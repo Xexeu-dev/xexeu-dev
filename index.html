@@ -616,6 +616,58 @@
       box-shadow: var(--shadow);
     }
 
+
+    .gallery-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .gallery-item {
+      position: relative;
+      min-height: 210px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.055);
+      transition: 0.28s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-6px) scale(1.01);
+      border-color: rgba(255, 230, 0, 0.42);
+      box-shadow: var(--shadow);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+      filter: contrast(1.06) saturate(1.06);
+    }
+
+    .gallery-item::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.86), rgba(0,0,0,.08));
+      pointer-events: none;
+    }
+
+    .gallery-item span {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      z-index: 2;
+      font-family: Orbitron, sans-serif;
+      color: var(--neon);
+      font-weight: 900;
+      text-shadow: 0 0 20px rgba(255, 230, 0, 0.45);
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.8px;
+    }
+
     .rules-grid { grid-template-columns: repeat(3, 1fr); }
     .rule-card { padding: 24px; }
 
@@ -840,6 +892,9 @@
       .hero-grid, .about-wrap, .contact-wrap, .banner { grid-template-columns: 1fr; }
       .hero-visual { min-height: 520px; }
       .services-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+
       .rules-grid, .projects-grid { grid-template-columns: 1fr; }
     }
 
@@ -868,6 +923,9 @@
       .hero-visual { min-height: 520px; }
       .floating-card { grid-template-columns: 1fr; }
       .services-grid { grid-template-columns: 1fr; }
+
+      .gallery-grid { grid-template-columns: 1fr; }
+
       .section-head { display: block; }
       .price { display: grid; }
     }
@@ -890,6 +948,7 @@
       <div class="nav-links" id="navLinks">
         <a href="#servicos">Serviços</a>
         <a href="#projetos">Projetos</a>
+        <a href="#galeria">Galeria</a>
         <a href="#regras">Regras</a>
         <a href="#sobre">Sobre</a>
         <a href="#contato">Contato</a>
@@ -988,10 +1047,7 @@
 
         <div class="grid projects-grid">
           <article class="project-card reveal">
-            <div class="project-image has-img">
-  <img src="assets/nova-roleplay.jpg" alt="Print do projeto Nova Roleplay">
-  <div class="mock-title">Nova Roleplay</div>
-</div>
+            <div class="project-image has-img"><img src="assets/nova-roleplay.png" alt="Print do projeto Nova Roleplay"><div class="mock-title">Nova Roleplay</div></div>
             <div class="project-body">
               <h3>Nova Roleplay — Servidor SAMP RP completo</h3>
               <p>Sistema de login, senha criptografada, segurança anti-invasões, proteção contra hackers, xiters e floods, VIPs, sócios, patrocinadores, carros privados, concessionárias, prefeituras, empregos, logotipo, comandos administrativos, celular, transferências Pix in game, roubos, organizações, corporações, mapeamentos, famílias, casamentos, novatos, veículos públicos, desmanche, vendas de drogas, rotas, dominações e muito mais.</p>
@@ -1001,7 +1057,7 @@
           </article>
 
           <article class="project-card reveal">
-            <div class="project-image"><div class="mock-title">Distrito PVP</div></div>
+            <div class="project-image has-img"><img src="assets/distrito-pvp.png" alt="Print do projeto Distrito PVP"><div class="mock-title">Distrito PVP</div></div>
             <div class="project-body">
               <h3>Distrito PVP — Ajustes e integrações</h3>
               <p>Ajustes e integrações na Distrito PVP, incluindo sistema anti-xiter, arenas, sistema de tags personalizadas, carros, eventos, sistema de dominações e X-Community.</p>
@@ -1011,7 +1067,7 @@
           </article>
 
           <article class="project-card reveal">
-            <div class="project-image"><div class="mock-title">Launcher Mobile</div></div>
+            <div class="project-image has-img"><img src="assets/launcher-mobile.png" alt="Print do Launcher SAMP Mobile"><div class="mock-title">Launcher Mobile</div></div>
             <div class="project-body">
               <h3>Launcher SAMP Mobile com IP fixo</h3>
               <p>Aplicativo para entrar no servidor fixo Nova Roleplay pelo celular, com funções exclusivas: macro bind, sensibilidade para cada arma, animações, datas exclusivas, redes sociais e atualizações de estabilização.</p>
@@ -1021,7 +1077,7 @@
           </article>
 
           <article class="project-card reveal">
-            <div class="project-image"><div class="mock-title">Bot Discord</div></div>
+            <div class="project-image has-img"><img src="assets/bot-discord.png" alt="Print dos bots Discord no Discloud"><div class="mock-title">Bot Discord</div></div>
             <div class="project-body">
               <h3>Bots Discord personalizados</h3>
               <p>Bots de ticket, lojas, músicas, IA e comandos para SAMP. O cliente pode executar comandos pelo Discord e integrar ações com o servidor dentro do jogo.</p>
@@ -1040,6 +1096,43 @@
         </div>
       </div>
     </section>
+
+
+    <section id="galeria">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Prints reais</div>
+            <h2>Galeria dos projetos</h2>
+          </div>
+          <p>Algumas imagens reais dos sistemas, launchers, bots e servidores para mostrar melhor o nível visual e funcional dos projetos.</p>
+        </div>
+
+        <div class="grid gallery-grid">
+          <a class="gallery-item reveal" href="assets/nova-roleplay.png" target="_blank" rel="noopener">
+            <img src="assets/nova-roleplay.png" alt="Print do servidor Nova Roleplay">
+            <span>Nova Roleplay</span>
+          </a>
+          <a class="gallery-item reveal" href="assets/nova-roleplay-launcher.png" target="_blank" rel="noopener">
+            <img src="assets/nova-roleplay-launcher.png" alt="Print do launcher Nova Roleplay">
+            <span>Launcher Nova Roleplay</span>
+          </a>
+          <a class="gallery-item reveal" href="assets/launcher-mobile.png" target="_blank" rel="noopener">
+            <img src="assets/launcher-mobile.png" alt="Print do aplicativo launcher mobile">
+            <span>Launcher Mobile</span>
+          </a>
+          <a class="gallery-item reveal" href="assets/distrito-pvp.png" target="_blank" rel="noopener">
+            <img src="assets/distrito-pvp.png" alt="Print do projeto Distrito PVP">
+            <span>Distrito PVP</span>
+          </a>
+          <a class="gallery-item reveal" href="assets/bot-discord.png" target="_blank" rel="noopener">
+            <img src="assets/bot-discord.png" alt="Print dos bots Discord online">
+            <span>Bots Discord</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
 
     <section id="regras">
       <div class="container">
@@ -1067,11 +1160,11 @@
         <article class="about-card profile-box reveal">
           <div>
             <div class="avatar">JR</div>
-            <h3>Jhonatan Da Silva Rodrigues</h3>
+            <h3>Jhonatan da Silva Rodrigues</h3>
             <p>Desenvolvedor Full Stack, Programador Freelancer e fundador da Xexeu Dev's.</p>
           </div>
           <div class="mini-row">
-            <div class="mini-card">10 anos</div>
+            <div class="mini-card">4+ anos</div>
             <div class="mini-card">SAMP</div>
             <div class="mini-card">Android</div>
           </div>
@@ -1081,13 +1174,13 @@
           <div class="eyebrow">Sobre mim</div>
           <h2>Experiência para tirar ideias do papel</h2>
           <p class="section-text">
-            Me chamo Jhonatan e trabalho com programação há 10 anos. Tenho experiência em várias áreas e linguagens, com foco profissional em desenvolvimento de servidores SAMP e aplicativos Android personalizados.
+            Me chamo Jhonatan da Silva Rodrigues, tenho 23 anos e decidi virar programador quando descobri o mundo fantástico por trás de aplicativos, sites, servidores e jogos.
           </p>
           <ul class="list">
-            <li><span class="check">✓</span> Desenvolvimento de servidores SAMP completos, modernos e personalizados.</li>
-            <li><span class="check">✓</span> Criação de aplicativos, launchers, bots, sites e sistemas sob medida.</li>
-            <li><span class="check">✓</span> Atendimento 24/7 para analisar ideias, orçamentos e melhorias.</li>
-            <li><span class="check">✓</span> Projetos com visual gamer, sistemas funcionais e foco em entregar valor real.</li>
+            <li><span class="check">✓</span> 23 anos.</li>
+            <li><span class="check">✓</span> Decidi virar programador quando descobri o mundo fantástico por trás de aplicativos, sites, servidores e jogos.</li>
+            <li><span class="check">✓</span> O Dev Full Stack com a maior qualidade e o melhor preço do mercado.</li>
+            <li><span class="check">✓</span> Especializado em servidores SAMP, aplicativos Android personalizados, sites, bots e sistemas sob medida.</li>
           </ul>
         </article>
       </div>
@@ -1142,7 +1235,7 @@
 
   <footer>
     <div class="container">
-      <p>© 2026 Xexeu Dev's — Sites, Apps, Launchers e Servidores SAMP. Desenvolvido por Jhonatan Da Silva Rodrigues.</p>
+      <p>© 2026 Xexeu Dev's — Sites, Apps, Launchers e Servidores SAMP. Desenvolvido por Jhonatan da Silva Rodrigues.</p>
     </div>
   </footer>
 
