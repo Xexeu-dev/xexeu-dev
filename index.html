@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xexeu Dev's | Sites, Apps, Launchers e Servidores SAMP</title>
+  <meta name="description" content="Xexeu Dev's - Desenvolvimento de sites, aplicativos Android, launchers, bots, sistemas e servidores SAMP personalizados." />
+  <meta name="theme-color" content="#ffe600" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #050505;
+      --bg-2: #0d0d0d;
+      --card: rgba(255, 255, 255, 0.055);
+      --card-2: rgba(255, 255, 255, 0.09);
+      --text: #ffffff;
+      --muted: #b8b8b8;
+      --muted-2: #777;
+      --neon: #ffe600;
+      --neon-2: #fff480;
+      --line: rgba(255, 255, 255, 0.12);
+      --shadow: 0 0 34px rgba(255, 230, 0, 0.22);
+      --radius: 26px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255, 230, 0, 0.17), transparent 26%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.09), transparent 22%),
+        radial-gradient(circle at 50% 100%, rgba(255, 230, 0, 0.10), transparent 32%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 58px 58px;
+      mask-image: linear-gradient(to bottom, #000 0%, transparent 88%);
+      z-index: -3;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(rgba(255, 255, 255, 0.025) 50%, rgba(0, 0, 0, 0.07) 50%);
+      background-size: 100% 4px;
+      opacity: 0.45;
+      z-index: 1000;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1180px, calc(100% - 36px)); margin: 0 auto; }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      z-index: -2;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.32'/%3E%3C/svg%3E");
+    }
+
+    .cursor-glow {
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 999px;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(255, 230, 0, 0.13), transparent 65%);
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      transition: opacity 0.25s ease;
+    }
+
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(5, 5, 5, 0.68);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: max-content;
+    }
+
+    .brand-logo {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 230, 0, 0.38);
+      background: linear-gradient(145deg, rgba(255, 230, 0, 0.18), rgba(255, 255, 255, 0.05));
+      box-shadow: var(--shadow);
+      color: var(--neon);
+      font-family: Orbitron, sans-serif;
+      font-weight: 900;
+    }
+
+    .brand strong {
+      display: block;
+      font-family: Orbitron, sans-serif;
+      letter-spacing: 0.5px;
+      font-size: 1rem;
+    }
+
+    .brand span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.76rem;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links a {
+      color: #d8d8d8;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 10px 12px;
+      border-radius: 999px;
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--neon);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      color: #050505;
+      background: linear-gradient(135deg, var(--neon), #ffffff 130%);
+      box-shadow: 0 0 26px rgba(255, 230, 0, 0.34);
+    }
+
+    .btn-primary:hover { box-shadow: 0 0 42px rgba(255, 230, 0, 0.50); }
+
+    .btn-ghost {
+      border-color: rgba(255, 255, 255, 0.17);
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+    }
+
+    .menu-btn {
+      display: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.07);
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    .hero {
+      position: relative;
+      padding: 150px 0 80px;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.04fr 0.96fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: max-content;
+      max-width: 100%;
+      padding: 9px 14px;
+      border: 1px solid rgba(255, 230, 0, 0.30);
+      border-radius: 999px;
+      color: var(--neon-2);
+      background: rgba(255, 230, 0, 0.08);
+      box-shadow: 0 0 28px rgba(255, 230, 0, 0.08);
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .pulse {
+      width: 9px;
+      height: 9px;
+      background: var(--neon);
+      border-radius: 999px;
+      box-shadow: 0 0 16px var(--neon);
+      animation: pulse 1.45s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.75); opacity: 0.45; }
+    }
+
+    h1 {
+      margin-top: 22px;
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: clamp(2.55rem, 7vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: -3px;
+      text-transform: uppercase;
+    }
+
+    .neon-text {
+      color: var(--neon);
+      text-shadow: 0 0 24px rgba(255, 230, 0, 0.42);
+    }
+
+    .hero p {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.22rem);
+      line-height: 1.8;
+      max-width: 670px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .mini-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .mini-card {
+      padding: 13px 15px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.055);
+      color: #eee;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 570px;
+      border-radius: 36px;
+      border: 1px solid rgba(255, 230, 0, 0.20);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+        radial-gradient(circle at 80% 10%, rgba(255, 230, 0, 0.22), transparent 36%);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35), var(--shadow);
+      overflow: hidden;
+      transform-style: preserve-3d;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: conic-gradient(from 90deg, transparent, rgba(255, 230, 0, 0.16), transparent 24%);
+      animation: spin 9s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .screen {
+      position: absolute;
+      inset: 20px;
+      border-radius: 28px;
+      background: rgba(7, 7, 7, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .screen-bar {
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .dots { display: flex; gap: 8px; }
+    .dot { width: 11px; height: 11px; border-radius: 999px; background: var(--neon); opacity: 0.9; }
+    .screen-title { color: var(--muted); font-size: 0.78rem; font-weight: 800; }
+
+    .code-lines {
+      padding: 22px;
+      font-family: "Courier New", monospace;
+      color: #f4f4f4;
+      font-size: 0.92rem;
+      line-height: 1.85;
+    }
+
+    .code-lines span {
+      display: block;
+      opacity: 0;
+      transform: translateX(-10px);
+      animation: revealCode 0.55s forwards;
+    }
+
+    .code-lines span:nth-child(2) { animation-delay: 0.15s; }
+    .code-lines span:nth-child(3) { animation-delay: 0.30s; }
+    .code-lines span:nth-child(4) { animation-delay: 0.45s; }
+    .code-lines span:nth-child(5) { animation-delay: 0.60s; }
+    .code-lines span:nth-child(6) { animation-delay: 0.75s; }
+    .code-lines span:nth-child(7) { animation-delay: 0.90s; }
+    .code-lines span:nth-child(8) { animation-delay: 1.05s; }
+
+    @keyframes revealCode { to { opacity: 1; transform: translateX(0); } }
+
+    .yellow { color: var(--neon); }
+    .gray { color: #969696; }
+
+    .floating-card {
+      position: absolute;
+      left: 32px;
+      right: 32px;
+      bottom: 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .stat {
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(255, 255, 255, 0.065);
+    }
+
+    .stat strong {
+      display: block;
+      font-family: Orbitron, sans-serif;
+      color: var(--neon);
+      font-size: 1.35rem;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 6px;
+    }
+
+    section {
+      padding: 86px 0;
+      position: relative;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 34px;
+    }
+
+    .eyebrow {
+      color: var(--neon);
+      font-family: Orbitron, sans-serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 0.82rem;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-family: Orbitron, sans-serif;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.05;
+      letter-spacing: -1.6px;
+      text-transform: uppercase;
+    }
+
+    .section-head p, .section-text {
+      color: var(--muted);
+      max-width: 680px;
+      line-height: 1.8;
+      font-size: 1.02rem;
+    }
+
+    .grid { display: grid; gap: 18px; }
+    .services-grid { grid-template-columns: repeat(5, 1fr); }
+
+    .service-card, .project-card, .rule-card, .about-card, .contact-card {
+      position: relative;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025));
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: 0.28s ease;
+    }
+
+    .service-card:hover, .project-card:hover, .rule-card:hover, .about-card:hover, .contact-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 230, 0, 0.42);
+      box-shadow: var(--shadow);
+    }
+
+    .service-card::before, .project-card::before, .rule-card::before, .about-card::before, .contact-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(255, 230, 0, 0.14), transparent 38%);
+      opacity: 0;
+      transition: 0.28s ease;
+      pointer-events: none;
+    }
+
+    .service-card:hover::before, .project-card:hover::before, .rule-card:hover::before, .about-card:hover::before, .contact-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-card {
+      padding: 22px;
+      min-height: 170px;
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      margin-bottom: 18px;
+      background: rgba(255, 230, 0, 0.12);
+      border: 1px solid rgba(255, 230, 0, 0.20);
+      color: var(--neon);
+      font-size: 1.35rem;
+      box-shadow: 0 0 20px rgba(255, 230, 0, 0.14);
+    }
+
+    .service-card h3, .project-card h3, .rule-card h3 {
+      font-size: 1.02rem;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    .service-card p, .project-card p, .rule-card p, .about-card p, .contact-card p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.94rem;
+    }
+
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    .project-card { min-height: 100%; }
+
+    .project-image {
+      min-height: 230px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(255, 230, 0, 0.22), rgba(255, 255, 255, 0.04)),
+        #111;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .project-image.has-img img {
+      width: 100%;
+      height: 270px;
+      object-fit: cover;
+      display: block;
+      opacity: 0.78;
+      filter: contrast(1.05) saturate(1.05);
+    }
+
+    .project-image.has-img::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.86), rgba(0,0,0,.10));
+      z-index: 1;
+    }
+
+    .project-image::after {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 26px 26px;
+      opacity: 0.65;
+    }
+
+    .project-image.has-img::after { z-index: 2; }
+
+    .project-image .mock-title {
+      position: absolute;
+      left: 26px;
+      bottom: 26px;
+      right: 26px;
+      z-index: 3;
+      font-family: Orbitron, sans-serif;
+      color: var(--neon);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 1.7rem;
+      text-shadow: 0 0 22px rgba(255, 230, 0, 0.55);
+    }
+
+    .project-body { padding: 24px; }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0 18px;
+    }
+
+    .tag {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255, 230, 0, 0.10);
+      border: 1px solid rgba(255, 230, 0, 0.18);
+      color: var(--neon-2);
+      font-weight: 800;
+      font-size: 0.76rem;
+    }
+
+    .price {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding-top: 18px;
+      margin-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .price strong {
+      color: var(--neon);
+      font-size: 1.18rem;
+    }
+
+    .price span {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .banner {
+      padding: 30px;
+      border-radius: 32px;
+      border: 1px solid rgba(255, 230, 0, 0.18);
+      background:
+        linear-gradient(135deg, rgba(255, 230, 0, 0.16), rgba(255, 255, 255, 0.04)),
+        rgba(255, 255, 255, 0.04);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      margin-top: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .rules-grid { grid-template-columns: repeat(3, 1fr); }
+    .rule-card { padding: 24px; }
+
+    .rule-number {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      background: rgba(255, 230, 0, 0.13);
+      color: var(--neon);
+      font-family: Orbitron, sans-serif;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .about-wrap {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .about-card { padding: 30px; }
+
+    .profile-box {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .avatar {
+      width: 112px;
+      height: 112px;
+      display: grid;
+      place-items: center;
+      border-radius: 34px;
+      border: 1px solid rgba(255, 230, 0, 0.30);
+      background: linear-gradient(145deg, rgba(255, 230, 0, 0.23), rgba(255, 255, 255, 0.04));
+      color: var(--neon);
+      font-family: Orbitron, sans-serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+
+    .profile-box h3 {
+      font-family: Orbitron, sans-serif;
+      font-size: 1.45rem;
+      margin-bottom: 8px;
+    }
+
+    .list {
+      display: grid;
+      gap: 13px;
+      margin-top: 18px;
+    }
+
+    .list li {
+      list-style: none;
+      display: flex;
+      gap: 12px;
+      color: #e5e5e5;
+      line-height: 1.55;
+    }
+
+    .check {
+      flex: 0 0 auto;
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--neon);
+      color: #060606;
+      font-size: 0.78rem;
+      font-weight: 900;
+      margin-top: 1px;
+    }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .contact-card { padding: 30px; }
+
+    .contact-methods {
+      display: grid;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .method {
+      padding: 16px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .method strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .method span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .copy-btn {
+      border: 1px solid rgba(255, 230, 0, 0.26);
+      background: rgba(255, 230, 0, 0.10);
+      color: var(--neon);
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .form {
+      display: grid;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .form input, .form textarea, .form select {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      padding: 15px 16px;
+      color: #fff;
+      font: inherit;
+      outline: none;
+      transition: 0.2s ease;
+    }
+
+    .form select option { background: #111; }
+
+    .form input:focus, .form textarea:focus, .form select:focus {
+      border-color: rgba(255, 230, 0, 0.58);
+      box-shadow: 0 0 0 4px rgba(255, 230, 0, 0.10);
+    }
+
+    .form textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    footer {
+      padding: 34px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: 0.72s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 60;
+      width: 62px;
+      height: 62px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--neon), #fff);
+      color: #050505;
+      box-shadow: 0 0 36px rgba(255, 230, 0, 0.48);
+      font-size: 1.6rem;
+      font-weight: 900;
+      animation: float 2.4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 26px;
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      padding: 13px 18px;
+      border-radius: 999px;
+      background: #fff;
+      color: #050505;
+      font-weight: 900;
+      z-index: 2000;
+      transition: 0.25s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 1020px) {
+      .hero-grid, .about-wrap, .contact-wrap, .banner { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 520px; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .rules-grid, .projects-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .nav-links {
+        position: fixed;
+        left: 18px;
+        right: 18px;
+        top: 90px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: rgba(10, 10, 10, 0.94);
+        backdrop-filter: blur(16px);
+      }
+
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 14px; }
+      .menu-btn { display: block; }
+      .nav .btn-primary { display: none; }
+      .hero { padding-top: 124px; }
+      h1 { letter-spacing: -1.6px; }
+      .hero-visual { min-height: 520px; }
+      .floating-card { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .price { display: grid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <header>
+    <nav class="container nav">
+      <a class="brand" href="#inicio" aria-label="Ir para o início">
+        <div class="brand-logo">XD</div>
+        <div>
+          <strong>Xexeu Dev's</strong>
+          <span>Full Stack • SAMP • Android</span>
+        </div>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#servicos">Serviços</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#regras">Regras</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#contato">Contato</a>
+      </div>
+
+      <a class="btn btn-primary" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20no%20seu%20trabalho%21%20me%20chamo%3A" target="_blank" rel="noopener">
+        Orçamento agora
+      </a>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">☰</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div class="reveal active">
+          <div class="badge"><span class="pulse"></span> Atendimento 24/7 • Projetos a partir de R$ 50,00</div>
+          <h1>Xexeu <span class="neon-text">Dev's</span></h1>
+          <p>
+            Desenvolvedor Full Stack, Programador Freelancer e Criador de Sites, Apps, Launchers e Servidores SAMP. Transforme suas melhores ideias em realidade com sistemas personalizados, visual moderno e foco em resultado.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20no%20seu%20trabalho%21%20me%20chamo%3A" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+            <a class="btn btn-ghost" href="#projetos">Ver projetos</a>
+          </div>
+          <div class="mini-row">
+            <div class="mini-card">Pawno / SAMP</div>
+            <div class="mini-card">Python</div>
+            <div class="mini-card">Java</div>
+            <div class="mini-card">Android / APK</div>
+            <div class="mini-card">Bots Discord</div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal active" id="heroVisual" aria-label="Painel visual de programação">
+          <div class="screen">
+            <div class="screen-bar">
+              <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <div class="screen-title">xexeu-devs/main.pwn</div>
+            </div>
+            <div class="code-lines">
+              <span><span class="gray">//</span> Xexeu Dev's - Projeto personalizado</span>
+              <span><span class="yellow">public</span> OnGameModeInit() {</span>
+              <span>&nbsp;&nbsp;<span class="yellow">LoadSystems</span>("login", "vip", "anti-xiter");</span>
+              <span>&nbsp;&nbsp;<span class="yellow">CreateLauncher</span>("Android", "IP Fixo");</span>
+              <span>&nbsp;&nbsp;<span class="yellow">ConnectDiscordBot</span>("tickets", "lojas");</span>
+              <span>&nbsp;&nbsp;<span class="yellow">return</span> 1;</span>
+              <span>}</span>
+              <span><span class="gray">//</span> pronto para jogar, vender e crescer</span>
+            </div>
+            <div class="floating-card">
+              <div class="stat"><strong>10+</strong><span>anos programando</span></div>
+              <div class="stat"><strong>24/7</strong><span>atendimento</span></div>
+              <div class="stat"><strong>PIX</strong><span>pagamento fácil</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicos">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">O que eu faço</div>
+            <h2>Serviços completos</h2>
+          </div>
+          <p>Desenvolvimento sob medida para quem precisa de um projeto funcionando de verdade: do servidor SAMP ao aplicativo, do bot ao sistema completo.</p>
+        </div>
+
+        <div class="grid services-grid">
+          <article class="service-card reveal"><div class="icon">🎮</div><h3>Servidores SAMP</h3><p>RP, PVP, sistemas exclusivos, gamemodes, filterscripts, comandos, empregos, organizações, rotas e eventos.</p></article>
+          <article class="service-card reveal"><div class="icon">🛡️</div><h3>Anti-xiter e segurança</h3><p>Proteções contra invasões, hackers, xiters, floods e ações suspeitas dentro do servidor.</p></article>
+          <article class="service-card reveal"><div class="icon">📱</div><h3>Apps e APKs</h3><p>Aplicativos Android, launchers personalizados, menus modernos, bind mobile e recursos exclusivos.</p></article>
+          <article class="service-card reveal"><div class="icon">🌐</div><h3>Sites</h3><p>Sites profissionais, landing pages, vitrines de serviços, páginas para comunidades e projetos digitais.</p></article>
+          <article class="service-card reveal"><div class="icon">🤖</div><h3>Bots Discord</h3><p>Bots de ticket, lojas, música, IA, comandos e integração com sistemas SAMP.</p></article>
+          <article class="service-card reveal"><div class="icon">🐍</div><h3>Python</h3><p>Automações, bots, scripts, ferramentas, integrações e sistemas personalizados.</p></article>
+          <article class="service-card reveal"><div class="icon">☕</div><h3>Java</h3><p>Sistemas, projetos acadêmicos, aplicações, lógica de negócio e integrações.</p></article>
+          <article class="service-card reveal"><div class="icon">🗄️</div><h3>Banco de dados</h3><p>Sistemas com cadastro, login, salvamento, painel, registros e organização de informações.</p></article>
+          <article class="service-card reveal"><div class="icon">🧩</div><h3>Correções e manutenção</h3><p>Correção de bugs, ajustes, melhorias, otimização e novas funções em projetos existentes.</p></article>
+          <article class="service-card reveal"><div class="icon">🎓</div><h3>Projetos escolares</h3><p>Ajuda em projetos de escola, cursos e faculdade, com explicação e desenvolvimento organizado.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projetos">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Vitrine</div>
+            <h2>Projetos em destaque</h2>
+          </div>
+          <p>Esses são exemplos dos trabalhos, sistemas e pacotes que podem ser comprados ou usados como base para um projeto personalizado.</p>
+        </div>
+
+        <div class="grid projects-grid">
+          <article class="project-card reveal">
+            <div class="project-image"><div class="mock-title">Nova Roleplay</div></div>
+            <div class="project-body">
+              <h3>Nova Roleplay — Servidor SAMP RP completo</h3>
+              <p>Sistema de login, senha criptografada, segurança anti-invasões, proteção contra hackers, xiters e floods, VIPs, sócios, patrocinadores, carros privados, concessionárias, prefeituras, empregos, logotipo, comandos administrativos, celular, transferências Pix in game, roubos, organizações, corporações, mapeamentos, famílias, casamentos, novatos, veículos públicos, desmanche, vendas de drogas, rotas, dominações e muito mais.</p>
+              <div class="tags"><span class="tag">RP</span><span class="tag">Launcher incluso</span><span class="tag">Bots DC inclusos</span><span class="tag">Completo</span></div>
+              <div class="price"><div><strong>R$ 1.620,00</strong><br><span>Com launcher e bots Discord inclusos</span></div><a class="btn btn-primary" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20no%20projeto%20Nova%20Roleplay%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a></div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-image"><div class="mock-title">Distrito PVP</div></div>
+            <div class="project-body">
+              <h3>Distrito PVP — Ajustes e integrações</h3>
+              <p>Ajustes e integrações na Distrito PVP, incluindo sistema anti-xiter, arenas, sistema de tags personalizadas, carros, eventos, sistema de dominações e X-Community.</p>
+              <div class="tags"><span class="tag">PVP</span><span class="tag">Arenas</span><span class="tag">Tags</span><span class="tag">Anti-xiter</span></div>
+              <div class="price"><div><strong>R$ 100,00</strong><br><span>Valor dos ajustes informados</span></div><a class="btn btn-primary" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20no%20projeto%20Distrito%20PVP%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a></div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-image"><div class="mock-title">Launcher Mobile</div></div>
+            <div class="project-body">
+              <h3>Launcher SAMP Mobile com IP fixo</h3>
+              <p>Aplicativo para entrar no servidor fixo Nova Roleplay pelo celular, com funções exclusivas: macro bind, sensibilidade para cada arma, animações, datas exclusivas, redes sociais e atualizações de estabilização.</p>
+              <div class="tags"><span class="tag">Android</span><span class="tag">IP fixo</span><span class="tag">Bind mobile</span><span class="tag">SAMP</span></div>
+              <div class="price"><div><strong>R$ 500,00</strong><br><span>Com redes sociais e estabilização</span></div><a class="btn btn-primary" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20no%20Launcher%20SAMP%20Mobile%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a></div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-image"><div class="mock-title">Bot Discord</div></div>
+            <div class="project-body">
+              <h3>Bots Discord personalizados</h3>
+              <p>Bots de ticket, lojas, músicas, IA e comandos para SAMP. O cliente pode executar comandos pelo Discord e integrar ações com o servidor dentro do jogo.</p>
+              <div class="tags"><span class="tag">Tickets</span><span class="tag">Lojas</span><span class="tag">IA</span><span class="tag">Integração SAMP</span></div>
+              <div class="price"><div><strong>A combinar</strong><br><span>Valores de acordo com o projeto</span></div><a class="btn btn-primary" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20um%20Bot%20Discord%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="banner reveal">
+          <div>
+            <h3>Servidores mais simples a partir de R$ 50,00</h3>
+            <p class="section-text">Preços acessíveis de acordo com o projeto desejado. O valor final depende da complexidade, prazo, quantidade de sistemas e nível de personalização.</p>
+          </div>
+          <a class="btn btn-primary" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20no%20seu%20trabalho%21%20me%20chamo%3A" target="_blank" rel="noopener">Pedir orçamento</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="regras">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Como funciona</div>
+            <h2>Regras do serviço</h2>
+          </div>
+          <p>Para o projeto sair do jeito certo, o processo é combinado com clareza antes do início do desenvolvimento.</p>
+        </div>
+
+        <div class="grid rules-grid">
+          <article class="rule-card reveal"><div class="rule-number">01</div><h3>Prazo sob análise</h3><p>O prazo de entrega depende do tamanho e da dificuldade do projeto desejado.</p></article>
+          <article class="rule-card reveal"><div class="rule-number">02</div><h3>Quanto mais detalhes, melhor</h3><p>Quanto mais o cliente especificar, mais direto fica o orçamento. Também posso usar criatividade própria, mas o preço pode subir.</p></article>
+          <article class="rule-card reveal"><div class="rule-number">03</div><h3>Alterações extras</h3><p>Mudanças muito difíceis ou fora do combinado inicial podem ter custo adicional.</p></article>
+          <article class="rule-card reveal"><div class="rule-number">04</div><h3>Pagamento inicial</h3><p>O pagamento inicial não é reembolsável, pois garante o início do desenvolvimento e reserva o tempo do projeto.</p></article>
+          <article class="rule-card reveal"><div class="rule-number">05</div><h3>Garantia contra bugs</h3><p>Garantia total de correção de bugs relacionados ao que foi combinado e entregue.</p></article>
+          <article class="rule-card reveal"><div class="rule-number">06</div><h3>Pagamento por Pix</h3><p>A forma de pagamento aceita é Pix. Aceito metade antes e metade depois, conforme combinado.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre">
+      <div class="container about-wrap">
+        <article class="about-card profile-box reveal">
+          <div>
+            <div class="avatar">JR</div>
+            <h3>Jhonatan Da Silva Rodrigues</h3>
+            <p>Desenvolvedor Full Stack, Programador Freelancer e fundador da Xexeu Dev's.</p>
+          </div>
+          <div class="mini-row">
+            <div class="mini-card">10 anos</div>
+            <div class="mini-card">SAMP</div>
+            <div class="mini-card">Android</div>
+          </div>
+        </article>
+
+        <article class="about-card reveal">
+          <div class="eyebrow">Sobre mim</div>
+          <h2>Experiência para tirar ideias do papel</h2>
+          <p class="section-text">
+            Me chamo Jhonatan e trabalho com programação há 10 anos. Tenho experiência em várias áreas e linguagens, com foco profissional em desenvolvimento de servidores SAMP e aplicativos Android personalizados.
+          </p>
+          <ul class="list">
+            <li><span class="check">✓</span> Desenvolvimento de servidores SAMP completos, modernos e personalizados.</li>
+            <li><span class="check">✓</span> Criação de aplicativos, launchers, bots, sites e sistemas sob medida.</li>
+            <li><span class="check">✓</span> Atendimento 24/7 para analisar ideias, orçamentos e melhorias.</li>
+            <li><span class="check">✓</span> Projetos com visual gamer, sistemas funcionais e foco em entregar valor real.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="contato">
+      <div class="container contact-wrap">
+        <article class="contact-card reveal">
+          <div class="eyebrow">Contato</div>
+          <h2>Vamos criar seu projeto?</h2>
+          <p>Chame no WhatsApp ou Discord, explique sua ideia com o máximo de detalhes possível e receba uma análise do orçamento.</p>
+
+          <div class="contact-methods">
+            <a class="method" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20no%20seu%20trabalho%21%20me%20chamo%3A" target="_blank" rel="noopener">
+              <div><strong>WhatsApp</strong><span>+55 14 99817-0370</span></div>
+              <span>↗</span>
+            </a>
+            <div class="method">
+              <div><strong>Discord</strong><span id="discordText">@7xexeu</span></div>
+              <button class="copy-btn" data-copy="@7xexeu">Copiar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="contact-card reveal">
+          <div class="eyebrow">Pedido rápido</div>
+          <h2>Gerar mensagem</h2>
+          <p>Preencha abaixo e envie uma mensagem pronta direto para o WhatsApp.</p>
+          <form class="form" id="quoteForm">
+            <input id="clientName" type="text" placeholder="Seu nome" required />
+            <select id="projectType" required>
+              <option value="">Tipo de projeto</option>
+              <option>Servidor SAMP</option>
+              <option>Launcher SAMP Mobile</option>
+              <option>Bot Discord</option>
+              <option>Site</option>
+              <option>Aplicativo / APK</option>
+              <option>Python / Java / Sistema</option>
+              <option>Correção de bugs</option>
+            </select>
+            <textarea id="projectDetails" placeholder="Explique sua ideia. Quanto mais detalhes, melhor fica o orçamento." required></textarea>
+            <button class="btn btn-primary" type="submit">Enviar no WhatsApp</button>
+          </form>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <a class="whatsapp-float" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20no%20seu%20trabalho%21%20me%20chamo%3A" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp">☎</a>
+
+  <div class="toast" id="toast">Copiado!</div>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Xexeu Dev's — Sites, Apps, Launchers e Servidores SAMP. Desenvolvido por Jhonatan Da Silva Rodrigues.</p>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    const cursorGlow = document.getElementById('cursorGlow');
+    const toast = document.getElementById('toast');
+    const heroVisual = document.getElementById('heroVisual');
+
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach((link) => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    window.addEventListener('mousemove', (event) => {
+      cursorGlow.style.left = event.clientX + 'px';
+      cursorGlow.style.top = event.clientY + 'px';
+    });
+
+    if (heroVisual) {
+      heroVisual.addEventListener('mousemove', (event) => {
+        const rect = heroVisual.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        const rotateY = ((x / rect.width) - 0.5) * 10;
+        const rotateX = ((y / rect.height) - 0.5) * -10;
+        heroVisual.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      heroVisual.addEventListener('mouseleave', () => {
+        heroVisual.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.getAttribute('data-copy');
+        try {
+          await navigator.clipboard.writeText(value);
+          showToast('Discord copiado!');
+        } catch (error) {
+          showToast('Copie: ' + value);
+        }
+      });
+    });
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    document.getElementById('quoteForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const name = document.getElementById('clientName').value.trim();
+      const type = document.getElementById('projectType').value;
+      const details = document.getElementById('projectDetails').value.trim();
+      const message = `Olá, analisei sua vitrine em seu site e tenho interesse no seu trabalho! me chamo: ${name}.\n\nTipo de projeto: ${type}\n\nDetalhes: ${details}`;
+      const url = 'https://wa.me/5514998170370?text=' + encodeURIComponent(message);
+      window.open(url, '_blank');
+    });
+  </script>
+</body>
+</html>
