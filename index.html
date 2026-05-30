@@ -601,6 +601,464 @@
       font-size: 0.82rem;
     }
 
+    .work-showcase {
+      position: relative;
+      min-height: 560vh;
+      margin-top: 30px;
+    }
+
+    .work-stage {
+      position: sticky;
+      top: 92px;
+      height: calc(100vh - 118px);
+      min-height: 690px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      isolation: isolate;
+      perspective: 1600px;
+      border: 1px solid rgba(255, 230, 0, 0.22);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.018)),
+        linear-gradient(135deg, rgba(255, 230, 0, 0.10), transparent 44%),
+        #060606;
+      box-shadow: 0 34px 90px rgba(0, 0, 0, 0.45), 0 0 44px rgba(255, 230, 0, 0.16);
+      transform-style: preserve-3d;
+    }
+
+    .work-stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      background-image:
+        linear-gradient(rgba(255, 230, 0, 0.075) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 230, 0, 0.055) 1px, transparent 1px);
+      background-size: 54px 54px;
+      transform: perspective(900px) rotateX(62deg) translateY(20%);
+      transform-origin: center bottom;
+      opacity: 0.48;
+    }
+
+    .work-stage::after {
+      content: "";
+      position: absolute;
+      inset: 9%;
+      z-index: -2;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 230, 0, 0.20);
+      box-shadow:
+        inset 0 0 42px rgba(255, 230, 0, 0.10),
+        0 0 38px rgba(255, 230, 0, 0.11);
+      transform: rotateX(70deg) rotateZ(var(--progress-deg, 0deg));
+    }
+
+    .work-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 6;
+    }
+
+    .work-particles span {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 1px;
+      background: var(--neon);
+      box-shadow: 0 0 14px rgba(255, 230, 0, 0.72);
+      opacity: 0.7;
+      animation: particleDrift 4.8s ease-in-out infinite;
+    }
+
+    .work-particles span:nth-child(1) { left: 18%; top: 22%; animation-delay: -0.2s; }
+    .work-particles span:nth-child(2) { left: 31%; top: 17%; animation-delay: -1.1s; }
+    .work-particles span:nth-child(3) { left: 70%; top: 20%; animation-delay: -2s; }
+    .work-particles span:nth-child(4) { left: 82%; top: 38%; animation-delay: -3.1s; }
+    .work-particles span:nth-child(5) { left: 74%; top: 70%; animation-delay: -0.8s; }
+    .work-particles span:nth-child(6) { left: 55%; top: 79%; animation-delay: -2.6s; }
+    .work-particles span:nth-child(7) { left: 27%; top: 76%; animation-delay: -1.7s; }
+    .work-particles span:nth-child(8) { left: 15%; top: 56%; animation-delay: -3.7s; }
+    .work-particles span:nth-child(9) { left: 45%; top: 31%; animation-delay: -1.4s; }
+    .work-particles span:nth-child(10) { left: 62%; top: 48%; animation-delay: -2.8s; }
+    .work-particles span:nth-child(11) { left: 38%; top: 58%; animation-delay: -0.6s; }
+    .work-particles span:nth-child(12) { left: 51%; top: 12%; animation-delay: -3.5s; }
+
+    .code-stream {
+      position: absolute;
+      inset: 6%;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      pointer-events: none;
+      opacity: 0.24;
+      filter: blur(2.4px);
+      mask-image: radial-gradient(circle at center, #000 0%, #000 42%, transparent 78%);
+      overflow: hidden;
+      transform: translateZ(-220px);
+    }
+
+    .code-column {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      color: rgba(255, 244, 128, 0.84);
+      font-family: "Courier New", monospace;
+      font-size: clamp(0.68rem, 1vw, 0.88rem);
+      line-height: 1.35;
+      text-shadow: 0 0 16px rgba(255, 230, 0, 0.34);
+      animation: codeFloat 16s linear infinite;
+    }
+
+    .code-column:nth-child(2) {
+      color: rgba(255, 255, 255, 0.58);
+      animation-duration: 20s;
+      animation-delay: -6s;
+    }
+
+    .code-column:nth-child(3) {
+      animation-duration: 18s;
+      animation-delay: -10s;
+    }
+
+    .code-column span {
+      white-space: nowrap;
+      opacity: 0.72;
+    }
+
+    @keyframes codeFloat {
+      from { transform: translateY(18%); }
+      to { transform: translateY(-46%); }
+    }
+
+    @keyframes particleDrift {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.45; }
+      45% { transform: translate3d(18px, -22px, 0) scale(1.7); opacity: 0.95; }
+      72% { transform: translate3d(-16px, 10px, 0) scale(0.85); opacity: 0.58; }
+    }
+
+    .work-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 150;
+      width: min(340px, 48vw);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      transform: translate(-50%, -50%);
+      transform-style: preserve-3d;
+      pointer-events: none;
+    }
+
+    .core-rings,
+    .core-rings::before,
+    .core-rings::after {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 230, 0, 0.28);
+      box-shadow: 0 0 34px rgba(255, 230, 0, 0.12);
+      transform: rotateX(68deg) rotateZ(var(--progress-deg, 0deg));
+    }
+
+    .core-rings::before,
+    .core-rings::after {
+      content: "";
+      inset: 14%;
+    }
+
+    .core-rings::after {
+      inset: 28%;
+      border-style: dashed;
+      animation: spin 10s linear infinite;
+    }
+
+    .core-shell {
+      position: relative;
+      width: 70%;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 230, 0, 0.35);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(255, 230, 0, 0.24), rgba(255, 255, 255, 0.035)),
+        rgba(10, 10, 10, 0.86);
+      box-shadow:
+        inset 0 0 32px rgba(255, 230, 0, 0.12),
+        0 0 52px rgba(255, 230, 0, 0.23);
+      transform: rotateX(58deg) rotateZ(45deg);
+      overflow: hidden;
+    }
+
+    .core-shell::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 6px;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .core-panel {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(360px, 48vw);
+      min-height: 230px;
+      display: grid;
+      place-items: center;
+      gap: 10px;
+      padding: 30px 24px;
+      border: 1px solid rgba(255, 230, 0, 0.42);
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(255, 230, 0, 0.18), transparent 48%),
+        rgba(5, 5, 5, 0.72);
+      box-shadow: 0 0 46px rgba(255, 230, 0, 0.24);
+      text-align: center;
+      transform: translate(-50%, -50%) translateZ(92px) rotateX(7deg) rotateY(-10deg);
+      transform-style: preserve-3d;
+      backdrop-filter: blur(14px);
+    }
+
+    .core-panel::before {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 6px;
+      pointer-events: none;
+    }
+
+    .core-panel > span {
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .core-brand-3d {
+      position: relative;
+      display: grid;
+      gap: 4px;
+      font-family: Orbitron, sans-serif;
+      font-weight: 900;
+      line-height: 0.86;
+      text-transform: uppercase;
+      transform: translateZ(58px);
+      transform-style: preserve-3d;
+    }
+
+    .core-brand-3d span {
+      display: block;
+      letter-spacing: 0;
+      font-size: clamp(2.05rem, 5vw, 4.8rem);
+      text-shadow:
+        1px 1px 0 #9e8f00,
+        2px 2px 0 #7b6f00,
+        3px 3px 0 #5a5200,
+        4px 4px 0 #3e3900,
+        0 0 24px rgba(255, 230, 0, 0.42),
+        0 0 54px rgba(255, 230, 0, 0.22);
+    }
+
+    .core-brand-3d .brand-xexeu {
+      color: #fff;
+    }
+
+    .core-brand-3d .brand-dev {
+      color: var(--neon);
+    }
+
+    .core-brand-3d::before {
+      content: "XEXEU\A DEV'S";
+      white-space: pre;
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      color: rgba(255, 230, 0, 0.12);
+      filter: blur(12px);
+      transform: translate3d(18px, 18px, -50px);
+    }
+
+    .core-tagline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 0 12px;
+      border: 1px solid rgba(255, 230, 0, 0.24);
+      border-radius: 999px;
+      background: rgba(255, 230, 0, 0.08);
+      color: var(--neon-2);
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      transform: translateZ(42px);
+    }
+
+    .core-panel strong {
+      font-family: Orbitron, sans-serif;
+      color: var(--neon);
+      font-size: clamp(1.35rem, 3vw, 2.2rem);
+      line-height: 1;
+      text-shadow: 0 0 24px rgba(255, 230, 0, 0.46);
+    }
+
+    .work-card {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 5;
+      width: min(315px, 78vw);
+      min-height: 405px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 13px;
+      padding: 12px;
+      border: 1px solid rgba(255, 230, 0, 0.20);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.028)),
+        rgba(6, 6, 6, 0.82);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+      backdrop-filter: blur(14px);
+      transform: translate(-50%, -50%);
+      transform-style: preserve-3d;
+      will-change: transform, opacity, filter;
+      overflow: hidden;
+    }
+
+    .work-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 18%, rgba(255, 255, 255, 0.11), transparent 42%);
+      transform: translateX(-110%);
+      transition: transform 0.7s ease;
+      pointer-events: none;
+    }
+
+    .work-card.is-front {
+      border-color: rgba(255, 230, 0, 0.48);
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.46), 0 0 34px rgba(255, 230, 0, 0.24);
+    }
+
+    .work-card.is-front::before { transform: translateX(110%); }
+
+    .product-media {
+      position: relative;
+      height: 128px;
+      overflow: hidden;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #111;
+    }
+
+    .product-media img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      filter: saturate(1.08) contrast(1.08) brightness(0.76);
+    }
+
+    .product-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(0, 0, 0, 0.84), transparent 62%),
+        linear-gradient(90deg, rgba(255, 230, 0, 0.12), transparent 36%);
+    }
+
+    .product-icon {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      z-index: 2;
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 230, 0, 0.44);
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.70);
+      color: var(--neon);
+      font-family: Orbitron, sans-serif;
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      box-shadow: 0 0 22px rgba(255, 230, 0, 0.20);
+    }
+
+    .product-body {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 12px;
+      padding: 2px 2px 4px;
+    }
+
+    .product-kicker {
+      color: var(--neon-2);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .product-body h3 {
+      font-family: Orbitron, sans-serif;
+      font-size: 1.12rem;
+      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .product-body p {
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.58;
+    }
+
+    .product-price {
+      display: grid;
+      gap: 4px;
+      padding: 11px 12px;
+      border: 1px solid rgba(255, 230, 0, 0.16);
+      border-radius: 6px;
+      background: rgba(255, 230, 0, 0.075);
+    }
+
+    .product-price span {
+      color: var(--muted);
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+    }
+
+    .product-price strong {
+      color: var(--neon);
+      font-size: 1.15rem;
+      line-height: 1;
+    }
+
+    .product-cta {
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: 6px;
+      font-size: 0.84rem;
+    }
+
     .banner {
       padding: 30px;
       border-radius: 32px;
@@ -892,6 +1350,10 @@
       .hero-grid, .about-wrap, .contact-wrap, .banner { grid-template-columns: 1fr; }
       .hero-visual { min-height: 520px; }
       .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .work-showcase { min-height: 560vh; }
+      .work-stage { min-height: 720px; }
+      .work-core { width: min(290px, 54vw); }
+      .work-card { width: min(300px, 78vw); }
 
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
 
@@ -923,6 +1385,46 @@
       .hero-visual { min-height: 520px; }
       .floating-card { grid-template-columns: 1fr; }
       .services-grid { grid-template-columns: 1fr; }
+      .work-showcase {
+        min-height: 560vh;
+        margin-left: -8px;
+        margin-right: -8px;
+      }
+      .work-stage {
+        top: 86px;
+        height: calc(100vh - 104px);
+        min-height: 710px;
+      }
+      .work-core { width: min(230px, 64vw); }
+      .core-panel {
+        width: min(214px, 66vw);
+        min-height: 142px;
+        padding: 18px;
+      }
+      .core-panel > span { font-size: 0.62rem; }
+      .core-brand-3d span { font-size: clamp(1.85rem, 12vw, 3.1rem); }
+      .core-tagline { font-size: 0.58rem; }
+      .code-stream {
+        grid-template-columns: 1fr;
+        inset: 3%;
+        opacity: 0.20;
+      }
+      .code-column:nth-child(2),
+      .code-column:nth-child(3) { display: none; }
+      .work-card {
+        width: min(252px, 78vw);
+        min-height: 362px;
+        padding: 10px;
+      }
+      .product-media { height: 94px; }
+      .product-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 0.66rem;
+      }
+      .product-body h3 { font-size: 0.94rem; }
+      .product-body p { font-size: 0.78rem; line-height: 1.48; }
+      .product-price strong { font-size: 1rem; }
 
       .gallery-grid { grid-template-columns: 1fr; }
 
@@ -947,7 +1449,7 @@
 
       <div class="nav-links" id="navLinks">
         <a href="#servicos">Serviços</a>
-        <a href="#projetos">Projetos</a>
+        <a href="#projetos">Vitrine</a>
         <a href="#galeria">Galeria</a>
         <a href="#regras">Regras</a>
         <a href="#sobre">Sobre</a>
@@ -973,7 +1475,7 @@
           </p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20no%20seu%20trabalho%21%20me%20chamo%3A" target="_blank" rel="noopener">Chamar no WhatsApp</a>
-            <a class="btn btn-ghost" href="#projetos">Ver projetos</a>
+            <a class="btn btn-ghost" href="#projetos">Ver vitrine</a>
           </div>
           <div class="mini-row">
             <div class="mini-card">Pawno / SAMP</div>
@@ -1040,57 +1542,287 @@
         <div class="section-head reveal">
           <div>
             <div class="eyebrow">Vitrine</div>
-            <h2>Projetos em destaque</h2>
+            <h2>Serviços em destaque</h2>
           </div>
-          <p>Esses são exemplos dos trabalhos, sistemas e pacotes que podem ser comprados ou usados como base para um projeto personalizado.</p>
+          <p>Role a página para girar a vitrine 3D e ver cada serviço disponível, com valor inicial e descrição rápida para orçamento.</p>
         </div>
 
-        <div class="grid projects-grid">
-          <article class="project-card reveal">
-            <div class="project-image has-img"><img src="assets/nova-roleplay.png" alt="Print do projeto Nova Roleplay"><div class="mock-title">Nova Roleplay</div></div>
-            <div class="project-body">
-              <h3>Nova Roleplay — Servidor SAMP RP completo</h3>
-              <p>Sistema de login, senha criptografada, segurança anti-invasões, proteção contra hackers, xiters e floods, VIPs, sócios, patrocinadores, carros privados, concessionárias, prefeituras, empregos, logotipo, comandos administrativos, celular, transferências Pix in game, roubos, organizações, corporações, mapeamentos, famílias, casamentos, novatos, veículos públicos, desmanche, vendas de drogas, rotas, dominações e muito mais.</p>
-              <div class="tags"><span class="tag">RP</span><span class="tag">Launcher incluso</span><span class="tag">Bots DC inclusos</span><span class="tag">Completo</span></div>
-              <div class="price"><div><strong>R$ 1.620,00</strong><br><span>Com launcher e bots Discord inclusos</span></div><a class="btn btn-primary" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20no%20projeto%20Nova%20Roleplay%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a></div>
+        <div class="work-showcase" data-work-showcase>
+          <div class="work-stage" data-work-stage>
+            <div class="work-particles" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
             </div>
-          </article>
 
-          <article class="project-card reveal">
-            <div class="project-image has-img"><img src="assets/distrito-pvp.png" alt="Print do projeto Distrito PVP"><div class="mock-title">Distrito PVP</div></div>
-            <div class="project-body">
-              <h3>Distrito PVP — Ajustes e integrações</h3>
-              <p>Ajustes e integrações na Distrito PVP, incluindo sistema anti-xiter, arenas, sistema de tags personalizadas, carros, eventos, sistema de dominações e X-Community.</p>
-              <div class="tags"><span class="tag">PVP</span><span class="tag">Arenas</span><span class="tag">Tags</span><span class="tag">Anti-xiter</span></div>
-              <div class="price"><div><strong>R$ 100,00</strong><br><span>Valor dos ajustes informados</span></div><a class="btn btn-primary" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20no%20projeto%20Distrito%20PVP%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a></div>
+            <div class="code-stream" aria-hidden="true">
+              <div class="code-column">
+                <span>const projeto = "xexeu-dev";</span>
+                <span>loadService("SAMP", "MTA");</span>
+                <span>if (cliente.online) deploy();</span>
+                <span>security.scan("anti-xiter");</span>
+                <span>mysql.connect("vitrine");</span>
+                <span>render.cards({ mode: "3D" });</span>
+                <span>bot.ticket.create(channel);</span>
+                <span>launcher.bind("mobile");</span>
+                <span>fix.bugs().then(testar);</span>
+                <span>while(scroll) rotateVitrine();</span>
+              </div>
+              <div class="code-column">
+                <span>public class XexeuDev {</span>
+                <span>  void criarServidor() {</span>
+                <span>    sistemas.add("login");</span>
+                <span>    sistemas.add("vip");</span>
+                <span>    sistemas.add("loja");</span>
+                <span>  }</span>
+                <span>}</span>
+                <span>SELECT * FROM servicos;</span>
+                <span>UPDATE projeto SET status="online";</span>
+                <span>commit("entrega organizada");</span>
+              </div>
+              <div class="code-column">
+                <span>#include &lt;vitrine&gt;</span>
+                <span>BuildSolution("C#", "Python");</span>
+                <span>model3D.optimize(mesh);</span>
+                <span>app.launch("Android");</span>
+                <span>discord.host("24/7");</span>
+                <span>schoolProject.explain();</span>
+                <span>cyber.harden(server);</span>
+                <span>site.publish("github-pages");</span>
+                <span>budget.from(30);</span>
+                <span>return resultado;</span>
+              </div>
             </div>
-          </article>
 
-          <article class="project-card reveal">
-            <div class="project-image has-img"><img src="assets/launcher-mobile.png" alt="Print do Launcher SAMP Mobile"><div class="mock-title">Launcher Mobile</div></div>
-            <div class="project-body">
-              <h3>Launcher SAMP Mobile com IP fixo</h3>
-              <p>Aplicativo para entrar no servidor fixo Nova Roleplay pelo celular, com funções exclusivas: macro bind, sensibilidade para cada arma, animações, datas exclusivas, redes sociais e atualizações de estabilização.</p>
-              <div class="tags"><span class="tag">Android</span><span class="tag">IP fixo</span><span class="tag">Bind mobile</span><span class="tag">SAMP</span></div>
-              <div class="price"><div><strong>R$ 500,00</strong><br><span>Com redes sociais e estabilização</span></div><a class="btn btn-primary" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20no%20Launcher%20SAMP%20Mobile%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a></div>
+            <div class="work-core" aria-hidden="true">
+              <div class="core-rings"></div>
+              <div class="core-shell"></div>
+              <div class="core-panel">
+                <span>Xexeu Dev Core</span>
+                <div class="core-brand-3d">
+                  <span class="brand-xexeu">XEXEU</span>
+                  <span class="brand-dev">DEV'S</span>
+                </div>
+                <div class="core-tagline">Serviços digitais</div>
+              </div>
             </div>
-          </article>
 
-          <article class="project-card reveal">
-            <div class="project-image has-img"><img src="assets/bot-discord.png" alt="Print dos bots Discord no Discloud"><div class="mock-title">Bot Discord</div></div>
-            <div class="project-body">
-              <h3>Bots Discord personalizados</h3>
-              <p>Bots de ticket, lojas, músicas, IA e comandos para SAMP. O cliente pode executar comandos pelo Discord e integrar ações com o servidor dentro do jogo.</p>
-              <div class="tags"><span class="tag">Tickets</span><span class="tag">Lojas</span><span class="tag">IA</span><span class="tag">Integração SAMP</span></div>
-              <div class="price"><div><strong>A combinar</strong><br><span>Valores de acordo com o projeto</span></div><a class="btn btn-primary" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20um%20Bot%20Discord%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a></div>
-            </div>
-          </article>
+            <article class="work-card" data-work-card>
+              <div class="product-media">
+                <img src="assets/nova-roleplay.png" alt="Servidor SAMP em destaque">
+                <div class="product-icon">SAMP</div>
+              </div>
+              <div class="product-body">
+                <div class="product-kicker">Criação de servidor</div>
+                <h3>Servidores SAMP</h3>
+                <p>Desenvolvimento de servidor RP ou PVP com gamemode, comandos, empregos, organizações, eventos, sistemas exclusivos e base pronta para sua comunidade.</p>
+                <div class="product-price"><span>Valor</span><strong>A PARTIR DE R$: 50,00</strong></div>
+                <a class="btn btn-primary product-cta" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20Servidores%20SAMP%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a>
+              </div>
+            </article>
+
+            <article class="work-card" data-work-card>
+              <div class="product-media">
+                <img src="assets/bot-discord.png" alt="Bot Discord personalizado">
+                <div class="product-icon">BOT</div>
+              </div>
+              <div class="product-body">
+                <div class="product-kicker">Automação Discord</div>
+                <h3>Bot Discord</h3>
+                <p>Bot com tickets, loja, comandos, moderação, economia, integração com servidor e recursos personalizados para sua comunidade.</p>
+                <div class="product-price"><span>Valor</span><strong>A PARTIR DE R$: 29,90</strong></div>
+                <a class="btn btn-primary product-cta" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20Bot%20Discord%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a>
+              </div>
+            </article>
+
+            <article class="work-card" data-work-card>
+              <div class="product-media">
+                <img src="assets/distrito-pvp.png" alt="Cyber segurança e proteção digital">
+                <div class="product-icon">SEC</div>
+              </div>
+              <div class="product-body">
+                <div class="product-kicker">Proteção e análise</div>
+                <h3>Cyber Segurança</h3>
+                <p>Análise básica de riscos, hardening, configuração segura, revisão de acessos e orientação para reduzir falhas comuns.</p>
+                <div class="product-price"><span>Valor</span><strong>A PARTIR DE R$: 50,00</strong></div>
+                <a class="btn btn-primary product-cta" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20Cyber%20Seguran%C3%A7a%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a>
+              </div>
+            </article>
+
+            <article class="work-card" data-work-card>
+              <div class="product-media">
+                <img src="assets/Apk_Launcher.png" alt="Banco de dados MySQL">
+                <div class="product-icon">SQL</div>
+              </div>
+              <div class="product-body">
+                <div class="product-kicker">Dados e painéis</div>
+                <h3>Banco MySQL</h3>
+                <p>Criação de tabelas, login, cadastros, salvamento, conexão com sistema, consultas e organização de dados para seu projeto.</p>
+                <div class="product-price"><span>Valor</span><strong>A PARTIR DE R$: 50,00</strong></div>
+                <a class="btn btn-primary product-cta" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20Banco%20MySQL%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a>
+              </div>
+            </article>
+
+            <article class="work-card" data-work-card>
+              <div class="product-media">
+                <img src="assets/distrito-pvp.png" alt="Criação de servidor MTA">
+                <div class="product-icon">MTA</div>
+              </div>
+              <div class="product-body">
+                <div class="product-kicker">Criação de servidor</div>
+                <h3>Servidores MTA</h3>
+                <p>Desenvolvimento de servidor MTA com scripts, sistemas, jobs, comandos, recursos personalizados e ajustes para gameplay.</p>
+                <div class="product-price"><span>Valor</span><strong>A PARTIR DE R$: 50,00</strong></div>
+                <a class="btn btn-primary product-cta" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20Servidores%20MTA%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a>
+              </div>
+            </article>
+
+            <article class="work-card" data-work-card>
+              <div class="product-media">
+                <img src="assets/Apk_Launcher.png" alt="Sites e vitrines digitais">
+                <div class="product-icon">WEB</div>
+              </div>
+              <div class="product-body">
+                <div class="product-kicker">Presença online</div>
+                <h3>Sites e Vitrines</h3>
+                <p>Landing pages, portfólios, páginas de venda, vitrines de serviços e interfaces modernas para apresentar sua marca com impacto.</p>
+                <div class="product-price"><span>Valor</span><strong>A PARTIR DE R$: 300,00</strong></div>
+                <a class="btn btn-primary product-cta" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20um%20site%20ou%20vitrine%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a>
+              </div>
+            </article>
+
+            <article class="work-card" data-work-card>
+              <div class="product-media">
+                <img src="assets/nova-roleplay-launcher.png" alt="Projetos Java personalizados">
+                <div class="product-icon">JAVA</div>
+              </div>
+              <div class="product-body">
+                <div class="product-kicker">Sistemas e lógica</div>
+                <h3>Projetos Java</h3>
+                <p>Aplicações, sistemas acadêmicos, lógica de negócio, interfaces, correções e integrações em Java sob medida.</p>
+                <div class="product-price"><span>Valor</span><strong>A PARTIR DE R$: 50,00</strong></div>
+                <a class="btn btn-primary product-cta" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20Projetos%20Java%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a>
+              </div>
+            </article>
+
+            <article class="work-card" data-work-card>
+              <div class="product-media">
+                <img src="assets/nova-roleplay.png" alt="Modelos 3D personalizados">
+                <div class="product-icon">3D</div>
+              </div>
+              <div class="product-body">
+                <div class="product-kicker">Visual e assets</div>
+                <h3>Modelos 3D</h3>
+                <p>Modelos simples, assets para jogos, objetos, ajustes de arquivos e preparação visual conforme o estilo do projeto.</p>
+                <div class="product-price"><span>Valor</span><strong>A PARTIR DE R$: 50,00</strong></div>
+                <a class="btn btn-primary product-cta" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20Modelos%203D%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a>
+              </div>
+            </article>
+
+            <article class="work-card" data-work-card>
+              <div class="product-media">
+                <img src="assets/launcher-mobile.png" alt="Apps e jogos personalizados">
+                <div class="product-icon">APP</div>
+              </div>
+              <div class="product-body">
+                <div class="product-kicker">Mobile e games</div>
+                <h3>Apps e Jogos</h3>
+                <p>Aplicativos Android, protótipos jogáveis, telas, menus, mecânicas simples e ajustes para projetos mobile.</p>
+                <div class="product-price"><span>Valor</span><strong>A PARTIR DE R$: 200,00</strong></div>
+                <a class="btn btn-primary product-cta" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20Apps%20e%20Jogos%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a>
+              </div>
+            </article>
+
+            <article class="work-card" data-work-card>
+              <div class="product-media">
+                <img src="assets/launcher-mobile.png" alt="Launcher SAMP personalizado">
+                <div class="product-icon">LCH</div>
+              </div>
+              <div class="product-body">
+                <div class="product-kicker">Launcher mobile</div>
+                <h3>Launcher SAMP</h3>
+                <p>Launcher com IP fixo, identidade do servidor, redes sociais, botões rápidos, recursos mobile e tela personalizada.</p>
+                <div class="product-price"><span>Valor</span><strong>A PARTIR DE R$: 150,00</strong></div>
+                <a class="btn btn-primary product-cta" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20Launcher%20SAMP%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a>
+              </div>
+            </article>
+
+            <article class="work-card" data-work-card>
+              <div class="product-media">
+                <img src="assets/bot-discord.png" alt="Hospedagem de bot Discord">
+                <div class="product-icon">HOST</div>
+              </div>
+              <div class="product-body">
+                <div class="product-kicker">Bot online 24/7</div>
+                <h3>Hospedagem Bot DC</h3>
+                <p>Hospedagem para manter seu bot Discord online com painel, reinício, suporte a Node.js/Python e configuração inicial.</p>
+                <div class="product-price"><span>Valor</span><strong>A PARTIR DE R$: 2,99/MÊS</strong></div>
+                <a class="btn btn-primary product-cta" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20Hospedagem%20Bot%20DC%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a>
+              </div>
+            </article>
+
+            <article class="work-card" data-work-card>
+              <div class="product-media">
+                <img src="assets/distrito-pvp.png" alt="Correção e manutenção de projetos">
+                <div class="product-icon">FIX</div>
+              </div>
+              <div class="product-body">
+                <div class="product-kicker">Suporte técnico</div>
+                <h3>Correção e Manutenção</h3>
+                <p>Correção de bugs, ajustes visuais, melhoria de desempenho, organização de código e novas funções em projetos existentes.</p>
+                <div class="product-price"><span>Valor</span><strong>A PARTIR DE R$: 30,00</strong></div>
+                <a class="btn btn-primary product-cta" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20Corre%C3%A7%C3%A3o%20e%20Manuten%C3%A7%C3%A3o%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a>
+              </div>
+            </article>
+
+            <article class="work-card" data-work-card>
+              <div class="product-media">
+                <img src="assets/Apk_Launcher.png" alt="Projetos C++, C# e Python">
+                <div class="product-icon">DEV</div>
+              </div>
+              <div class="product-body">
+                <div class="product-kicker">Scripts e sistemas</div>
+                <h3>Projetos C++ C# Python</h3>
+                <p>Scripts, automações, ferramentas, sistemas simples, correções e integração usando C++, C# ou Python.</p>
+                <div class="product-price"><span>Valor</span><strong>A PARTIR DE R$: 50,00</strong></div>
+                <a class="btn btn-primary product-cta" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20Projetos%20C%2B%2B%2C%20C%23%20ou%20Python%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a>
+              </div>
+            </article>
+
+            <article class="work-card" data-work-card>
+              <div class="product-media">
+                <img src="assets/distrito-pvp.png" alt="Anti-xiter para servidores">
+                <div class="product-icon">ANTI</div>
+              </div>
+              <div class="product-body">
+                <div class="product-kicker">Proteção para servidor</div>
+                <h3>Anti-Xiter</h3>
+                <p>Proteções contra xiter, flood, abuso de comandos, ações suspeitas e melhorias para reduzir trapaças no servidor.</p>
+                <div class="product-price"><span>Valor</span><strong>A PARTIR DE R$: 80,00</strong></div>
+                <a class="btn btn-primary product-cta" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20Anti-Xiter%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a>
+              </div>
+            </article>
+
+            <article class="work-card" data-work-card>
+              <div class="product-media">
+                <img src="assets/Apk_Launcher.png" alt="Projetos escolares de programação">
+                <div class="product-icon">EDU</div>
+              </div>
+              <div class="product-body">
+                <div class="product-kicker">Escola e curso</div>
+                <h3>Projetos Escolares</h3>
+                <p>Ajuda em trabalhos de escola, curso ou faculdade, com desenvolvimento organizado, explicação e entrega conforme o tema.</p>
+                <div class="product-price"><span>Valor</span><strong>A PARTIR DE R$: 30,00</strong></div>
+                <a class="btn btn-primary product-cta" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20em%20Projetos%20Escolares%21%20me%20chamo%3A" target="_blank" rel="noopener">Tenho interesse</a>
+              </div>
+            </article>
+          </div>
         </div>
 
         <div class="banner reveal">
           <div>
-            <h3>Servidores mais simples a partir de R$ 50,00</h3>
-            <p class="section-text">Preços acessíveis de acordo com o projeto desejado. O valor final depende da complexidade, prazo, quantidade de sistemas e nível de personalização.</p>
+            <h3>Serviços simples a partir de R$ 30,00</h3>
+            <p class="section-text">Preços acessíveis de acordo com o serviço desejado. O valor final depende da complexidade, prazo, quantidade de sistemas e nível de personalização.</p>
           </div>
           <a class="btn btn-primary" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20em%20seu%20site%20e%20tenho%20interesse%20no%20seu%20trabalho%21%20me%20chamo%3A" target="_blank" rel="noopener">Pedir orçamento</a>
         </div>
@@ -1214,12 +1946,20 @@
             <select id="projectType" required>
               <option value="">Tipo de projeto</option>
               <option>Servidor SAMP</option>
-              <option>Launcher SAMP Mobile</option>
               <option>Bot Discord</option>
-              <option>Site</option>
-              <option>Aplicativo / APK</option>
-              <option>Python / Java / Sistema</option>
-              <option>Correção de bugs</option>
+              <option>Cyber Segurança</option>
+              <option>Banco MySQL</option>
+              <option>Servidor MTA</option>
+              <option>Sites e Vitrines</option>
+              <option>Projetos Java</option>
+              <option>Modelos 3D</option>
+              <option>Apps e Jogos</option>
+              <option>Launcher SAMP</option>
+              <option>Hospedagem Bot DC</option>
+              <option>Correção e Manutenção</option>
+              <option>Projetos C++ C# Python</option>
+              <option>Anti-Xiter</option>
+              <option>Projetos Escolares</option>
             </select>
             <textarea id="projectDetails" placeholder="Explique sua ideia. Quanto mais detalhes, melhor fica o orçamento." required></textarea>
             <button class="btn btn-primary" type="submit">Enviar no WhatsApp</button>
@@ -1283,6 +2023,71 @@
     }, { threshold: 0.12 });
 
     document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+
+    const workShowcase = document.querySelector('[data-work-showcase]');
+    const workStage = document.querySelector('[data-work-stage]');
+    const workCards = Array.from(document.querySelectorAll('[data-work-card]'));
+    let workFrame = null;
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function updateWorkShowcase() {
+      workFrame = null;
+      if (!workShowcase || !workStage || workCards.length === 0) return;
+
+      const stageRect = workStage.getBoundingClientRect();
+      const totalScroll = Math.max(1, workShowcase.offsetHeight - window.innerHeight);
+      const progress = clamp((-workShowcase.getBoundingClientRect().top + 96) / totalScroll, 0, 1);
+      const isMobile = window.innerWidth <= 760;
+      const radius = Math.min(stageRect.width * (isMobile ? 0.34 : 0.36), isMobile ? 210 : 395);
+      const coreGap = isMobile ? 0 : 335;
+      const depthRadius = isMobile ? 280 : 460;
+      const step = 360 / workCards.length;
+      const baseAngle = progress * 360 * 2.35;
+
+      workStage.style.setProperty('--progress-deg', `${baseAngle}deg`);
+
+      workCards.forEach((card, index) => {
+        const angleDeg = index * step - baseAngle;
+        const angle = angleDeg * Math.PI / 180;
+        let x = Math.sin(angle) * radius;
+        let y = Math.cos(angle) * (isMobile ? 66 : 82);
+        const z = Math.cos(angle) * depthRadius;
+        const depth = (z + depthRadius) / (depthRadius * 2);
+        const side = x < 0 ? -1 : 1;
+
+        if (isMobile) {
+          y += depth * 110;
+        }
+
+        if (Math.abs(x) < coreGap) {
+          x = coreGap * side;
+        }
+
+        const scale = 0.68 + depth * 0.32;
+        const rotateY = -Math.sin(angle) * 34;
+        const opacity = 0.18 + depth * 0.82;
+        const blur = depth < 0.28 ? 2.2 : 0;
+
+        card.style.transform = `translate3d(calc(-50% + ${x}px), calc(-50% + ${y}px), ${z}px) rotateY(${rotateY}deg) scale(${scale})`;
+        card.style.opacity = opacity.toFixed(2);
+        card.style.filter = `blur(${blur}px)`;
+        card.style.zIndex = String(Math.round(100 + depth * 100));
+        card.style.pointerEvents = depth > 0.58 ? 'auto' : 'none';
+        card.classList.toggle('is-front', depth > 0.88);
+      });
+    }
+
+    function queueWorkShowcaseUpdate() {
+      if (workFrame !== null) return;
+      workFrame = window.requestAnimationFrame(updateWorkShowcase);
+    }
+
+    updateWorkShowcase();
+    window.addEventListener('scroll', queueWorkShowcaseUpdate, { passive: true });
+    window.addEventListener('resize', queueWorkShowcaseUpdate);
 
     document.querySelectorAll('[data-copy]').forEach((button) => {
       button.addEventListener('click', async () => {
