@@ -263,6 +263,119 @@
       text-shadow: 0 0 24px rgba(255, 230, 0, 0.42);
     }
 
+    .hero-title-stage {
+      position: relative;
+      margin-top: 22px;
+      min-height: clamp(190px, 25vw, 330px);
+      display: grid;
+      align-items: center;
+      max-width: 720px;
+      overflow: hidden;
+      perspective: 1200px;
+      isolation: isolate;
+    }
+
+    .hero-code-wall {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      opacity: 0.28;
+      filter: blur(2.6px);
+      mask-image: radial-gradient(circle at 43% 48%, #000 0%, #000 42%, transparent 78%);
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .hero-code-column {
+      display: grid;
+      align-content: start;
+      gap: 10px;
+      color: rgba(255, 244, 128, 0.8);
+      font-family: "Courier New", monospace;
+      font-size: clamp(0.66rem, 0.9vw, 0.84rem);
+      line-height: 1.35;
+      text-shadow: 0 0 16px rgba(255, 230, 0, 0.36);
+      animation: heroCodeFlow 14s linear infinite;
+    }
+
+    .hero-code-column:nth-child(2) {
+      color: rgba(255, 255, 255, 0.54);
+      animation-duration: 18s;
+      animation-delay: -6s;
+    }
+
+    .hero-code-column:nth-child(3) {
+      animation-duration: 16s;
+      animation-delay: -9s;
+    }
+
+    .hero-code-column span { white-space: nowrap; }
+
+    @keyframes heroCodeFlow {
+      from { transform: translateY(20%); }
+      to { transform: translateY(-48%); }
+    }
+
+    .hero-logo-3d {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      width: max-content;
+      max-width: 100%;
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: clamp(3.5rem, 8.5vw, 8.2rem);
+      line-height: 0.78;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      transform: rotateX(9deg) rotateY(-13deg) translateZ(48px);
+      transform-style: preserve-3d;
+      animation: heroLogoFloat 5.2s ease-in-out infinite;
+    }
+
+    .hero-logo-3d span {
+      display: block;
+      text-shadow:
+        1px 1px 0 #b8b8b8,
+        2px 2px 0 #777,
+        3px 3px 0 #3f3f3f,
+        6px 8px 0 rgba(0, 0, 0, 0.38),
+        0 0 28px rgba(255, 255, 255, 0.18);
+    }
+
+    .hero-logo-3d .hero-xexeu { color: #fff; }
+
+    .hero-logo-3d .hero-dev {
+      color: var(--neon);
+      text-shadow:
+        1px 1px 0 #b8a800,
+        2px 2px 0 #8f8200,
+        3px 3px 0 #5d5500,
+        6px 8px 0 rgba(0, 0, 0, 0.42),
+        0 0 30px rgba(255, 230, 0, 0.62),
+        0 0 68px rgba(255, 230, 0, 0.24);
+    }
+
+    .hero-logo-3d::before {
+      content: "XEXEU\A DEV'S";
+      white-space: pre;
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      color: rgba(255, 230, 0, 0.12);
+      filter: blur(15px);
+      transform: translate3d(26px, 22px, -70px);
+    }
+
+    @keyframes heroLogoFloat {
+      0%, 100% { transform: rotateX(9deg) rotateY(-13deg) translate3d(0, 0, 48px); }
+      50% { transform: rotateX(6deg) rotateY(-9deg) translate3d(0, -10px, 68px); }
+    }
+
     .hero p {
       margin-top: 24px;
       color: var(--muted);
@@ -620,10 +733,15 @@
       border: 1px solid rgba(255, 230, 0, 0.22);
       border-radius: 8px;
       background:
+        radial-gradient(circle at 22% 26%, rgba(0, 229, 255, 0.16), transparent 30%),
+        radial-gradient(circle at 78% 30%, rgba(255, 61, 127, 0.12), transparent 28%),
+        radial-gradient(circle at 52% 58%, rgba(255, 230, 0, 0.16), transparent 34%),
         linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.018)),
-        linear-gradient(135deg, rgba(255, 230, 0, 0.10), transparent 44%),
-        #060606;
-      box-shadow: 0 34px 90px rgba(0, 0, 0, 0.45), 0 0 44px rgba(255, 230, 0, 0.16);
+        #050608;
+      box-shadow:
+        0 34px 90px rgba(0, 0, 0, 0.48),
+        0 0 44px rgba(255, 230, 0, 0.14),
+        inset 0 0 80px rgba(0, 229, 255, 0.05);
       transform-style: preserve-3d;
     }
 
@@ -685,231 +803,135 @@
     .work-particles span:nth-child(11) { left: 38%; top: 58%; animation-delay: -0.6s; }
     .work-particles span:nth-child(12) { left: 51%; top: 12%; animation-delay: -3.5s; }
 
-    .code-stream {
-      position: absolute;
-      inset: 6%;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 24px;
-      pointer-events: none;
-      opacity: 0.24;
-      filter: blur(2.4px);
-      mask-image: radial-gradient(circle at center, #000 0%, #000 42%, transparent 78%);
-      overflow: hidden;
-      transform: translateZ(-220px);
-    }
-
-    .code-column {
-      display: grid;
-      gap: 12px;
-      align-content: start;
-      color: rgba(255, 244, 128, 0.84);
-      font-family: "Courier New", monospace;
-      font-size: clamp(0.68rem, 1vw, 0.88rem);
-      line-height: 1.35;
-      text-shadow: 0 0 16px rgba(255, 230, 0, 0.34);
-      animation: codeFloat 16s linear infinite;
-    }
-
-    .code-column:nth-child(2) {
-      color: rgba(255, 255, 255, 0.58);
-      animation-duration: 20s;
-      animation-delay: -6s;
-    }
-
-    .code-column:nth-child(3) {
-      animation-duration: 18s;
-      animation-delay: -10s;
-    }
-
-    .code-column span {
-      white-space: nowrap;
-      opacity: 0.72;
-    }
-
-    @keyframes codeFloat {
-      from { transform: translateY(18%); }
-      to { transform: translateY(-46%); }
-    }
-
     @keyframes particleDrift {
       0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.45; }
       45% { transform: translate3d(18px, -22px, 0) scale(1.7); opacity: 0.95; }
       72% { transform: translate3d(-16px, 10px, 0) scale(0.85); opacity: 0.58; }
     }
 
-    .work-core {
+    .orbit-pillar {
       position: absolute;
       left: 50%;
       top: 50%;
-      z-index: 150;
-      width: min(340px, 48vw);
-      aspect-ratio: 1;
-      display: grid;
-      place-items: center;
-      transform: translate(-50%, -50%);
+      z-index: 130;
+      width: min(190px, 28vw);
+      height: min(560px, 68vh);
+      transform: translate(-50%, -50%) translateZ(80px);
       transform-style: preserve-3d;
       pointer-events: none;
     }
 
-    .core-rings,
-    .core-rings::before,
-    .core-rings::after {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 230, 0, 0.28);
-      box-shadow: 0 0 34px rgba(255, 230, 0, 0.12);
-      transform: rotateX(68deg) rotateZ(var(--progress-deg, 0deg));
-    }
-
-    .core-rings::before,
-    .core-rings::after {
+    .orbit-pillar::before {
       content: "";
-      inset: 14%;
-    }
-
-    .core-rings::after {
-      inset: 28%;
-      border-style: dashed;
-      animation: spin 10s linear infinite;
-    }
-
-    .core-shell {
-      position: relative;
-      width: 70%;
-      aspect-ratio: 1;
-      border: 1px solid rgba(255, 230, 0, 0.35);
-      border-radius: 8px;
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 46%;
+      height: 100%;
+      border-radius: 999px;
       background:
-        linear-gradient(135deg, rgba(255, 230, 0, 0.24), rgba(255, 255, 255, 0.035)),
-        rgba(10, 10, 10, 0.86);
+        linear-gradient(180deg, transparent, rgba(255, 244, 128, 0.42), rgba(0, 229, 255, 0.30), rgba(255, 61, 127, 0.18), transparent);
       box-shadow:
-        inset 0 0 32px rgba(255, 230, 0, 0.12),
-        0 0 52px rgba(255, 230, 0, 0.23);
-      transform: rotateX(58deg) rotateZ(45deg);
-      overflow: hidden;
+        0 0 40px rgba(255, 230, 0, 0.36),
+        0 0 82px rgba(0, 229, 255, 0.22);
+      filter: blur(16px);
+      transform: translateX(-50%);
+      animation: pillarPulse 3.4s ease-in-out infinite;
     }
 
-    .core-shell::before {
+    .orbit-pillar::after {
       content: "";
       position: absolute;
-      inset: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 6px;
-      background:
-        linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-        linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-      background-size: 20px 20px;
+      left: 50%;
+      bottom: -18px;
+      width: 160%;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 230, 0, 0.28);
+      border-radius: 50%;
+      box-shadow:
+        inset 0 0 34px rgba(255, 230, 0, 0.12),
+        0 0 36px rgba(0, 229, 255, 0.12);
+      transform: translateX(-50%) rotateX(74deg) rotateZ(var(--progress-deg, 0deg));
     }
 
-    .core-panel {
+    .pillar-spine {
+      position: absolute;
+      left: 50%;
+      top: 8%;
+      width: 1px;
+      height: 84%;
+      background: linear-gradient(transparent, rgba(255, 255, 255, 0.62), transparent);
+      box-shadow:
+        0 0 22px rgba(255, 230, 0, 0.45),
+        0 0 38px rgba(0, 229, 255, 0.30);
+      transform: translateX(-50%);
+    }
+
+    .pillar-core {
       position: absolute;
       left: 50%;
       top: 50%;
-      width: min(360px, 48vw);
-      min-height: 230px;
-      display: grid;
-      place-items: center;
-      gap: 10px;
-      padding: 30px 24px;
-      border: 1px solid rgba(255, 230, 0, 0.42);
-      border-radius: 8px;
+      width: 82px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 230, 0, 0.36);
       background:
-        radial-gradient(circle at 50% 18%, rgba(255, 230, 0, 0.18), transparent 48%),
-        rgba(5, 5, 5, 0.72);
-      box-shadow: 0 0 46px rgba(255, 230, 0, 0.24);
-      text-align: center;
-      transform: translate(-50%, -50%) translateZ(92px) rotateX(7deg) rotateY(-10deg);
-      transform-style: preserve-3d;
-      backdrop-filter: blur(14px);
+        radial-gradient(circle, rgba(255, 255, 255, 0.88), rgba(255, 230, 0, 0.44) 18%, rgba(0, 229, 255, 0.18) 42%, transparent 70%);
+      box-shadow:
+        0 0 34px rgba(255, 230, 0, 0.42),
+        0 0 78px rgba(0, 229, 255, 0.24);
+      transform: translate(-50%, -50%) translateZ(60px);
+      animation: coreBreathe 2.8s ease-in-out infinite;
     }
 
-    .core-panel::before {
-      content: "";
+    .pillar-ring {
       position: absolute;
-      inset: 9px;
-      border: 1px solid rgba(255, 255, 255, 0.13);
-      border-radius: 6px;
-      pointer-events: none;
+      left: 50%;
+      width: 132%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 230, 0, 0.22);
+      transform: translateX(-50%) rotateX(72deg) rotateZ(var(--progress-deg, 0deg));
     }
 
-    .core-panel > span {
-      color: var(--muted);
-      font-size: 0.74rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+    .pillar-ring.top { top: 16%; }
+    .pillar-ring.mid {
+      top: 42%;
+      border-color: rgba(0, 229, 255, 0.22);
+      transform: translateX(-50%) rotateX(72deg) rotateZ(var(--progress-neg-deg, 0deg));
     }
+    .pillar-ring.bottom { top: 68%; }
 
-    .core-brand-3d {
-      position: relative;
-      display: grid;
-      gap: 4px;
-      font-family: Orbitron, sans-serif;
-      font-weight: 900;
-      line-height: 0.86;
-      text-transform: uppercase;
-      transform: translateZ(58px);
-      transform-style: preserve-3d;
-    }
-
-    .core-brand-3d span {
-      display: block;
-      letter-spacing: 0;
-      font-size: clamp(2.05rem, 5vw, 4.8rem);
-      text-shadow:
-        1px 1px 0 #9e8f00,
-        2px 2px 0 #7b6f00,
-        3px 3px 0 #5a5200,
-        4px 4px 0 #3e3900,
-        0 0 24px rgba(255, 230, 0, 0.42),
-        0 0 54px rgba(255, 230, 0, 0.22);
-    }
-
-    .core-brand-3d .brand-xexeu {
-      color: #fff;
-    }
-
-    .core-brand-3d .brand-dev {
-      color: var(--neon);
-    }
-
-    .core-brand-3d::before {
-      content: "XEXEU\A DEV'S";
-      white-space: pre;
+    .pillar-label {
       position: absolute;
-      inset: 0;
-      z-index: -1;
-      color: rgba(255, 230, 0, 0.12);
-      filter: blur(12px);
-      transform: translate3d(18px, 18px, -50px);
-    }
-
-    .core-tagline {
+      left: 50%;
+      top: 50%;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 28px;
-      padding: 0 12px;
-      border: 1px solid rgba(255, 230, 0, 0.24);
+      min-height: 34px;
+      padding: 0 14px;
+      border: 1px solid rgba(255, 230, 0, 0.22);
       border-radius: 999px;
-      background: rgba(255, 230, 0, 0.08);
-      color: var(--neon-2);
+      background: rgba(5, 6, 8, 0.52);
+      color: rgba(255, 244, 128, 0.88);
+      font-family: Orbitron, sans-serif;
       font-size: 0.68rem;
       font-weight: 900;
-      letter-spacing: 1.8px;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      transform: translateZ(42px);
+      transform: translate(-50%, 78px) translateZ(90px);
+      backdrop-filter: blur(12px);
     }
 
-    .core-panel strong {
-      font-family: Orbitron, sans-serif;
-      color: var(--neon);
-      font-size: clamp(1.35rem, 3vw, 2.2rem);
-      line-height: 1;
-      text-shadow: 0 0 24px rgba(255, 230, 0, 0.46);
+    @keyframes pillarPulse {
+      0%, 100% { opacity: 0.62; transform: translateX(-50%) scaleX(0.86); }
+      50% { opacity: 0.96; transform: translateX(-50%) scaleX(1.12); }
+    }
+
+    @keyframes coreBreathe {
+      0%, 100% { transform: translate(-50%, -50%) translateZ(60px) scale(0.92); opacity: 0.82; }
+      50% { transform: translate(-50%, -50%) translateZ(90px) scale(1.08); opacity: 1; }
     }
 
     .work-card {
@@ -1352,7 +1374,7 @@
       .services-grid { grid-template-columns: repeat(2, 1fr); }
       .work-showcase { min-height: 560vh; }
       .work-stage { min-height: 720px; }
-      .work-core { width: min(290px, 54vw); }
+      .orbit-pillar { width: min(170px, 34vw); }
       .work-card { width: min(300px, 78vw); }
 
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1382,6 +1404,14 @@
       .nav .btn-primary { display: none; }
       .hero { padding-top: 124px; }
       h1 { letter-spacing: -1.6px; }
+      .hero-title-stage { min-height: 235px; }
+      .hero-logo-3d { font-size: clamp(3rem, 18vw, 5.4rem); }
+      .hero-code-wall {
+        grid-template-columns: 1fr;
+        opacity: 0.22;
+      }
+      .hero-code-column:nth-child(2),
+      .hero-code-column:nth-child(3) { display: none; }
       .hero-visual { min-height: 520px; }
       .floating-card { grid-template-columns: 1fr; }
       .services-grid { grid-template-columns: 1fr; }
@@ -1395,22 +1425,11 @@
         height: calc(100vh - 104px);
         min-height: 710px;
       }
-      .work-core { width: min(230px, 64vw); }
-      .core-panel {
-        width: min(214px, 66vw);
-        min-height: 142px;
-        padding: 18px;
+      .orbit-pillar {
+        width: min(130px, 38vw);
+        height: min(420px, 58vh);
       }
-      .core-panel > span { font-size: 0.62rem; }
-      .core-brand-3d span { font-size: clamp(1.85rem, 12vw, 3.1rem); }
-      .core-tagline { font-size: 0.58rem; }
-      .code-stream {
-        grid-template-columns: 1fr;
-        inset: 3%;
-        opacity: 0.20;
-      }
-      .code-column:nth-child(2),
-      .code-column:nth-child(3) { display: none; }
+      .pillar-label { font-size: 0.56rem; transform: translate(-50%, 64px) translateZ(90px); }
       .work-card {
         width: min(252px, 78vw);
         min-height: 362px;
@@ -1469,7 +1488,38 @@
       <div class="container hero-grid">
         <div class="reveal active">
           <div class="badge"><span class="pulse"></span> Atendimento 24/7 • Projetos a partir de R$ 50,00</div>
-          <h1>Xexeu <span class="neon-text">Dev's</span></h1>
+          <div class="hero-title-stage" aria-label="Xexeu Dev's">
+            <div class="hero-code-wall" aria-hidden="true">
+              <div class="hero-code-column">
+                <span>const universe = "xexeu-dev";</span>
+                <span>render.hologram({ depth: true });</span>
+                <span>particles.flow("neon");</span>
+                <span>camera.dollyTo("portfolio");</span>
+                <span>services.orbit("pillar");</span>
+                <span>deploy.githubPages();</span>
+              </div>
+              <div class="hero-code-column">
+                <span>public class XexeuDev {</span>
+                <span>  void criarExperiencia() {</span>
+                <span>    ui.glassCards();</span>
+                <span>    fx.depthLayers();</span>
+                <span>    motion.smooth();</span>
+                <span>  }</span>
+              </div>
+              <div class="hero-code-column">
+                <span>#include &lt;hologram&gt;</span>
+                <span>scene.build("sci-fi");</span>
+                <span>mysql.sync();</span>
+                <span>bot.launch("24/7");</span>
+                <span>server.create("SAMP/MTA");</span>
+                <span>return cinematic;</span>
+              </div>
+            </div>
+            <h1 class="hero-logo-3d">
+              <span class="hero-xexeu">XEXEU</span>
+              <span class="hero-dev">DEV'S</span>
+            </h1>
+          </div>
           <p>
             Desenvolvedor Full Stack, Programador Freelancer e Criador de Sites, Apps, Launchers e Servidores SAMP. Transforme suas melhores ideias em realidade com sistemas personalizados, visual moderno e foco em resultado.
           </p>
@@ -1555,56 +1605,13 @@
               <span></span><span></span><span></span><span></span>
             </div>
 
-            <div class="code-stream" aria-hidden="true">
-              <div class="code-column">
-                <span>const projeto = "xexeu-dev";</span>
-                <span>loadService("SAMP", "MTA");</span>
-                <span>if (cliente.online) deploy();</span>
-                <span>security.scan("anti-xiter");</span>
-                <span>mysql.connect("vitrine");</span>
-                <span>render.cards({ mode: "3D" });</span>
-                <span>bot.ticket.create(channel);</span>
-                <span>launcher.bind("mobile");</span>
-                <span>fix.bugs().then(testar);</span>
-                <span>while(scroll) rotateVitrine();</span>
-              </div>
-              <div class="code-column">
-                <span>public class XexeuDev {</span>
-                <span>  void criarServidor() {</span>
-                <span>    sistemas.add("login");</span>
-                <span>    sistemas.add("vip");</span>
-                <span>    sistemas.add("loja");</span>
-                <span>  }</span>
-                <span>}</span>
-                <span>SELECT * FROM servicos;</span>
-                <span>UPDATE projeto SET status="online";</span>
-                <span>commit("entrega organizada");</span>
-              </div>
-              <div class="code-column">
-                <span>#include &lt;vitrine&gt;</span>
-                <span>BuildSolution("C#", "Python");</span>
-                <span>model3D.optimize(mesh);</span>
-                <span>app.launch("Android");</span>
-                <span>discord.host("24/7");</span>
-                <span>schoolProject.explain();</span>
-                <span>cyber.harden(server);</span>
-                <span>site.publish("github-pages");</span>
-                <span>budget.from(30);</span>
-                <span>return resultado;</span>
-              </div>
-            </div>
-
-            <div class="work-core" aria-hidden="true">
-              <div class="core-rings"></div>
-              <div class="core-shell"></div>
-              <div class="core-panel">
-                <span>Xexeu Dev Core</span>
-                <div class="core-brand-3d">
-                  <span class="brand-xexeu">XEXEU</span>
-                  <span class="brand-dev">DEV'S</span>
-                </div>
-                <div class="core-tagline">Serviços digitais</div>
-              </div>
+            <div class="orbit-pillar" aria-hidden="true">
+              <div class="pillar-spine"></div>
+              <div class="pillar-ring top"></div>
+              <div class="pillar-ring mid"></div>
+              <div class="pillar-ring bottom"></div>
+              <div class="pillar-core"></div>
+              <div class="pillar-label">Serviços</div>
             </div>
 
             <article class="work-card" data-work-card>
@@ -2041,42 +2048,40 @@
       const totalScroll = Math.max(1, workShowcase.offsetHeight - window.innerHeight);
       const progress = clamp((-workShowcase.getBoundingClientRect().top + 96) / totalScroll, 0, 1);
       const isMobile = window.innerWidth <= 760;
-      const radius = Math.min(stageRect.width * (isMobile ? 0.34 : 0.36), isMobile ? 210 : 395);
-      const coreGap = isMobile ? 0 : 335;
-      const depthRadius = isMobile ? 280 : 460;
+      const radius = Math.min(stageRect.width * (isMobile ? 0.30 : 0.36), isMobile ? 190 : 430);
+      const depthRadius = isMobile ? 230 : 360;
       const step = 360 / workCards.length;
-      const baseAngle = progress * 360 * 2.35;
+      const baseAngle = progress * 360 * 2.8;
 
       workStage.style.setProperty('--progress-deg', `${baseAngle}deg`);
+      workStage.style.setProperty('--progress-neg-deg', `${-baseAngle}deg`);
 
       workCards.forEach((card, index) => {
         const angleDeg = index * step - baseAngle;
         const angle = angleDeg * Math.PI / 180;
+        const frontness = Math.max(0, Math.cos(angle));
+        const focus = Math.pow(clamp((frontness - 0.76) / 0.24, 0, 1), 2);
         let x = Math.sin(angle) * radius;
-        let y = Math.cos(angle) * (isMobile ? 66 : 82);
-        const z = Math.cos(angle) * depthRadius;
+        let y = Math.cos(angle) * (isMobile ? 58 : 72) - focus * (isMobile ? 38 : 54);
+        let z = Math.cos(angle) * depthRadius + focus * (isMobile ? 150 : 220);
         const depth = (z + depthRadius) / (depthRadius * 2);
-        const side = x < 0 ? -1 : 1;
 
         if (isMobile) {
-          y += depth * 110;
+          y += depth * 88;
         }
 
-        if (Math.abs(x) < coreGap) {
-          x = coreGap * side;
-        }
+        const scale = 0.56 + clamp(depth, 0, 1) * 0.30 + focus * 0.24;
+        const rotateY = -Math.sin(angle) * (40 - focus * 18);
+        const rotateX = focus * -4;
+        const opacity = clamp(0.14 + depth * 0.76 + focus * 0.18, 0.12, 1);
+        const blur = depth < 0.26 ? 2.8 : focus > 0 ? 0 : 0.7;
 
-        const scale = 0.68 + depth * 0.32;
-        const rotateY = -Math.sin(angle) * 34;
-        const opacity = 0.18 + depth * 0.82;
-        const blur = depth < 0.28 ? 2.2 : 0;
-
-        card.style.transform = `translate3d(calc(-50% + ${x}px), calc(-50% + ${y}px), ${z}px) rotateY(${rotateY}deg) scale(${scale})`;
+        card.style.transform = `translate3d(calc(-50% + ${x}px), calc(-50% + ${y}px), ${z}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
         card.style.opacity = opacity.toFixed(2);
         card.style.filter = `blur(${blur}px)`;
-        card.style.zIndex = String(Math.round(100 + depth * 100));
-        card.style.pointerEvents = depth > 0.58 ? 'auto' : 'none';
-        card.classList.toggle('is-front', depth > 0.88);
+        card.style.zIndex = String(Math.round(70 + depth * 110 + focus * 130));
+        card.style.pointerEvents = focus > 0.35 ? 'auto' : 'none';
+        card.classList.toggle('is-front', focus > 0.45);
       });
     }
 
