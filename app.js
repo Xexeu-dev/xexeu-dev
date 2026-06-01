@@ -6,6 +6,8 @@ import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
 const canvas = document.querySelector("#universe");
 const smokeCanvas = document.querySelector("#toxicSmoke");
 const smokeCtx = smokeCanvas?.getContext("2d");
+const endSmokeCanvas = document.querySelector("#endSmoke");
+const endSmokeCtx = endSmokeCanvas?.getContext("2d");
 const codeColumns = Array.from(document.querySelectorAll("[data-code-column]"));
 const loaderOverlay = document.querySelector("[data-loader]");
 const loaderPercent = document.querySelector("[data-loader-percent]");
@@ -468,6 +470,129 @@ function renderSmoke(delta, elapsed) {
   smokeCtx.globalCompositeOperation = "source-over";
 }
 
+const endSmokeMouse = { x: -9999, y: -9999, vx: 0, vy: 0 };
+const endSmokeParticles = [];
+let endSceneWasActive = false;
+let endSmokeStartTime = 0;
+let endSmokeEmitCarry = 0;
+
+function resizeEndSmokeCanvas() {
+  if (!endSmokeCanvas) return;
+  const ratio = Math.min(window.devicePixelRatio || 1, 1.15);
+  endSmokeCanvas.width = Math.max(1, Math.floor(window.innerWidth * ratio));
+  endSmokeCanvas.height = Math.max(1, Math.floor(window.innerHeight * ratio));
+}
+
+function resetEndSmoke(elapsed) {
+  endSmokeParticles.length = 0;
+  endSmokeStartTime = elapsed;
+  endSmokeEmitCarry = 0;
+}
+
+function createEndSmokeParticle(source) {
+  const fromGreen = source === "green";
+  const x = fromGreen ? -window.innerWidth * 0.08 : window.innerWidth * 1.08;
+  const y = fromGreen ? -window.innerHeight * 0.06 : window.innerHeight * 1.08;
+  const angle = fromGreen
+    ? 0.58 + Math.random() * 0.72
+    : Math.PI + 0.58 + Math.random() * 0.72;
+  const speed = fromGreen ? 180 + Math.random() * 330 : 150 + Math.random() * 300;
+  return {
+    x,
+    y,
+    vx: Math.cos(angle) * speed,
+    vy: Math.sin(angle) * speed,
+    radius: 76 + Math.random() * 172,
+    alpha: 0.42 + Math.random() * 0.52,
+    life: 0,
+    maxLife: 13 + Math.random() * 8,
+    hue: fromGreen ? "green" : "purple",
+    phase: Math.random() * Math.PI * 2,
+    spin: (Math.random() - 0.5) * 1.7,
+  };
+}
+
+function renderEndSmoke(delta, elapsed, active) {
+  if (!endSmokeCtx || !endSmokeCanvas) return;
+  const scaleX = endSmokeCanvas.width / window.innerWidth;
+  const scaleY = endSmokeCanvas.height / window.innerHeight;
+  endSmokeCtx.clearRect(0, 0, endSmokeCanvas.width, endSmokeCanvas.height);
+  if (!active) {
+    endSceneWasActive = false;
+    return;
+  }
+
+  if (!endSceneWasActive) {
+    endSceneWasActive = true;
+    resetEndSmoke(elapsed);
+  }
+
+  const emitAge = elapsed - endSmokeStartTime;
+  if (emitAge < 4.6 && endSmokeParticles.length < 430) {
+    endSmokeEmitCarry += delta * 108;
+    while (endSmokeEmitCarry >= 1 && endSmokeParticles.length < 430) {
+      endSmokeParticles.push(createEndSmokeParticle(Math.random() > 0.5 ? "green" : "purple"));
+      endSmokeEmitCarry -= 1;
+    }
+  }
+
+  endSmokeCtx.globalCompositeOperation = "source-over";
+  endSmokeCtx.fillStyle = "rgba(0, 0, 0, 0.32)";
+  endSmokeCtx.fillRect(0, 0, endSmokeCanvas.width, endSmokeCanvas.height);
+  endSmokeCtx.globalCompositeOperation = "lighter";
+
+  for (let index = endSmokeParticles.length - 1; index >= 0; index -= 1) {
+    const particle = endSmokeParticles[index];
+    particle.life += delta;
+
+    const dx = particle.x - endSmokeMouse.x;
+    const dy = particle.y - endSmokeMouse.y;
+    const distance = Math.hypot(dx, dy);
+    if (distance < 260) {
+      const power = (1 - distance / 260) * 1.18;
+      particle.vx += endSmokeMouse.vx * power * 2.8 + (dx / Math.max(distance, 1)) * power * 62;
+      particle.vy += endSmokeMouse.vy * power * 2.8 + (dy / Math.max(distance, 1)) * power * 48;
+    }
+
+    particle.vx *= 0.986;
+    particle.vy *= 0.986;
+    particle.x += particle.vx * delta + Math.sin(elapsed * 0.7 + particle.phase) * 0.8;
+    particle.y += particle.vy * delta + Math.cos(elapsed * 0.62 + particle.phase) * 0.72;
+    particle.radius += delta * 8.5;
+
+    if (particle.life > particle.maxLife) {
+      endSmokeParticles.splice(index, 1);
+      continue;
+    }
+
+    const fadeIn = Math.min(1, particle.life * 1.8);
+    const fadeOut = 1 - Math.max(0, particle.life - particle.maxLife + 3.2) / 3.2;
+    const alpha = particle.alpha * fadeIn * Math.max(0, fadeOut);
+    const x = particle.x * scaleX;
+    const y = particle.y * scaleY;
+    const radius = particle.radius * Math.max(scaleX, scaleY) * (0.92 + Math.sin(elapsed + particle.phase) * 0.08);
+    const gradient = endSmokeCtx.createRadialGradient(x, y, 0, x, y, radius);
+    if (particle.hue === "green") {
+      gradient.addColorStop(0, `rgba(143, 255, 34, ${Math.min(0.96, alpha * 1.7)})`);
+      gradient.addColorStop(0.34, `rgba(33, 255, 91, ${Math.min(0.88, alpha * 1.18)})`);
+      gradient.addColorStop(0.72, `rgba(2, 65, 22, ${alpha * 0.64})`);
+    } else {
+      gradient.addColorStop(0, `rgba(226, 50, 255, ${Math.min(0.96, alpha * 1.7)})`);
+      gradient.addColorStop(0.38, `rgba(148, 30, 255, ${Math.min(0.9, alpha * 1.2)})`);
+      gradient.addColorStop(0.72, `rgba(39, 3, 67, ${alpha * 0.68})`);
+    }
+    gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+    endSmokeCtx.fillStyle = gradient;
+    endSmokeCtx.beginPath();
+    endSmokeCtx.arc(x, y, radius, 0, Math.PI * 2);
+    endSmokeCtx.fill();
+  }
+
+  endSmokeMouse.vx *= 0.7;
+  endSmokeMouse.vy *= 0.7;
+  endSmokeCtx.globalCompositeOperation = "source-over";
+}
+
 const root = new THREE.Group();
 const columnAnchor = new THREE.Group();
 const orbitAnchor = new THREE.Group();
@@ -587,7 +712,7 @@ function addGalleryBox(width, height, depth, x, y, z, material) {
   return mesh;
 }
 
-addGalleryBox(8.5, 0.08, 20.5, 0, -1.36, -4.75, galleryFloorMaterial);
+addGalleryBox(8.5, 0.42, 20.5, 0, -1.53, -4.75, galleryFloorMaterial);
 addGalleryBox(0.08, 4.95, 20.5, -4.25, 1.08, -4.75, galleryWallMaterial);
 addGalleryBox(0.08, 4.95, 20.5, 4.25, 1.08, -4.75, galleryWallMaterial);
 addGalleryBox(8.5, 4.95, 0.08, 0, 1.08, -15.02, galleryWallMaterial);
@@ -2043,6 +2168,7 @@ function resize() {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
   resizeSmokeCanvas();
+  resizeEndSmokeCanvas();
 }
 
 function getMaxScroll() {
@@ -2196,6 +2322,10 @@ window.addEventListener("pointermove", (event) => {
   smokeMouse.vy = event.clientY - smokeMouse.y;
   smokeMouse.x = event.clientX;
   smokeMouse.y = event.clientY;
+  endSmokeMouse.vx = event.clientX - endSmokeMouse.x;
+  endSmokeMouse.vy = event.clientY - endSmokeMouse.y;
+  endSmokeMouse.x = event.clientX;
+  endSmokeMouse.y = event.clientY;
   setPointerFromEvent(event);
   updateHoveredCardFromPointer();
   if (isDragging) {
@@ -2318,6 +2448,8 @@ function animate() {
   const galleryVisibility = THREE.MathUtils.smoothstep(scrollProgress, projectsRevealProgress - 0.018, projectsRevealProgress + 0.025);
   const galleryZoom = THREE.MathUtils.smoothstep(scrollProgress, projectsRevealProgress + 0.012, 0.995);
   const galleryMouseStrength = galleryVisibility * (1.05 + galleryZoom * 0.75);
+  const finalGatePhase = THREE.MathUtils.smoothstep(scrollProgress, 0.982, 0.998);
+  const finalGateActive = finalGatePhase > 0.01;
 
   document.documentElement.style.setProperty("--gallery-zoom", galleryZoom.toFixed(4));
   document.documentElement.style.setProperty("--gallery-scale", (1 + galleryZoom * 0.08).toFixed(4));
@@ -2353,6 +2485,7 @@ function animate() {
   document.body.classList.toggle("show-freelancer-info", scrollProgress >= 0.18 && scrollProgress < 0.265);
   document.body.classList.toggle("show-services-list", scrollProgress >= serviceListRevealProgress && scrollProgress < projectsGateStart);
   document.body.classList.toggle("show-projects", scrollProgress >= projectsRevealProgress);
+  document.body.classList.toggle("show-final-gate", finalGateActive);
   galleryAnchor.visible = galleryVisibility > 0.01;
   galleryAnchor.position.set(
     pointer.x * 0.28 * galleryMouseStrength,
@@ -2510,10 +2643,12 @@ function animate() {
 
   renderer.render(scene, camera);
   renderSmoke(delta, elapsed);
+  renderEndSmoke(delta, elapsed, finalGateActive);
   requestAnimationFrame(animate);
 }
 
 resizeSmokeCanvas();
+resizeEndSmokeCanvas();
 updateScroll();
 
 if (hasPreviewProgress) {

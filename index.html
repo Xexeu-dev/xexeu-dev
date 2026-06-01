@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XEXEU DEV,S</title>
-    <link rel="stylesheet" href="./styles.css?v=75" />
+    <link rel="stylesheet" href="./styles.css?v=76" />
   </head>
   <body>
     <div class="loading-screen" data-loader aria-live="polite">
@@ -156,6 +156,20 @@
       </div>
     </section>
 
+    <section class="final-gate" data-final-gate aria-hidden="true">
+      <div class="final-gate__door final-gate__door--left" aria-hidden="true"></div>
+      <div class="final-gate__door final-gate__door--right" aria-hidden="true"></div>
+      <canvas id="endSmoke" aria-hidden="true"></canvas>
+      <div class="final-gate__text" aria-label="THE END">
+        <span class="final-gate__letter">T</span>
+        <span class="final-gate__letter">H</span>
+        <span class="final-gate__letter">E</span>
+        <span class="final-gate__letter final-gate__letter--gap">E</span>
+        <span class="final-gate__letter">N</span>
+        <span class="final-gate__letter">D</span>
+      </div>
+    </section>
+
     <main class="scroll-stage" aria-hidden="true"></main>
 
     <script type="importmap">
@@ -166,6 +180,6 @@
         }
       }
     </script>
-    <script type="module" src="./app.js?v=75"></script>
+    <script type="module" src="./app.js?v=76"></script>
   </body>
 </html>

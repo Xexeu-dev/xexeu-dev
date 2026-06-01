@@ -1312,6 +1312,172 @@ body.show-projects .museum-book-stand {
   display: none;
 }
 
+.final-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 16;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 16% 14%, rgba(71, 255, 40, 0.16), transparent 28%),
+    radial-gradient(circle at 86% 86%, rgba(198, 33, 255, 0.2), transparent 30%),
+    #010102;
+  transition: opacity 420ms ease, visibility 420ms ease;
+}
+
+body.show-final-gate .final-gate {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.final-gate__door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.2%;
+  z-index: 2;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 22%, rgba(0, 0, 0, 0.46)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 18px),
+    linear-gradient(145deg, #101b18, #283a34 46%, #070c0c);
+  box-shadow:
+    inset 0 0 72px rgba(0, 0, 0, 0.82),
+    0 0 44px rgba(124, 255, 64, 0.16);
+  transform: translateX(0);
+  transition: transform 1600ms cubic-bezier(.18,.86,.22,1), filter 1200ms ease;
+}
+
+.final-gate__door::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(124, 255, 64, 0.13), transparent 32%),
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  mix-blend-mode: screen;
+}
+
+.final-gate__door--left {
+  left: 0;
+  transform-origin: left center;
+  border-right: 2px solid rgba(124, 255, 64, 0.34);
+}
+
+.final-gate__door--right {
+  right: 0;
+  transform-origin: right center;
+  border-left: 2px solid rgba(210, 80, 255, 0.34);
+}
+
+body.show-final-gate .final-gate__door--left {
+  transform: translateX(-102%) rotateY(-18deg);
+  filter: brightness(0.64);
+}
+
+body.show-final-gate .final-gate__door--right {
+  transform: translateX(102%) rotateY(18deg);
+  filter: brightness(0.64);
+}
+
+#endSmoke {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  mix-blend-mode: screen;
+}
+
+.final-gate__text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(8px, 1.3vw, 18px);
+  width: min(860px, calc(100vw - 34px));
+  transform: translate(-50%, -50%) scale(0.72);
+  opacity: 0;
+  transition: opacity 780ms ease 2200ms, transform 900ms cubic-bezier(.18,.86,.22,1) 2200ms;
+}
+
+body.show-final-gate .final-gate__text {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.final-gate__letter {
+  --letter-tilt: 0deg;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(64px, 10vw, 126px);
+  aspect-ratio: 1;
+  clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%);
+  color: #f7fff4;
+  background:
+    radial-gradient(circle at 34% 22%, rgba(255, 255, 255, 0.45), transparent 22%),
+    linear-gradient(145deg, rgba(124, 255, 64, 0.92), rgba(10, 28, 13, 0.92) 48%, rgba(197, 42, 255, 0.9));
+  box-shadow:
+    0 0 24px rgba(124, 255, 64, 0.74),
+    0 0 54px rgba(197, 42, 255, 0.42),
+    inset 0 0 18px rgba(255, 255, 255, 0.22);
+  font: 900 clamp(2rem, 7vw, 5.1rem) / 1 "Arial Black", Impact, sans-serif;
+  text-shadow:
+    3px 3px 0 #000,
+    -1px -1px 0 #000,
+    0 0 20px rgba(255, 255, 255, 0.86);
+  cursor: pointer;
+  transform: rotate(var(--letter-tilt));
+  animation: endLetterFloat 3.6s ease-in-out infinite;
+  transition: transform 360ms cubic-bezier(.18,.86,.22,1), filter 280ms ease;
+}
+
+.final-gate__letter::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  clip-path: inherit;
+  border: 2px solid rgba(0, 0, 0, 0.62);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.28),
+    0 0 18px rgba(0, 0, 0, 0.58);
+}
+
+.final-gate__letter:nth-child(2n) {
+  --letter-tilt: -5deg;
+  animation-delay: -0.8s;
+}
+
+.final-gate__letter:nth-child(2n + 1) {
+  --letter-tilt: 4deg;
+}
+
+.final-gate__letter--gap {
+  margin-left: clamp(18px, 3vw, 42px);
+}
+
+.final-gate__letter:hover,
+.final-gate__letter:focus-visible {
+  filter: saturate(1.35) brightness(1.24);
+  transform: rotate(360deg) scale(1.12);
+}
+
+@keyframes endLetterFloat {
+  0%, 100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -10px;
+  }
+}
+
 @keyframes museumRoomDrop {
   0% {
     transform: translateY(-11vh) scale(1.12);
@@ -2003,6 +2169,19 @@ body::after {
 
   .project-gallery__image {
     border-width: 7px;
+  }
+
+  .final-gate__text {
+    width: min(330px, calc(100vw - 24px));
+    gap: 7px;
+  }
+
+  .final-gate__letter {
+    width: clamp(52px, 23vw, 82px);
+  }
+
+  .final-gate__letter--gap {
+    margin-left: 0;
   }
 }
 
