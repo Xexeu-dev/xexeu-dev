@@ -29,17 +29,28 @@ body.is-dragging {
   position: fixed;
   inset: 0;
   z-index: 30;
-  display: block;
+  display: grid;
+  place-items: center;
   padding: 24px;
   background:
-    linear-gradient(45deg, rgba(0, 0, 0, 0.22) 25%, transparent 25% 50%, rgba(0, 0, 0, 0.22) 50% 75%, transparent 75%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.035) 0 12%, transparent 12% 42%, rgba(0, 0, 0, 0.18) 42% 68%, transparent 68%),
+    url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAYklEQVQ4T2N88OBBCwMSYGxsjM6/fv36/5UrV/4fOnTo/9u3b/8vXrz4/4MHD/4D5Rhg+s7OzsyHhoaGDIzNzMxMMADpAYI9S0vLDIaGhoYMDA0NjTAA6QGCPUtLywyGhoaGEAD9b5EALx0TcgAAAAAASUVORK5CYII=")
+    repeat,
     #21160e;
-  background-size: 42px 42px, 42px 42px, auto;
+  background-size: 64px 64px, auto;
   color: #efffff;
+  image-rendering: pixelated;
+  box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.82);
   opacity: 1;
   visibility: visible;
   transition: opacity 520ms ease, visibility 520ms ease;
+}
+
+.loading-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.82) 100%);
 }
 
 body.is-loaded .loading-screen {
@@ -49,62 +60,41 @@ body.is-loaded .loading-screen {
 }
 
 .loading-world {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: min(214px, 52vw);
+  position: relative;
+  z-index: 1;
+  width: min(140px, 38vw);
   aspect-ratio: 1;
-  border: 13px solid #050505;
+  border: 5px solid #000000;
   image-rendering: pixelated;
-  transform: translate(-50%, -50%);
-  background:
-    linear-gradient(90deg, transparent calc(var(--loader-fill, 0) * 1%), #a4a4a4 calc(var(--loader-fill, 0) * 1%)),
-    #9a9a9a;
+  background: #a0a0a0;
   box-shadow:
-    18px 18px 0 rgba(0, 0, 0, 0.28),
-    0 0 28px rgba(255, 255, 255, 0.1);
+    inset 5px 5px 0 rgba(255, 255, 255, 0.2),
+    inset -5px -5px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .loading-world::before,
 .loading-world::after {
-  content: "";
-  position: absolute;
-  background: #a4a4a4;
-  image-rendering: pixelated;
-}
-
-.loading-world::before {
-  top: -2px;
-  left: 37%;
-  width: 33%;
-  height: 12px;
-}
-
-.loading-world::after {
-  right: -22px;
-  top: 40%;
-  width: 22px;
-  height: 34%;
+  display: none;
 }
 
 .loading-world__terrain {
   position: absolute;
-  inset: 50%;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  width: 45%;
-  aspect-ratio: 1;
+  left: 50%;
+  top: 50%;
+  display: block;
+  width: calc(var(--loader-fill, 0) * 1%);
+  height: calc(var(--loader-fill, 0) * 1%);
   transform: translate(-50%, -50%);
-  border: 7px solid #53d116;
-  outline: 7px solid #273879;
+  border: 4px solid #28fb13;
+  outline: 4px solid #141639;
   background: #ffffff;
-  box-shadow: 0 0 0 8px rgba(96, 161, 50, 0.82);
+  box-shadow: 0 0 0 4px rgba(100, 160, 50, 0.8);
+  transition: width 50ms linear, height 50ms linear;
 }
 
 .loading-world__terrain span {
-  opacity: 0;
-  background: #ffffff;
-  animation: chunkReveal 1.15s steps(1) infinite;
+  display: none;
 }
 
 .loading-world__terrain span:nth-child(3n) {
@@ -126,7 +116,8 @@ body.is-loaded .loading-screen {
 .loading-panel {
   position: absolute;
   left: 50%;
-  top: calc(50% - 158px);
+  top: calc(50% - 116px);
+  z-index: 2;
   width: min(330px, 76vw);
   display: grid;
   gap: 6px;
@@ -155,7 +146,8 @@ body.is-loaded .loading-screen {
 }
 
 .loading-panel strong {
-  font-size: clamp(1.1rem, 3vw, 1.55rem);
+  font-size: clamp(2.15rem, 8vw, 3rem);
+  letter-spacing: 2px;
 }
 
 .loading-bar {
@@ -2067,12 +2059,12 @@ body.show-projects .museum-frame * {
 }
 
 body.show-projects .code-wall {
-  opacity: 0.08;
+  opacity: 0;
   filter: grayscale(1);
 }
 
 body.show-projects #toxicSmoke {
-  opacity: 0.08;
+  opacity: 0;
 }
 
 body.show-projects .museum-frame:nth-child(1) { animation-delay: 220ms !important; }
