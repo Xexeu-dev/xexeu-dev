@@ -136,19 +136,19 @@ const serviceItems = [
 
 const serviceCardArt = [
   null,
-  "./assets/service-cards-clean/02-servidor-samp.png?v=60",
-  "./assets/service-cards-clean/03-servidor-mta.png?v=60",
-  "./assets/service-cards-clean/04-java.png?v=60",
-  "./assets/service-cards-clean/05-cpp-csharp.png?v=60",
-  "./assets/service-cards-clean/06-correcoes.png?v=60",
-  "./assets/service-cards-clean/07-bot-discord.png?v=60",
-  "./assets/service-cards-clean/08-aplicativos-launchers.png?v=60",
-  "./assets/service-cards-clean/09-sites-repositorios.png?v=60",
-  "./assets/service-cards-clean/10-projetos-escolares.png?v=60",
-  "./assets/service-cards-clean/11-banco-mysql.png?v=60",
-  "./assets/service-cards-clean/12-renda-extra.png?v=60",
-  "./assets/service-cards-clean/13-ant-xiter-ant-ddos.png?v=60",
-  "./assets/service-cards-clean/14-aula-personalizada.png?v=60",
+  "./assets/service-cards-clean/02-servidor-samp.png?v=61",
+  "./assets/service-cards-clean/03-servidor-mta.png?v=61",
+  "./assets/service-cards-clean/04-java.png?v=61",
+  "./assets/service-cards-clean/05-cpp-csharp.png?v=61",
+  "./assets/service-cards-clean/06-correcoes.png?v=61",
+  "./assets/service-cards-clean/07-bot-discord.png?v=61",
+  "./assets/service-cards-clean/08-aplicativos-launchers.png?v=61",
+  "./assets/service-cards-clean/09-sites-repositorios.png?v=61",
+  "./assets/service-cards-clean/10-projetos-escolares.png?v=61",
+  "./assets/service-cards-clean/11-banco-mysql.png?v=61",
+  "./assets/service-cards-clean/12-renda-extra.png?v=61",
+  "./assets/service-cards-clean/13-ant-xiter-ant-ddos.png?v=61",
+  "./assets/service-cards-clean/14-aula-personalizada.png?v=61",
 ];
 
 const serviceDetails = [
@@ -884,19 +884,21 @@ for (let i = 0; i < 4; i += 1) {
 
 function createHeroInfoTexture() {
   const infoCanvas = document.createElement("canvas");
-  infoCanvas.width = 1720;
-  infoCanvas.height = 620;
+  infoCanvas.width = 2060;
+  infoCanvas.height = 760;
   const ctx = infoCanvas.getContext("2d");
   ctx.clearRect(0, 0, infoCanvas.width, infoCanvas.height);
   const cx = infoCanvas.width / 2;
 
   const bg = ctx.createLinearGradient(0, 0, infoCanvas.width, infoCanvas.height);
-  bg.addColorStop(0, "rgba(0, 217, 255, 0.1)");
-  bg.addColorStop(0.48, "rgba(8, 16, 28, 0.44)");
-  bg.addColorStop(1, "rgba(0, 255, 200, 0.08)");
+  bg.addColorStop(0, "rgba(0, 217, 255, 0.18)");
+  bg.addColorStop(0.48, "rgba(2, 10, 16, 0.76)");
+  bg.addColorStop(1, "rgba(0, 255, 200, 0.14)");
   ctx.fillStyle = bg;
   ctx.beginPath();
-  ctx.roundRect(58, 48, infoCanvas.width - 116, infoCanvas.height - 96, 52);
+  ctx.roundRect(70, 62, infoCanvas.width - 140, infoCanvas.height - 124, 58);
+  ctx.fill();
+  ctx.fillStyle = "rgba(0, 0, 0, 0.18)";
   ctx.fill();
   ctx.strokeStyle = "rgba(125, 249, 255, 0.56)";
   ctx.lineWidth = 3;
@@ -907,19 +909,19 @@ function createHeroInfoTexture() {
   ctx.shadowColor = "rgba(125, 249, 255, 0.65)";
   ctx.shadowBlur = 18;
   ctx.fillStyle = "rgba(239, 255, 255, 0.94)";
-  ctx.font = '700 46px "Courier New", monospace';
-  ctx.fillText("FULL STACK  |  SAMP/MTA  |  BOTS  |  SITES  |  LAUNCHERS", cx, 136);
+  ctx.font = '700 45px "Courier New", monospace';
+  ctx.fillText("FULL STACK  |  FREELANCER  |  SAMP/MTA  |  SITES  |  APPS", cx, 158);
 
   ctx.shadowBlur = 10;
   ctx.fillStyle = "rgba(190, 255, 216, 0.92)";
-  ctx.font = '700 35px "Courier New", monospace';
-  ctx.fillText("Scripts Pawno/Lua, automacoes, paineis, apps e integracoes.", cx, 250);
-  ctx.fillText("Correcoes, anti-xiter, MySQL, projetos escolares e aulas.", cx, 324);
-  ctx.fillText("4+ anos programando  |  atendimento 24/7  |  Pix facilitado.", cx, 398);
+  ctx.font = '700 36px "Courier New", monospace';
+  ctx.fillText("Sites, apps, launchers, bots e servidores SAMP/MTA.", cx, 296);
+  ctx.fillText("Paineis, automacoes, MySQL, correcoes, anti-xiter e aulas.", cx, 386);
+  ctx.fillText("4+ anos programando  |  atendimento 24/7  |  Pix facilitado.", cx, 476);
 
   ctx.fillStyle = "rgba(255, 226, 94, 0.92)";
-  ctx.font = '700 31px "Courier New", monospace';
-  ctx.fillText("Deslize para entrar na torre de servicos", cx, 500);
+  ctx.font = '700 32px "Courier New", monospace';
+  ctx.fillText("Deslize para entrar na torre de servicos", cx, 610);
 
   const texture = new THREE.CanvasTexture(infoCanvas);
   texture.colorSpace = THREE.SRGBColorSpace;
@@ -969,8 +971,8 @@ function buildHeroInfoPlane() {
     side: THREE.DoubleSide,
     depthWrite: false,
   });
-  const infoPlane = new THREE.Mesh(new THREE.PlaneGeometry(6.65, 2.4), infoMaterial);
-  infoPlane.position.set(0, -1.27, 0.02);
+  const infoPlane = new THREE.Mesh(new THREE.PlaneGeometry(7.55, 2.78), infoMaterial);
+  infoPlane.position.set(0, -1.38, 0.02);
   heroAnchor.add(infoPlane);
 }
 
@@ -1937,14 +1939,14 @@ function animate() {
     link.classList.toggle("is-active", index === activeIndex);
   });
 
-  root.position.set(0.28, 0, 0);
+  root.position.set(isMobile ? -0.12 : 0.28, 0, 0);
   root.rotation.set(0, 0, 0);
   document.body.classList.toggle("hide-hero-code", false);
   document.body.classList.toggle("show-services-list", scrollProgress >= serviceListRevealProgress && scrollProgress < projectsGateStart);
   document.body.classList.toggle("show-projects", scrollProgress >= projectsRevealProgress);
   heroAnchor.visible = heroExit < 0.98;
   heroAnchor.position.set(0.08, towerHeroY + heroExit * 1.35, -1.04 - heroExit * 0.44);
-  heroAnchor.scale.setScalar(isMobile ? 0.68 : 1);
+  heroAnchor.scale.setScalar(isMobile ? 0.45 : 1);
   heroLetterAnchor.children.forEach((letter) => {
     const entry = letter.userData;
     const entrance = THREE.MathUtils.smoothstep(elapsed - entry.delay, 0, 1.05);

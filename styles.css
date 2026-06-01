@@ -52,9 +52,9 @@ body.is-loaded .loading-screen {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: min(230px, 52vw);
+  width: min(214px, 52vw);
   aspect-ratio: 1;
-  border: 14px solid #050505;
+  border: 13px solid #050505;
   image-rendering: pixelated;
   transform: translate(-50%, -50%);
   background:
@@ -126,7 +126,7 @@ body.is-loaded .loading-screen {
 .loading-panel {
   position: absolute;
   left: 50%;
-  top: calc(50% - 170px);
+  top: calc(50% - 158px);
   width: min(330px, 76vw);
   display: grid;
   gap: 6px;
