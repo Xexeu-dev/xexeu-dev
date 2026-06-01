@@ -548,12 +548,12 @@ const galleryGlowMaterial = new THREE.MeshBasicMaterial({
 });
 
 const galleryPedestalSlots = [
-  { x: -2.86, z: 1.15, scale: 1.08, yaw: 0.16 },
-  { x: 2.86, z: 1.15, scale: 1.08, yaw: -0.16 },
-  { x: -2.48, z: -1.2, scale: 0.88, yaw: 0.1 },
-  { x: 2.48, z: -1.2, scale: 0.88, yaw: -0.1 },
-  { x: -2.08, z: -3.65, scale: 0.72, yaw: 0.06 },
-  { x: 2.08, z: -3.65, scale: 0.72, yaw: -0.06 },
+  { x: -3.06, z: 1.15, scale: 1.08, yaw: 0.17 },
+  { x: 3.06, z: 1.15, scale: 1.08, yaw: -0.17 },
+  { x: -2.66, z: -1.2, scale: 0.88, yaw: 0.11 },
+  { x: 2.66, z: -1.2, scale: 0.88, yaw: -0.11 },
+  { x: -2.22, z: -3.65, scale: 0.72, yaw: 0.07 },
+  { x: 2.22, z: -3.65, scale: 0.72, yaw: -0.07 },
 ];
 const projectButtons = Array.from(document.querySelectorAll("[data-project-open]"));
 
@@ -626,12 +626,6 @@ const wallGlowMaterial = new THREE.MeshBasicMaterial({
 });
 
 galleryPedestalSlots.forEach((slot, index) => {
-  const glow = new THREE.Mesh(new THREE.CircleGeometry(0.78 * slot.scale, 48), galleryGlowMaterial.clone());
-  glow.position.set(slot.x, -1.31, slot.z);
-  glow.rotation.x = -Math.PI / 2;
-  glow.material.opacity = 0.24 + index * 0.012;
-  galleryRoom.add(glow);
-
   const topLight = new THREE.PointLight(0xffffff, 0, 4.2);
   topLight.position.set(slot.x, 1.8, slot.z + 0.08);
   topLight.userData.galleryBaseIntensity = 0.9 + slot.scale * 0.34;
@@ -2341,7 +2335,7 @@ function animate() {
   galleryAnchor.position.set(
     pointer.x * 0.28 * galleryMouseStrength,
     -0.1 + pointer.y * 0.14 * galleryMouseStrength,
-    -0.34 - galleryZoom * 0.9,
+    -0.22 - galleryZoom * 0.38,
   );
   galleryAnchor.rotation.set(
     -pointer.y * 0.058 * galleryMouseStrength,
@@ -2475,12 +2469,12 @@ function animate() {
   const galleryCamera = new THREE.Vector3(
     pointer.x * 0.72 * galleryMouseStrength,
     1.12 + pointer.y * 0.26 * galleryMouseStrength,
-    (isMobile ? 10.4 : 9.85) - galleryZoom * (isMobile ? 1.55 : 2.15),
+    (isMobile ? 10.4 : 9.85) - galleryZoom * (isMobile ? 5.7 : 10.05),
   );
   const galleryLook = new THREE.Vector3(
     pointer.x * 0.58 * galleryMouseStrength,
     0.62 + pointer.y * 0.18 * galleryMouseStrength,
-    -4.9 - galleryZoom * 2.65,
+    -4.9 - galleryZoom * (isMobile ? 6.7 : 9.45),
   );
   targetCamera.lerp(galleryCamera, galleryVisibility);
   targetLook.lerp(galleryLook, galleryVisibility);
