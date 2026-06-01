@@ -390,15 +390,23 @@ function buildCodeWall() {
 buildCodeWall();
 
 const smokeMouse = { x: -9999, y: -9999, vx: 0, vy: 0 };
-const smokeParticles = Array.from({ length: 112 }, (_, index) => ({
-  x: 18 + Math.random() * Math.max(260, window.innerWidth * 0.48),
-  y: window.innerHeight * (0.24 + Math.random() * 0.62),
-  baseX: 18 + Math.random() * Math.max(260, window.innerWidth * 0.48),
-  radius: 34 + Math.random() * 86,
-  drift: 0.18 + Math.random() * 0.72,
-  phase: index * 0.61 + Math.random() * 6,
-  alpha: 0.035 + Math.random() * 0.075,
-}));
+const smokeParticles = Array.from({ length: 162 }, (_, index) => {
+  const side = index % 3 === 0 ? "right" : "left";
+  const range = Math.max(260, window.innerWidth * 0.46);
+  const baseX = side === "left"
+    ? 18 + Math.random() * range
+    : window.innerWidth - 18 - Math.random() * range;
+  return {
+    side,
+    x: baseX,
+    y: window.innerHeight * (0.18 + Math.random() * 0.72),
+    baseX,
+    radius: 30 + Math.random() * (side === "left" ? 94 : 72),
+    drift: 0.16 + Math.random() * 0.76,
+    phase: index * 0.61 + Math.random() * 6,
+    alpha: (side === "left" ? 0.038 : 0.026) + Math.random() * (side === "left" ? 0.082 : 0.052),
+  };
+});
 
 function resizeSmokeCanvas() {
   if (!smokeCanvas) return;
@@ -421,21 +429,34 @@ function renderSmoke(delta, elapsed) {
       particle.x += smokeMouse.vx * power * 0.028 + (dx / Math.max(mouseDistance, 1)) * power * 1.8;
       particle.y += smokeMouse.vy * power * 0.028 + (dy / Math.max(mouseDistance, 1)) * power * 1.2;
     }
-    particle.x += Math.sin(elapsed * particle.drift + particle.phase) * 0.22 + delta * 4.4;
+    const direction = particle.side === "left" ? 1 : -1;
+    particle.x += Math.sin(elapsed * particle.drift + particle.phase) * 0.22 + delta * 4.4 * direction;
     particle.y += Math.cos(elapsed * (particle.drift * 0.72) + particle.phase) * 0.34;
     particle.x += (particle.baseX - particle.x) * 0.006;
-    if (particle.x > window.innerWidth * 0.54) {
+    if (particle.side === "left" && particle.x > window.innerWidth * 0.58) {
       particle.x = -particle.radius;
-      particle.y = window.innerHeight * (0.18 + Math.random() * 0.7);
-      particle.baseX = 18 + Math.random() * Math.max(260, window.innerWidth * 0.48);
+      particle.y = window.innerHeight * (0.16 + Math.random() * 0.72);
+      particle.baseX = 18 + Math.random() * Math.max(260, window.innerWidth * 0.46);
+    }
+    if (particle.side === "right" && particle.x < window.innerWidth * 0.42) {
+      particle.x = window.innerWidth + particle.radius;
+      particle.y = window.innerHeight * (0.16 + Math.random() * 0.72);
+      particle.baseX = window.innerWidth - 18 - Math.random() * Math.max(260, window.innerWidth * 0.46);
     }
 
     const x = particle.x * scaleX;
     const y = particle.y * scaleY;
     const radius = particle.radius * scaleX * (0.86 + Math.sin(elapsed + index) * 0.08);
     const gradient = smokeCtx.createRadialGradient(x, y, 0, x, y, radius);
-    gradient.addColorStop(0, `rgba(125, 255, 60, ${particle.alpha * 1.4})`);
-    gradient.addColorStop(0.45, `rgba(43, 255, 87, ${particle.alpha})`);
+    if (particle.side === "left") {
+      gradient.addColorStop(0, `rgba(125, 255, 60, ${particle.alpha * 1.52})`);
+      gradient.addColorStop(0.42, `rgba(43, 255, 87, ${particle.alpha})`);
+      gradient.addColorStop(0.74, `rgba(2, 18, 6, ${particle.alpha * 0.38})`);
+    } else {
+      gradient.addColorStop(0, `rgba(255, 226, 83, ${particle.alpha * 0.82})`);
+      gradient.addColorStop(0.36, `rgba(86, 255, 191, ${particle.alpha * 0.58})`);
+      gradient.addColorStop(0.72, `rgba(0, 0, 0, ${particle.alpha * 0.42})`);
+    }
     gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
     smokeCtx.fillStyle = gradient;
     smokeCtx.beginPath();
@@ -2329,6 +2350,7 @@ function animate() {
   root.position.set(isMobile ? -0.12 : 0.28, 0, 0);
   root.rotation.set(0, 0, 0);
   document.body.classList.toggle("hide-hero-code", false);
+  document.body.classList.toggle("show-freelancer-info", scrollProgress >= 0.18 && scrollProgress < 0.265);
   document.body.classList.toggle("show-services-list", scrollProgress >= serviceListRevealProgress && scrollProgress < projectsGateStart);
   document.body.classList.toggle("show-projects", scrollProgress >= projectsRevealProgress);
   galleryAnchor.visible = galleryVisibility > 0.01;
