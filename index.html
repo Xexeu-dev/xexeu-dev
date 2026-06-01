@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XEXEU DEV,S</title>
-    <link rel="stylesheet" href="./styles.css?v=62" />
+    <link rel="stylesheet" href="./styles.css?v=64" />
   </head>
   <body>
     <div class="loading-screen" data-loader aria-live="polite">
@@ -74,47 +74,48 @@
       </article>
     </section>
 
-    <section class="projects-stage" aria-label="Projetos feitos">
-      <div class="projects-stage__inner">
-        <p class="projects-stage__kicker">PROJETOS FEITOS</p>
-        <h2>Vitrines, servidores, bots e launchers</h2>
-        <div class="projects-grid">
-          <article class="project-tile">
-            <img src="./assets/projects/nova-roleplay.png" alt="Projeto Nova Roleplay" />
-            <h3>Nova Roleplay</h3>
-            <p>Servidor RP com sistemas, mapas, interface e modulos personalizados.</p>
-            <a class="project-action" href="https://discord.gg/qjzc24UeVy" target="_blank" rel="noreferrer">ABRIR</a>
-          </article>
-          <article class="project-tile">
-            <img src="./assets/projects/site-piscinas.png" alt="Site piscinas" />
-            <h3>Site piscinas</h3>
-            <p>Site visual para servicos de piscina, contato rapido e chamada por WhatsApp.</p>
-            <a class="project-action" href="https://kalyan-piscinas.github.io/site/" target="_blank" rel="noreferrer">ABRIR</a>
-          </article>
-          <article class="project-tile">
-            <img src="./assets/projects/site-petloven.png" alt="Site PetLoven" />
-            <h3>Site PetLoven</h3>
-            <p>Vitrine responsiva para pet shop, servicos, fotos, contato e agendamento.</p>
-            <a class="project-action" href="https://pet-lovevan.github.io/love/" target="_blank" rel="noreferrer">ABRIR</a>
-          </article>
-          <article class="project-tile">
-            <img src="./assets/projects/distrito-pvp.png" alt="Distrito PVP" />
-            <h3>Distrito PVP</h3>
-            <p>Projeto focado em gameplay, apresentacao visual e presenca digital.</p>
-            <a class="project-action" href="https://discord.gg/MhCAnmmEf9" target="_blank" rel="noreferrer">ABRIR</a>
-          </article>
-          <article class="project-tile">
-            <img src="./assets/projects/bot-discord.png" alt="Bot Discord" />
-            <h3>Bot Discord</h3>
-            <p>Automacao, comandos, atendimento, moderacao e sistemas para comunidade.</p>
-            <button class="project-action" type="button" data-project-gallery="BOT Discord">VER FOTOS</button>
-          </article>
-          <article class="project-tile">
-            <img src="./assets/projects/launcher-mobile.png" alt="Launcher mobile" />
-            <h3>Mobile Launcher</h3>
-            <p>Interface mobile para acesso, apresentacao e navegacao de servidores.</p>
-            <button class="project-action" type="button" data-project-gallery="Launcher Mobile">VER FOTOS</button>
-          </article>
+    <section class="projects-stage" aria-label="Vitrine de projetos">
+      <div class="museum-room">
+        <div class="museum-heading">
+          <p>GALERIA DE PROJETOS</p>
+          <h2>Exposicao XEXEU DEV'S</h2>
+        </div>
+
+        <div class="museum-gallery">
+          <button class="museum-frame museum-frame--left" type="button" data-project-open data-project-title="Nova Roleplay" data-project-image="./assets/projects/nova-roleplay.png" data-project-link="https://discord.gg/qjzc24UeVy" data-project-description="Servidor RP com sistemas, mapas, interface e modulos personalizados.">
+            <span class="frame-name">Nova Roleplay</span>
+            <span class="frame-art"><img src="./assets/projects/nova-roleplay.png" alt="Projeto Nova Roleplay" /></span>
+            <span class="frame-plaque">Servidor RP</span>
+          </button>
+          <button class="museum-frame museum-frame--center" type="button" data-project-open data-project-title="Site piscinas" data-project-image="./assets/projects/site-piscinas.png" data-project-link="https://kalyan-piscinas.github.io/site/" data-project-description="Site visual para servicos de piscina, contato rapido e chamada por WhatsApp.">
+            <span class="frame-name">Site piscinas</span>
+            <span class="frame-art"><img src="./assets/projects/site-piscinas.png" alt="Site piscinas" /></span>
+            <span class="frame-plaque">Vitrine comercial</span>
+          </button>
+          <button class="museum-frame museum-frame--right" type="button" data-project-open data-project-title="Site PetLoven" data-project-image="./assets/projects/site-petloven.png" data-project-link="https://pet-lovevan.github.io/love/" data-project-description="Vitrine responsiva para pet shop, servicos, fotos, contato e agendamento.">
+            <span class="frame-name">Site PetLoven</span>
+            <span class="frame-art"><img src="./assets/projects/site-petloven.png" alt="Site PetLoven" /></span>
+            <span class="frame-plaque">Site pet shop</span>
+          </button>
+          <button class="museum-frame museum-frame--left museum-frame--lower" type="button" data-project-open data-project-title="Distrito PVP" data-project-image="./assets/projects/distrito-pvp.png" data-project-link="https://discord.gg/MhCAnmmEf9" data-project-description="Projeto focado em gameplay, apresentacao visual e presenca digital.">
+            <span class="frame-name">Distrito PVP</span>
+            <span class="frame-art"><img src="./assets/projects/distrito-pvp.png" alt="Distrito PVP" /></span>
+            <span class="frame-plaque">Servidor PVP</span>
+          </button>
+          <button class="museum-frame museum-frame--center museum-frame--lower" type="button" data-project-open data-project-title="BOT Discord" data-project-image="./assets/projects/bot-discord.png" data-project-description="Automacao, comandos, atendimento, moderacao e sistemas para comunidade.">
+            <span class="frame-name">BOT Discord</span>
+            <span class="frame-art"><img src="./assets/projects/bot-discord.png" alt="Bot Discord" /></span>
+            <span class="frame-plaque">Automacao</span>
+          </button>
+          <button class="museum-frame museum-frame--right museum-frame--lower" type="button" data-project-open data-project-title="Mobile Launcher" data-project-image="./assets/projects/launcher-mobile.png" data-project-description="Interface mobile para acesso, apresentacao e navegacao de servidores.">
+            <span class="frame-name">Mobile Launcher</span>
+            <span class="frame-art"><img src="./assets/projects/launcher-mobile.png" alt="Launcher mobile" /></span>
+            <span class="frame-plaque">Launcher mobile</span>
+          </button>
+        </div>
+
+        <div class="museum-book-stand" aria-hidden="true">
+          <span>CLIQUE EM UM QUADRO</span>
         </div>
       </div>
     </section>
@@ -122,9 +123,12 @@
     <section class="project-gallery" data-project-gallery-modal aria-hidden="true">
       <div class="project-gallery__card">
         <button class="project-gallery__close" type="button" data-project-gallery-close aria-label="Fechar galeria">x</button>
-        <p>GALERIA DO PROJETO</p>
+        <p data-project-gallery-kicker>PROJETO EM EXPOSICAO</p>
         <h2 data-project-gallery-title>Projeto</h2>
-        <div class="project-gallery__grid">
+        <img class="project-gallery__image" data-project-gallery-image src="./assets/projects/nova-roleplay.png" alt="" />
+        <p class="project-gallery__description" data-project-gallery-description></p>
+        <a class="project-gallery__link" data-project-gallery-link href="#" target="_blank" rel="noreferrer">ABRIR PROJETO</a>
+        <div class="project-gallery__grid" data-project-gallery-placeholders>
           <span>FOTO 01</span>
           <span>FOTO 02</span>
           <span>FOTO 03</span>
@@ -144,6 +148,6 @@
         }
       }
     </script>
-    <script type="module" src="./app.js?v=61"></script>
+    <script type="module" src="./app.js?v=64"></script>
   </body>
 </html>

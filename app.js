@@ -1753,6 +1753,10 @@ const detailList = document.querySelector("[data-detail-list]");
 const projectGalleryModal = document.querySelector("[data-project-gallery-modal]");
 const projectGalleryTitle = document.querySelector("[data-project-gallery-title]");
 const projectGalleryClose = document.querySelector("[data-project-gallery-close]");
+const projectGalleryImage = document.querySelector("[data-project-gallery-image]");
+const projectGalleryDescription = document.querySelector("[data-project-gallery-description]");
+const projectGalleryLink = document.querySelector("[data-project-gallery-link]");
+const projectGalleryPlaceholders = document.querySelector("[data-project-gallery-placeholders]");
 
 function setPointerFromEvent(event) {
   pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -1881,12 +1885,32 @@ serviceLinks.forEach((link) => {
   });
 });
 
-document.querySelectorAll("[data-project-gallery]").forEach((button) => {
+function openProjectGallery(trigger) {
+  if (!projectGalleryModal) return;
+  const title = trigger.dataset.projectTitle || trigger.dataset.projectGallery || "Projeto";
+  const image = trigger.dataset.projectImage || "";
+  const description = trigger.dataset.projectDescription || "Projeto criado por XEXEU DEV'S com foco em visual, funcionamento e entrega personalizada.";
+  const link = trigger.dataset.projectLink || "";
+
+  if (projectGalleryTitle) projectGalleryTitle.textContent = title;
+  if (projectGalleryImage) {
+    projectGalleryImage.src = image;
+    projectGalleryImage.alt = title;
+  }
+  if (projectGalleryDescription) projectGalleryDescription.textContent = description;
+  if (projectGalleryLink) {
+    projectGalleryLink.href = link || "#";
+    projectGalleryLink.classList.toggle("is-hidden", !link);
+  }
+  projectGalleryPlaceholders?.classList.toggle("is-hidden", Boolean(link));
+  projectGalleryModal.classList.add("is-open");
+  projectGalleryModal.setAttribute("aria-hidden", "false");
+}
+
+document.querySelectorAll("[data-project-gallery], [data-project-open]").forEach((button) => {
   button.addEventListener("click", () => {
     if (!projectGalleryModal) return;
-    if (projectGalleryTitle) projectGalleryTitle.textContent = button.dataset.projectGallery || "Projeto";
-    projectGalleryModal.classList.add("is-open");
-    projectGalleryModal.setAttribute("aria-hidden", "false");
+    openProjectGallery(button);
   });
 });
 

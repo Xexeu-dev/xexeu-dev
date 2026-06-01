@@ -832,6 +832,380 @@ body.show-projects .projects-stage {
   cursor: pointer;
 }
 
+.projects-stage {
+  place-items: stretch;
+  padding: 0;
+  overflow: hidden;
+  background: #130f0b;
+}
+
+.museum-room {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  padding: clamp(18px, 3vw, 38px);
+  background:
+    linear-gradient(180deg, rgba(12, 8, 5, 0.18), rgba(0, 0, 0, 0.5)),
+    url("./assets/projects/museum-room.png") center / cover no-repeat;
+  isolation: isolate;
+  transform-origin: center top;
+  transform: translateY(-9vh) scale(1.08);
+  opacity: 0;
+}
+
+body.show-projects .museum-room {
+  opacity: 1;
+  animation: museumRoomDrop 980ms cubic-bezier(.12,.82,.2,1) both;
+}
+
+.museum-room::before,
+.museum-room::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.museum-room::before {
+  background:
+    radial-gradient(circle at 18% 28%, rgba(255, 231, 160, 0.22), transparent 19%),
+    radial-gradient(circle at 50% 18%, rgba(255, 245, 220, 0.18), transparent 23%),
+    radial-gradient(circle at 82% 28%, rgba(255, 231, 160, 0.2), transparent 19%);
+  mix-blend-mode: multiply;
+}
+
+.museum-room::after {
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 44%, rgba(0, 0, 0, 0.5) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.45), transparent 23%, transparent 77%, rgba(0, 0, 0, 0.45));
+}
+
+.museum-heading {
+  position: relative;
+  z-index: 4;
+  width: min(620px, calc(100vw - 36px));
+  margin: 0 auto;
+  padding: 11px 18px 13px;
+  border: 1px solid rgba(255, 215, 112, 0.58);
+  border-radius: 14px;
+  color: #fff8d8;
+  background:
+    linear-gradient(135deg, rgba(0, 0, 0, 0.76), rgba(28, 21, 10, 0.58)),
+    radial-gradient(circle at 50% 0%, rgba(255, 215, 112, 0.22), transparent 70%);
+  box-shadow:
+    0 14px 35px rgba(0, 0, 0, 0.38),
+    inset 0 0 20px rgba(255, 215, 112, 0.08);
+  text-align: center;
+}
+
+.museum-heading p {
+  margin: 0 0 4px;
+  color: #ffd977;
+  font-size: 0.74rem;
+  font-weight: 900;
+  text-shadow: 0 0 12px rgba(255, 215, 112, 0.58);
+}
+
+.museum-heading h2 {
+  margin: 0;
+  font-size: clamp(1.3rem, 3vw, 2.8rem);
+  line-height: 1;
+  color: #fffef0;
+  text-shadow:
+    0 0 18px rgba(255, 215, 112, 0.32),
+    0 4px 0 rgba(0, 0, 0, 0.34);
+}
+
+.museum-gallery {
+  position: absolute;
+  z-index: 4;
+  left: 7vw;
+  right: 7vw;
+  top: clamp(112px, 17vh, 150px);
+  bottom: clamp(128px, 23vh, 178px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(130px, 1fr));
+  grid-template-rows: repeat(2, minmax(118px, 1fr));
+  gap: clamp(12px, 2.1vw, 28px) clamp(22px, 4vw, 64px);
+  align-items: start;
+}
+
+.museum-frame {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+  min-width: 0;
+  border: 0;
+  color: #120d04;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+  --wall-tilt: 0deg;
+  --fall-spin: 0deg;
+  transform: perspective(780px) rotateY(var(--wall-tilt)) translateY(-62vh) rotateZ(var(--fall-spin)) scale(0.82);
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+body.show-projects .museum-frame {
+  opacity: 1;
+  animation: museumFrameFall 980ms cubic-bezier(.16,.92,.18,1) both;
+}
+
+body.show-projects .museum-frame:nth-child(1) {
+  --fall-spin: -7deg;
+  animation-delay: 540ms;
+}
+
+body.show-projects .museum-frame:nth-child(2) {
+  --fall-spin: 5deg;
+  animation-delay: 680ms;
+}
+
+body.show-projects .museum-frame:nth-child(3) {
+  --fall-spin: -4deg;
+  animation-delay: 820ms;
+}
+
+body.show-projects .museum-frame:nth-child(4) {
+  --fall-spin: 6deg;
+  animation-delay: 960ms;
+}
+
+body.show-projects .museum-frame:nth-child(5) {
+  --fall-spin: -5deg;
+  animation-delay: 1100ms;
+}
+
+body.show-projects .museum-frame:nth-child(6) {
+  --fall-spin: 7deg;
+  animation-delay: 1240ms;
+}
+
+.museum-frame:hover,
+.museum-frame:focus-visible {
+  transform: perspective(780px) rotateY(var(--wall-tilt)) translateY(-5px) scale(1.035);
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.32));
+  outline: 0;
+}
+
+.museum-frame--left {
+  --wall-tilt: 4deg;
+}
+
+.museum-frame--right {
+  --wall-tilt: -4deg;
+}
+
+.museum-frame--left:hover,
+.museum-frame--left:focus-visible {
+  transform: perspective(780px) rotateY(var(--wall-tilt)) translateY(-5px) scale(1.035);
+}
+
+.museum-frame--right:hover,
+.museum-frame--right:focus-visible {
+  transform: perspective(780px) rotateY(var(--wall-tilt)) translateY(-5px) scale(1.035);
+}
+
+.museum-frame--lower {
+  align-self: end;
+}
+
+.frame-name {
+  max-width: 100%;
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 215, 112, 0.8);
+  border-radius: 999px;
+  color: #fff4c7;
+  background: rgba(8, 5, 2, 0.84);
+  box-shadow: 0 0 18px rgba(255, 215, 112, 0.18);
+  font-size: clamp(0.63rem, 1.1vw, 0.88rem);
+  font-weight: 900;
+  text-align: center;
+  text-shadow: 0 0 9px rgba(255, 215, 112, 0.48);
+  white-space: nowrap;
+}
+
+.frame-art {
+  position: relative;
+  display: block;
+  width: min(100%, 240px);
+  aspect-ratio: 16 / 9;
+  padding: clamp(8px, 1vw, 12px);
+  border: 8px solid #070604;
+  border-radius: 4px;
+  background:
+    linear-gradient(145deg, #1a1308, #020202 38%, #3b270b 67%, #090604);
+  box-shadow:
+    0 0 0 2px #d7aa3c,
+    0 0 0 5px #111,
+    inset 0 0 0 2px rgba(255, 226, 122, 0.55),
+    inset 0 0 18px rgba(255, 215, 112, 0.24),
+    0 18px 34px rgba(0, 0, 0, 0.46);
+}
+
+.frame-art::before,
+.frame-art::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.frame-art::before {
+  inset: 7px;
+  border: 1px solid rgba(255, 239, 180, 0.7);
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.42);
+}
+
+.frame-art::after {
+  inset: 12px;
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.22), transparent 34%, rgba(255, 215, 112, 0.12) 72%, transparent);
+  mix-blend-mode: screen;
+}
+
+.frame-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.96) contrast(1.02);
+}
+
+.frame-plaque {
+  min-width: min(150px, 86%);
+  padding: 5px 10px;
+  border: 1px solid rgba(80, 48, 8, 0.75);
+  border-radius: 4px;
+  color: #2c1b05;
+  background:
+    linear-gradient(180deg, #ffe7a1, #c08a26 56%, #f9df8a);
+  box-shadow:
+    0 5px 12px rgba(0, 0, 0, 0.28),
+    inset 0 1px rgba(255, 255, 255, 0.55);
+  font-size: clamp(0.56rem, 1vw, 0.72rem);
+  font-weight: 900;
+  text-align: center;
+}
+
+.museum-book-stand {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: clamp(26px, 5vh, 48px);
+  width: min(390px, 64vw);
+  height: clamp(58px, 9vh, 84px);
+  display: grid;
+  place-items: center;
+  transform: translateX(-50%) perspective(520px) rotateX(58deg);
+  border: 2px solid rgba(20, 16, 10, 0.22);
+  border-radius: 8px;
+  color: rgba(45, 30, 8, 0.9);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.28) 49%, rgba(0, 0, 0, 0.11) 50%, rgba(255, 255, 255, 0.65)),
+    linear-gradient(180deg, rgba(255, 252, 240, 0.9), rgba(184, 172, 153, 0.86));
+  box-shadow:
+    0 22px 30px rgba(0, 0, 0, 0.24),
+    inset 0 0 18px rgba(255, 255, 255, 0.62);
+  font-weight: 900;
+  opacity: 0;
+}
+
+body.show-projects .museum-book-stand {
+  animation: museumPedestalRise 760ms ease-out 1480ms forwards;
+}
+
+.museum-book-stand span {
+  transform: rotateX(-58deg);
+  font-size: clamp(0.62rem, 1.4vw, 0.82rem);
+  letter-spacing: 0;
+}
+
+.project-gallery__image {
+  display: block;
+  width: min(760px, 100%);
+  aspect-ratio: 16 / 9;
+  margin: 0 auto 16px;
+  object-fit: cover;
+  border: 10px solid #050505;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 2px #d7aa3c,
+    0 18px 36px rgba(0, 0, 0, 0.48);
+}
+
+.project-gallery__description {
+  max-width: 760px;
+  margin: 0 auto 16px;
+  color: rgba(239, 255, 255, 0.86);
+  font-weight: 800;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.project-gallery__link {
+  width: fit-content;
+  min-height: 38px;
+  margin: 0 auto 18px;
+  display: grid;
+  place-items: center;
+  padding: 0 18px;
+  border: 1px solid rgba(255, 215, 112, 0.78);
+  border-radius: 10px;
+  color: #fff8d8;
+  background: linear-gradient(145deg, rgba(22, 12, 3, 0.92), rgba(80, 48, 8, 0.72));
+  box-shadow: 0 0 24px rgba(255, 215, 112, 0.18);
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.project-gallery__link.is-hidden,
+.project-gallery__grid.is-hidden {
+  display: none;
+}
+
+@keyframes museumRoomDrop {
+  0% {
+    transform: translateY(-11vh) scale(1.12);
+    opacity: 0;
+  }
+  58% {
+    transform: translateY(2.4vh) scale(0.985);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes museumFrameFall {
+  0% {
+    opacity: 0;
+    transform: perspective(780px) rotateY(var(--wall-tilt)) translateY(-62vh) rotateZ(var(--fall-spin)) scale(0.82);
+  }
+  72% {
+    opacity: 1;
+    transform: perspective(780px) rotateY(var(--wall-tilt)) translateY(10px) rotateZ(1deg) scale(1.035);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(780px) rotateY(var(--wall-tilt)) translateY(0) rotateZ(0deg) scale(1);
+  }
+}
+
+@keyframes museumPedestalRise {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(30px) perspective(520px) rotateX(58deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) perspective(520px) rotateX(58deg);
+  }
+}
+
 body::before,
 body::after {
   content: "";
@@ -859,6 +1233,18 @@ body::after {
 @media (max-width: 950px) {
   .projects-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .museum-gallery {
+    left: 5vw;
+    right: 5vw;
+    grid-template-columns: repeat(2, minmax(130px, 1fr));
+    grid-template-rows: repeat(3, minmax(118px, 1fr));
+    bottom: 118px;
+  }
+
+  .frame-art {
+    width: min(100%, 220px);
   }
 }
 
@@ -906,9 +1292,70 @@ body::after {
   }
 
   .projects-stage {
-    place-items: start center;
-    padding: 72px 12px 18px;
+    place-items: stretch;
+    padding: 0;
     overflow: auto;
+  }
+
+  .museum-room {
+    min-height: 1180px;
+    padding: 16px 12px 28px;
+    background-position: center top;
+  }
+
+  .museum-heading {
+    width: min(100%, 360px);
+    padding: 10px 12px;
+  }
+
+  .museum-gallery {
+    position: relative;
+    inset: auto;
+    margin: 18px auto 110px;
+    width: min(310px, 88vw);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    gap: 18px;
+  }
+
+  .museum-frame,
+  .museum-frame--left,
+  .museum-frame--right,
+  .museum-frame--left:hover,
+  .museum-frame--left:focus-visible,
+  .museum-frame--right:hover,
+  .museum-frame--right:focus-visible {
+    transform: none;
+  }
+
+  .museum-frame:hover,
+  .museum-frame:focus-visible {
+    transform: translateY(-4px) scale(1.025);
+  }
+
+  .frame-art {
+    width: min(100%, 260px);
+    border-width: 7px;
+  }
+
+  .museum-book-stand {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    margin: -80px auto 0;
+    transform: perspective(520px) rotateX(58deg);
+    opacity: 1;
+    animation: none;
+  }
+
+  body.show-projects .museum-book-stand {
+    animation: none;
+    opacity: 1;
+  }
+
+  .museum-book-stand span {
+    transform: rotateX(-58deg);
   }
 
   .projects-stage__inner {
@@ -958,5 +1405,9 @@ body::after {
 
   .project-gallery__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-gallery__image {
+    border-width: 7px;
   }
 }
