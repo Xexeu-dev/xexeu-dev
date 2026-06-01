@@ -8,6 +8,7 @@ const smokeCanvas = document.querySelector("#toxicSmoke");
 const smokeCtx = smokeCanvas?.getContext("2d");
 const endSmokeCanvas = document.querySelector("#endSmoke");
 const endSmokeCtx = endSmokeCanvas?.getContext("2d");
+const endLetters = Array.from(document.querySelectorAll(".final-gate__letter"));
 const codeColumns = Array.from(document.querySelectorAll("[data-code-column]"));
 const loaderOverlay = document.querySelector("[data-loader]");
 const loaderPercent = document.querySelector("[data-loader-percent]");
@@ -491,19 +492,19 @@ function resetEndSmoke(elapsed) {
 
 function createEndSmokeParticle(source) {
   const fromGreen = source === "green";
-  const x = fromGreen ? -window.innerWidth * 0.08 : window.innerWidth * 1.08;
-  const y = fromGreen ? -window.innerHeight * 0.06 : window.innerHeight * 1.08;
+  const x = fromGreen ? -window.innerWidth * 0.02 : window.innerWidth * 1.02;
+  const y = fromGreen ? -window.innerHeight * 0.02 : window.innerHeight * 1.02;
   const angle = fromGreen
-    ? 0.58 + Math.random() * 0.72
-    : Math.PI + 0.58 + Math.random() * 0.72;
-  const speed = fromGreen ? 180 + Math.random() * 330 : 150 + Math.random() * 300;
+    ? 0.7 + Math.random() * 0.48
+    : Math.PI + 0.7 + Math.random() * 0.48;
+  const speed = fromGreen ? 380 + Math.random() * 520 : 350 + Math.random() * 500;
   return {
     x,
     y,
     vx: Math.cos(angle) * speed,
     vy: Math.sin(angle) * speed,
-    radius: 76 + Math.random() * 172,
-    alpha: 0.42 + Math.random() * 0.52,
+    radius: 96 + Math.random() * 220,
+    alpha: 0.66 + Math.random() * 0.34,
     life: 0,
     maxLife: 13 + Math.random() * 8,
     hue: fromGreen ? "green" : "purple",
@@ -528,17 +529,42 @@ function renderEndSmoke(delta, elapsed, active) {
   }
 
   const emitAge = elapsed - endSmokeStartTime;
-  if (emitAge < 4.6 && endSmokeParticles.length < 430) {
-    endSmokeEmitCarry += delta * 108;
-    while (endSmokeEmitCarry >= 1 && endSmokeParticles.length < 430) {
+  if (emitAge < 5.4 && endSmokeParticles.length < 620) {
+    endSmokeEmitCarry += delta * 185;
+    while (endSmokeEmitCarry >= 1 && endSmokeParticles.length < 620) {
       endSmokeParticles.push(createEndSmokeParticle(Math.random() > 0.5 ? "green" : "purple"));
       endSmokeEmitCarry -= 1;
     }
   }
 
   endSmokeCtx.globalCompositeOperation = "source-over";
-  endSmokeCtx.fillStyle = "rgba(0, 0, 0, 0.32)";
+  endSmokeCtx.fillStyle = "rgba(0, 0, 0, 0.42)";
   endSmokeCtx.fillRect(0, 0, endSmokeCanvas.width, endSmokeCanvas.height);
+
+  if (emitAge < 5.4) {
+    const burst = Math.max(0, 1 - emitAge / 5.4);
+    const greenJet = endSmokeCtx.createRadialGradient(0, 0, 0, 0, 0, Math.max(endSmokeCanvas.width, endSmokeCanvas.height) * 0.78);
+    greenJet.addColorStop(0, `rgba(143, 255, 34, ${0.98 * burst})`);
+    greenJet.addColorStop(0.28, `rgba(33, 255, 91, ${0.82 * burst})`);
+    greenJet.addColorStop(0.72, "rgba(0, 0, 0, 0)");
+    endSmokeCtx.fillStyle = greenJet;
+    endSmokeCtx.fillRect(0, 0, endSmokeCanvas.width, endSmokeCanvas.height);
+
+    const purpleJet = endSmokeCtx.createRadialGradient(
+      endSmokeCanvas.width,
+      endSmokeCanvas.height,
+      0,
+      endSmokeCanvas.width,
+      endSmokeCanvas.height,
+      Math.max(endSmokeCanvas.width, endSmokeCanvas.height) * 0.82,
+    );
+    purpleJet.addColorStop(0, `rgba(232, 43, 255, ${0.98 * burst})`);
+    purpleJet.addColorStop(0.3, `rgba(136, 32, 255, ${0.86 * burst})`);
+    purpleJet.addColorStop(0.76, "rgba(0, 0, 0, 0)");
+    endSmokeCtx.fillStyle = purpleJet;
+    endSmokeCtx.fillRect(0, 0, endSmokeCanvas.width, endSmokeCanvas.height);
+  }
+
   endSmokeCtx.globalCompositeOperation = "lighter";
 
   for (let index = endSmokeParticles.length - 1; index >= 0; index -= 1) {
@@ -558,7 +584,7 @@ function renderEndSmoke(delta, elapsed, active) {
     particle.vy *= 0.986;
     particle.x += particle.vx * delta + Math.sin(elapsed * 0.7 + particle.phase) * 0.8;
     particle.y += particle.vy * delta + Math.cos(elapsed * 0.62 + particle.phase) * 0.72;
-    particle.radius += delta * 8.5;
+    particle.radius += delta * 13;
 
     if (particle.life > particle.maxLife) {
       endSmokeParticles.splice(index, 1);
@@ -573,13 +599,13 @@ function renderEndSmoke(delta, elapsed, active) {
     const radius = particle.radius * Math.max(scaleX, scaleY) * (0.92 + Math.sin(elapsed + particle.phase) * 0.08);
     const gradient = endSmokeCtx.createRadialGradient(x, y, 0, x, y, radius);
     if (particle.hue === "green") {
-      gradient.addColorStop(0, `rgba(143, 255, 34, ${Math.min(0.96, alpha * 1.7)})`);
-      gradient.addColorStop(0.34, `rgba(33, 255, 91, ${Math.min(0.88, alpha * 1.18)})`);
-      gradient.addColorStop(0.72, `rgba(2, 65, 22, ${alpha * 0.64})`);
+      gradient.addColorStop(0, `rgba(143, 255, 34, ${Math.min(1, alpha * 2.1)})`);
+      gradient.addColorStop(0.34, `rgba(33, 255, 91, ${Math.min(0.98, alpha * 1.45)})`);
+      gradient.addColorStop(0.78, `rgba(2, 65, 22, ${alpha * 0.86})`);
     } else {
-      gradient.addColorStop(0, `rgba(226, 50, 255, ${Math.min(0.96, alpha * 1.7)})`);
-      gradient.addColorStop(0.38, `rgba(148, 30, 255, ${Math.min(0.9, alpha * 1.2)})`);
-      gradient.addColorStop(0.72, `rgba(39, 3, 67, ${alpha * 0.68})`);
+      gradient.addColorStop(0, `rgba(226, 50, 255, ${Math.min(1, alpha * 2.1)})`);
+      gradient.addColorStop(0.38, `rgba(148, 30, 255, ${Math.min(0.98, alpha * 1.48)})`);
+      gradient.addColorStop(0.78, `rgba(39, 3, 67, ${alpha * 0.9})`);
     }
     gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
     endSmokeCtx.fillStyle = gradient;
@@ -702,6 +728,14 @@ const galleryPedestalSlots = [
   { x: 2.22, z: -3.65, scale: 0.72, yaw: -0.07 },
 ];
 const projectButtons = Array.from(document.querySelectorAll("[data-project-open]"));
+const galleryBackDoorClosed = {
+  leftX: -2.13,
+  rightX: 2.13,
+  y: 1.08,
+  z: -15.02,
+};
+let galleryBackDoorLeft = null;
+let galleryBackDoorRight = null;
 
 function addGalleryBox(width, height, depth, x, y, z, material) {
   const mesh = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
@@ -715,7 +749,8 @@ function addGalleryBox(width, height, depth, x, y, z, material) {
 addGalleryBox(8.5, 0.42, 20.5, 0, -1.53, -4.75, galleryFloorMaterial);
 addGalleryBox(0.08, 4.95, 20.5, -4.25, 1.08, -4.75, galleryWallMaterial);
 addGalleryBox(0.08, 4.95, 20.5, 4.25, 1.08, -4.75, galleryWallMaterial);
-addGalleryBox(8.5, 4.95, 0.08, 0, 1.08, -15.02, galleryWallMaterial);
+galleryBackDoorLeft = addGalleryBox(4.32, 4.95, 0.12, galleryBackDoorClosed.leftX, galleryBackDoorClosed.y, galleryBackDoorClosed.z, galleryWallMaterial.clone());
+galleryBackDoorRight = addGalleryBox(4.32, 4.95, 0.12, galleryBackDoorClosed.rightX, galleryBackDoorClosed.y, galleryBackDoorClosed.z, galleryWallMaterial.clone());
 addGalleryBox(8.5, 0.08, 20.5, 0, 3.56, -4.75, galleryWallMaterial);
 addGalleryBox(0.045, 0.08, 16.6, -2.42, 3.39, -4.75, galleryDarkMaterial);
 addGalleryBox(0.045, 0.08, 16.6, 2.42, 3.39, -4.75, galleryDarkMaterial);
@@ -2326,6 +2361,18 @@ window.addEventListener("pointermove", (event) => {
   endSmokeMouse.vy = event.clientY - endSmokeMouse.y;
   endSmokeMouse.x = event.clientX;
   endSmokeMouse.y = event.clientY;
+  const endMove = Math.hypot(endSmokeMouse.vx, endSmokeMouse.vy);
+  if (endMove > 0.8) {
+    const endAngle = Math.atan2(endSmokeMouse.vy, endSmokeMouse.vx) * 180 / Math.PI;
+    const endPower = THREE.MathUtils.clamp(endMove / 42, 0, 1);
+    const endScale = 1 + endPower * 0.14;
+    document.documentElement.style.setProperty("--end-spin-angle", `${endAngle.toFixed(2)}deg`);
+    document.documentElement.style.setProperty("--end-spin-scale", endScale.toFixed(3));
+    endLetters.forEach((letter, index) => {
+      letter.style.setProperty("--end-spin-angle", `${(endAngle + index * 10).toFixed(2)}deg`);
+      letter.style.setProperty("--end-spin-scale", endScale.toFixed(3));
+    });
+  }
   setPointerFromEvent(event);
   updateHoveredCardFromPointer();
   if (isDragging) {
@@ -2486,6 +2533,25 @@ function animate() {
   document.body.classList.toggle("show-services-list", scrollProgress >= serviceListRevealProgress && scrollProgress < projectsGateStart);
   document.body.classList.toggle("show-projects", scrollProgress >= projectsRevealProgress);
   document.body.classList.toggle("show-final-gate", finalGateActive);
+  if (galleryBackDoorLeft && galleryBackDoorRight) {
+    const open = finalGatePhase;
+    const doorSlide = open * 3.65;
+    const doorPush = open * 0.44;
+    galleryBackDoorLeft.position.set(
+      galleryBackDoorClosed.leftX - doorSlide,
+      galleryBackDoorClosed.y,
+      galleryBackDoorClosed.z + doorPush,
+    );
+    galleryBackDoorRight.position.set(
+      galleryBackDoorClosed.rightX + doorSlide,
+      galleryBackDoorClosed.y,
+      galleryBackDoorClosed.z + doorPush,
+    );
+    galleryBackDoorLeft.rotation.y = -open * 0.42;
+    galleryBackDoorRight.rotation.y = open * 0.42;
+    galleryBackDoorLeft.material.emissiveIntensity = 0.05 + open * 0.18;
+    galleryBackDoorRight.material.emissiveIntensity = 0.05 + open * 0.18;
+  }
   galleryAnchor.visible = galleryVisibility > 0.01;
   galleryAnchor.position.set(
     pointer.x * 0.28 * galleryMouseStrength,
