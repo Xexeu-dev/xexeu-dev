@@ -1948,3 +1948,275 @@ body::after {
     transform: translateY(0) scale(1);
   }
 }
+
+/* Galeria final em WebGL: o canvas faz a sala 3D; esta camada só segura os projetos clicáveis. */
+:root {
+  --gallery-zoom: 0;
+  --gallery-scale: 1;
+  --gallery-shift-x: 0px;
+  --gallery-shift-y: 0px;
+}
+
+.projects-stage {
+  background: transparent !important;
+  overflow: hidden !important;
+}
+
+.museum-room {
+  min-height: 100vh !important;
+  padding: 0 !important;
+  background: transparent !important;
+  transform: none !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.show-projects .museum-room {
+  opacity: 1;
+  pointer-events: auto;
+  animation: none !important;
+}
+
+.museum-room::before,
+.museum-room::after,
+.museum-depth,
+.museum-pedestals,
+.museum-book-stand {
+  display: none !important;
+}
+
+.museum-heading {
+  position: absolute;
+  left: 50%;
+  top: clamp(18px, 4.4vh, 48px);
+  z-index: 10;
+  width: auto;
+  min-width: 0;
+  padding: 9px 18px;
+  border: 1px solid rgba(255, 215, 112, 0.72);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(255, 245, 202, 0.16), rgba(6, 7, 7, 0.54)),
+    rgba(2, 3, 3, 0.42);
+  box-shadow:
+    0 0 28px rgba(255, 215, 112, 0.14),
+    inset 0 0 18px rgba(255, 255, 255, 0.06);
+  transform: translate(-50%, var(--gallery-shift-y));
+}
+
+.museum-heading p {
+  margin: 0;
+  color: #fff3b0;
+  font-size: clamp(0.78rem, 1.15vw, 1rem);
+  letter-spacing: 0;
+  text-shadow:
+    0 0 14px rgba(255, 215, 112, 0.32),
+    0 1px 0 #000;
+  white-space: nowrap;
+}
+
+.museum-gallery {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 8;
+  display: block !important;
+  width: auto !important;
+  margin: 0 !important;
+  pointer-events: none;
+  transform: translate3d(var(--gallery-shift-x), var(--gallery-shift-y), 0) scale(var(--gallery-scale));
+  transform-origin: 50% 58%;
+  will-change: transform;
+}
+
+.museum-frame,
+.museum-frame--left,
+.museum-frame--right,
+.museum-frame--left:hover,
+.museum-frame--left:focus-visible,
+.museum-frame--right:hover,
+.museum-frame--right:focus-visible {
+  position: absolute !important;
+  left: 50% !important;
+  top: 51% !important;
+  width: clamp(112px, 12.2vw, 182px) !important;
+  --rise: 0px !important;
+  opacity: 0;
+  pointer-events: auto;
+  transform:
+    translate(-50%, -50%)
+    translate(var(--x), var(--y))
+    scale(var(--s))
+    rotateY(var(--yaw))
+    rotateX(3deg) !important;
+}
+
+body.show-projects .museum-frame {
+  animation: realGalleryFrameDrop 940ms cubic-bezier(.15,.9,.2,1) both !important;
+}
+
+body.show-projects .museum-frame:nth-child(1) { animation-delay: 220ms !important; }
+body.show-projects .museum-frame:nth-child(2) { animation-delay: 360ms !important; }
+body.show-projects .museum-frame:nth-child(3) { animation-delay: 500ms !important; }
+body.show-projects .museum-frame:nth-child(4) { animation-delay: 640ms !important; }
+body.show-projects .museum-frame:nth-child(5) { animation-delay: 780ms !important; }
+body.show-projects .museum-frame:nth-child(6) { animation-delay: 920ms !important; }
+
+.museum-frame:nth-child(1) {
+  --x: -37vw;
+  --y: 24vh;
+  --s: 1.04;
+  --yaw: 15deg;
+}
+
+.museum-frame:nth-child(2) {
+  --x: -22vw;
+  --y: 13vh;
+  --s: 0.82;
+  --yaw: 9deg;
+}
+
+.museum-frame:nth-child(3) {
+  --x: -5vw;
+  --y: 7vh;
+  --s: 0.7;
+  --yaw: 3deg;
+}
+
+.museum-frame:nth-child(4) {
+  --x: 14vw;
+  --y: 9vh;
+  --s: 0.76;
+  --yaw: -8deg;
+}
+
+.museum-frame:nth-child(5) {
+  --x: 32vw;
+  --y: 12vh;
+  --s: 0.8;
+  --yaw: -14deg;
+}
+
+.museum-frame:nth-child(6) {
+  --x: 27vw;
+  --y: 28vh;
+  --s: 0.98;
+  --yaw: -16deg;
+}
+
+.museum-frame:hover,
+.museum-frame:focus-visible {
+  outline: 0;
+  filter:
+    drop-shadow(0 0 22px rgba(255, 215, 112, 0.38))
+    drop-shadow(0 18px 20px rgba(0, 0, 0, 0.48));
+  transform:
+    translate(-50%, -50%)
+    translate(var(--x), calc(var(--y) - 7px))
+    scale(calc(var(--s) + 0.045))
+    rotateY(var(--yaw))
+    rotateX(1deg) !important;
+}
+
+.frame-name {
+  bottom: calc(100% + 10px);
+  padding: 5px 10px;
+  border-color: rgba(255, 215, 112, 0.9);
+  color: #fff6bd;
+  background: rgba(7, 7, 5, 0.78);
+}
+
+.frame-art {
+  border-width: 5px;
+  border-radius: 8px;
+}
+
+.frame-art img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.frame-plaque {
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: #251a04;
+  background: linear-gradient(180deg, #ffef9d, #d9a538 54%, #8e661c);
+  box-shadow:
+    0 0 16px rgba(255, 215, 112, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+@keyframes realGalleryFrameDrop {
+  from {
+    opacity: 0;
+    transform:
+      translate(-50%, -50%)
+      translate(var(--x), calc(var(--y) - 58vh))
+      scale(var(--s))
+      rotateY(var(--yaw))
+      rotateX(24deg)
+      rotateZ(-3deg);
+  }
+  72% {
+    opacity: 1;
+    transform:
+      translate(-50%, -50%)
+      translate(var(--x), calc(var(--y) + 8px))
+      scale(var(--s))
+      rotateY(var(--yaw))
+      rotateX(-1deg)
+      rotateZ(1deg);
+  }
+  to {
+    opacity: 1;
+    transform:
+      translate(-50%, -50%)
+      translate(var(--x), var(--y))
+      scale(var(--s))
+      rotateY(var(--yaw))
+      rotateX(3deg);
+  }
+}
+
+@media (max-width: 720px) {
+  .museum-heading {
+    top: 18px;
+    padding: 7px 12px;
+  }
+
+  .museum-heading p {
+    font-size: 0.72rem;
+  }
+
+  .museum-gallery {
+    transform: translate3d(0, var(--gallery-shift-y), 0) scale(calc(var(--gallery-scale) * 0.88));
+    transform-origin: 50% 64%;
+  }
+
+  .museum-frame,
+  .museum-frame--left,
+  .museum-frame--right,
+  .museum-frame--left:hover,
+  .museum-frame--left:focus-visible,
+  .museum-frame--right:hover,
+  .museum-frame--right:focus-visible {
+    width: min(38vw, 154px) !important;
+  }
+
+  .museum-frame:nth-child(1) { --x: -24vw; --y: 22vh; --s: 0.98; --yaw: 12deg; }
+  .museum-frame:nth-child(2) { --x: -9vw; --y: 12vh; --s: 0.8; --yaw: 7deg; }
+  .museum-frame:nth-child(3) { --x: 8vw; --y: 7vh; --s: 0.68; --yaw: -2deg; }
+  .museum-frame:nth-child(4) { --x: 24vw; --y: 14vh; --s: 0.76; --yaw: -10deg; }
+  .museum-frame:nth-child(5) { --x: -15vw; --y: 38vh; --s: 0.8; --yaw: 8deg; }
+  .museum-frame:nth-child(6) { --x: 17vw; --y: 36vh; --s: 0.88; --yaw: -10deg; }
+
+  .frame-name {
+    max-width: 150%;
+    font-size: 0.58rem;
+  }
+
+  .frame-plaque {
+    font-size: 0.56rem;
+  }
+}

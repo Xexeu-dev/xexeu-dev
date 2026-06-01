@@ -35,7 +35,7 @@ window.setTimeout(() => {
 
 function updateLoader(delta) {
   if (!loaderOverlay || document.body.classList.contains("is-loaded")) return;
-  const assetBonus = state.loadedColumn ? 18 : 0;
+  const assetBonus = (state.loadedColumn ? 12 : 0) + (state.loadedGallery ? 12 : 0);
   const target = pageLoaded ? 100 : 78 + assetBonus;
   visualLoadingProgress = THREE.MathUtils.damp(visualLoadingProgress, target, pageLoaded ? 5.5 : 1.8, delta);
   const visibleProgress = Math.min(100, Math.round(visualLoadingProgress));
@@ -85,6 +85,7 @@ let loaderInterval = null;
 
 const state = {
   loadedColumn: false,
+  loadedGallery: false,
   phase: 0,
   orbitScrollRange: carouselCount - 1,
   orbitImpulseStrength: 0.032,
@@ -451,11 +452,16 @@ const columnAnchor = new THREE.Group();
 const orbitAnchor = new THREE.Group();
 const heroAnchor = new THREE.Group();
 const ceilingAnchor = new THREE.Group();
+const galleryAnchor = new THREE.Group();
+const galleryRoom = new THREE.Group();
+const galleryDisplays = new THREE.Group();
 const mistAnchor = new THREE.Group();
 const heroLetterAnchor = new THREE.Group();
-scene.add(root, mistAnchor);
+scene.add(root, mistAnchor, galleryAnchor);
 root.add(columnAnchor, orbitAnchor, heroAnchor, ceilingAnchor);
 heroAnchor.add(heroLetterAnchor);
+galleryAnchor.add(galleryRoom, galleryDisplays);
+galleryAnchor.visible = false;
 
 const ambient = new THREE.HemisphereLight(0x9bdfff, 0x110014, 1.55);
 scene.add(ambient);
@@ -472,9 +478,23 @@ const backLight = new THREE.PointLight(0x62ffc4, 58, 54);
 backLight.position.set(0, 2.8, -7.4);
 scene.add(backLight);
 
+const galleryAmbient = new THREE.HemisphereLight(0xffffff, 0x5d5d59, 0);
+scene.add(galleryAmbient);
+
+const galleryKeyLight = new THREE.SpotLight(0xffffff, 0, 22, Math.PI / 4.6, 0.64, 1.05);
+galleryKeyLight.position.set(-2.8, 3.3, 4.5);
+galleryKeyLight.target.position.set(0, 0.2, -3.8);
+scene.add(galleryKeyLight, galleryKeyLight.target);
+
+const galleryFillLight = new THREE.PointLight(0xf7f4e8, 0, 20);
+galleryFillLight.position.set(3.8, 2.1, 1.8);
+scene.add(galleryFillLight);
+
 const aura = new THREE.Group();
 let columnModel = null;
+let galleryModel = null;
 const columnSegments = [];
+const galleryLightPoints = [];
 const auraMaterials = [
   new THREE.MeshBasicMaterial({ color: state.colors.cyan, transparent: true, opacity: 0.36, blending: THREE.AdditiveBlending, depthWrite: false }),
   new THREE.MeshBasicMaterial({ color: state.colors.pink, transparent: true, opacity: 0.24, blending: THREE.AdditiveBlending, depthWrite: false }),
@@ -497,6 +517,157 @@ const fallbackColumnMaterial = new THREE.MeshStandardMaterial({
 });
 
 const gltfLoader = new GLTFLoader();
+
+const galleryWallMaterial = new THREE.MeshStandardMaterial({
+  color: 0xa8a8a3,
+  roughness: 0.72,
+  metalness: 0.04,
+});
+
+const galleryFloorMaterial = new THREE.MeshStandardMaterial({
+  color: 0xbcbcb6,
+  roughness: 0.58,
+  metalness: 0.02,
+});
+
+const galleryDarkMaterial = new THREE.MeshStandardMaterial({
+  color: 0x3c3c39,
+  roughness: 0.8,
+  metalness: 0.08,
+});
+
+const galleryGlowMaterial = new THREE.MeshBasicMaterial({
+  color: 0xffffff,
+  transparent: true,
+  opacity: 0.34,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+});
+
+const galleryPedestalSlots = [
+  { x: -3.55, z: 0.75, scale: 1.08, yaw: 0.18 },
+  { x: -1.68, z: -0.55, scale: 0.92, yaw: 0.08 },
+  { x: -0.08, z: -1.72, scale: 0.78, yaw: 0.02 },
+  { x: 1.68, z: -0.92, scale: 0.88, yaw: -0.08 },
+  { x: 3.34, z: -0.18, scale: 0.86, yaw: -0.16 },
+  { x: 2.9, z: 1.36, scale: 1.02, yaw: -0.22 },
+];
+
+function addGalleryBox(width, height, depth, x, y, z, material) {
+  const mesh = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
+  mesh.position.set(x, y, z);
+  mesh.receiveShadow = false;
+  mesh.castShadow = false;
+  galleryRoom.add(mesh);
+  return mesh;
+}
+
+addGalleryBox(11.2, 0.08, 16.4, 0, -1.36, -3.35, galleryFloorMaterial);
+addGalleryBox(0.08, 4.8, 16.4, -5.58, 1.02, -3.35, galleryWallMaterial);
+addGalleryBox(0.08, 4.8, 16.4, 5.58, 1.02, -3.35, galleryWallMaterial);
+addGalleryBox(11.2, 4.8, 0.08, 0, 1.02, -11.55, galleryWallMaterial);
+addGalleryBox(11.2, 0.08, 16.4, 0, 3.42, -3.35, galleryWallMaterial);
+addGalleryBox(0.06, 0.08, 12.8, -2.55, 3.27, -3.35, galleryDarkMaterial);
+addGalleryBox(0.06, 0.08, 12.8, 2.55, 3.27, -3.35, galleryDarkMaterial);
+
+galleryPedestalSlots.forEach((slot, index) => {
+  const glow = new THREE.Mesh(new THREE.CircleGeometry(0.78 * slot.scale, 48), galleryGlowMaterial.clone());
+  glow.position.set(slot.x, -1.31, slot.z);
+  glow.rotation.x = -Math.PI / 2;
+  glow.material.opacity = 0.24 + index * 0.012;
+  galleryRoom.add(glow);
+
+  const topLight = new THREE.PointLight(0xffffff, 0, 4.2);
+  topLight.position.set(slot.x, 1.8, slot.z + 0.08);
+  topLight.userData.galleryBaseIntensity = 0.9 + slot.scale * 0.34;
+  galleryLightPoints.push(topLight);
+  galleryRoom.add(topLight);
+});
+
+function addFallbackGalleryPedestal(slot) {
+  const pedestalGroup = new THREE.Group();
+  const baseMaterial = galleryWallMaterial.clone();
+  const topMaterial = new THREE.MeshStandardMaterial({
+    color: 0xe8e8e2,
+    roughness: 0.48,
+    metalness: 0.04,
+  });
+  const column = new THREE.Mesh(new THREE.BoxGeometry(0.56, 1.46, 0.56), baseMaterial);
+  column.position.y = -0.55;
+  const base = new THREE.Mesh(new THREE.BoxGeometry(0.92, 0.13, 0.92), galleryDarkMaterial.clone());
+  base.position.y = -1.27;
+  const top = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.11, 0.82), topMaterial);
+  top.position.y = 0.2;
+  pedestalGroup.add(base, column, top);
+  pedestalGroup.position.set(slot.x, -0.08, slot.z);
+  pedestalGroup.rotation.y = slot.yaw;
+  pedestalGroup.scale.setScalar(slot.scale);
+  galleryDisplays.add(pedestalGroup);
+  return pedestalGroup;
+}
+
+galleryAnchor.position.set(0, 0, 0);
+galleryAnchor.rotation.set(0, 0, 0);
+
+gltfLoader.load(
+  "./assets/model/gallery-display-pedestal.glb",
+  (gltf) => {
+    const source = gltf.scene;
+    const bounds = new THREE.Box3().setFromObject(source);
+    const size = new THREE.Vector3();
+    const center = new THREE.Vector3();
+    bounds.getSize(size);
+    bounds.getCenter(center);
+    const wideScene = Math.max(size.x, size.z) > Math.max(size.y, 0.001) * 2.2;
+
+    source.traverse((child) => {
+      if (!child.isMesh) return;
+      const materials = Array.isArray(child.material) ? child.material : [child.material];
+      child.material = materials.map((material) => {
+        const tuned = material ? material.clone() : galleryWallMaterial.clone();
+        tuned.side = THREE.DoubleSide;
+        if ("color" in tuned && tuned.color) tuned.color.lerp(new THREE.Color(0xd0d0ca), 0.36);
+        if ("metalness" in tuned) tuned.metalness = Math.min(tuned.metalness ?? 0.08, 0.12);
+        if ("roughness" in tuned) tuned.roughness = Math.max(tuned.roughness ?? 0.45, 0.48);
+        return tuned;
+      });
+      if (child.material.length === 1) child.material = child.material[0];
+      child.castShadow = false;
+      child.receiveShadow = false;
+      child.frustumCulled = false;
+    });
+
+    if (wideScene) {
+      const maxAxis = Math.max(size.x, size.y, size.z, 1);
+      source.position.sub(center);
+      source.scale.setScalar(8.2 / maxAxis);
+      source.position.y -= 0.8;
+      galleryModel = source;
+      galleryDisplays.add(source);
+    } else {
+      const normalized = source;
+      normalized.position.set(-center.x, -bounds.min.y, -center.z);
+      normalized.scale.setScalar(1.28 / Math.max(size.y, 1));
+
+      galleryPedestalSlots.forEach((slot, index) => {
+        const pedestal = index === 0 ? normalized : normalized.clone(true);
+        pedestal.position.set(slot.x, -1.34, slot.z);
+        pedestal.rotation.y = slot.yaw;
+        pedestal.scale.multiplyScalar(slot.scale);
+        galleryDisplays.add(pedestal);
+      });
+      galleryModel = galleryDisplays;
+    }
+    state.loadedGallery = true;
+  },
+  undefined,
+  () => {
+    galleryPedestalSlots.forEach(addFallbackGalleryPedestal);
+    galleryModel = galleryDisplays;
+    state.loadedGallery = true;
+  },
+);
+
 gltfLoader.load(
   "./assets/model/coluna-site.glb",
   (gltf) => {
@@ -1954,6 +2125,16 @@ function animate() {
   const projectsGatePhase = THREE.MathUtils.smoothstep(scrollProgress, towerScrollEnd - 0.015, projectsGateStart) * (1 - THREE.MathUtils.smoothstep(scrollProgress, projectsGateStart + 0.025, projectsRevealProgress));
   const ceilingPhase = Math.min(1, introCeilingPhase + projectsGatePhase * 0.95);
   const cameraTrackY = THREE.MathUtils.lerp(towerTopY + 0.08, towerBottomY - 0.08, towerProgress);
+  const galleryVisibility = THREE.MathUtils.smoothstep(scrollProgress, projectsRevealProgress - 0.018, projectsRevealProgress + 0.025);
+  const galleryZoom = THREE.MathUtils.smoothstep(scrollProgress, projectsRevealProgress + 0.012, 0.995);
+  const galleryMouseStrength = galleryVisibility * (0.55 + galleryZoom * 0.45);
+
+  document.documentElement.style.setProperty("--gallery-zoom", galleryZoom.toFixed(4));
+  document.documentElement.style.setProperty("--gallery-scale", (1 + galleryZoom * 0.34).toFixed(4));
+  document.documentElement.style.setProperty("--gallery-mouse-x", pointer.x.toFixed(4));
+  document.documentElement.style.setProperty("--gallery-mouse-y", pointer.y.toFixed(4));
+  document.documentElement.style.setProperty("--gallery-shift-x", `${(-pointer.x * 16 * galleryMouseStrength).toFixed(2)}px`);
+  document.documentElement.style.setProperty("--gallery-shift-y", `${(pointer.y * 9 * galleryMouseStrength).toFixed(2)}px`);
 
   orbitImpulse += orbitVelocity * delta;
   orbitImpulse = THREE.MathUtils.damp(orbitImpulse, 0, state.orbitImpulseReturn, delta);
@@ -1981,6 +2162,25 @@ function animate() {
   document.body.classList.toggle("hide-hero-code", false);
   document.body.classList.toggle("show-services-list", scrollProgress >= serviceListRevealProgress && scrollProgress < projectsGateStart);
   document.body.classList.toggle("show-projects", scrollProgress >= projectsRevealProgress);
+  galleryAnchor.visible = galleryVisibility > 0.01;
+  galleryAnchor.position.set(
+    pointer.x * 0.18 * galleryMouseStrength,
+    -0.06 + pointer.y * 0.08 * galleryMouseStrength,
+    -0.2 - galleryZoom * 0.72,
+  );
+  galleryAnchor.rotation.set(
+    -pointer.y * 0.032 * galleryMouseStrength,
+    pointer.x * 0.062 * galleryMouseStrength,
+    pointer.x * 0.008 * galleryMouseStrength,
+  );
+  galleryRoom.position.z = -galleryZoom * 0.24;
+  galleryDisplays.rotation.y = Math.sin(elapsed * 0.18) * 0.012 * galleryVisibility;
+  galleryAmbient.intensity = galleryVisibility * 0.62;
+  galleryKeyLight.intensity = galleryVisibility * (9.5 + galleryZoom * 4.5);
+  galleryFillLight.intensity = galleryVisibility * (1.8 + galleryZoom * 1.2);
+  galleryLightPoints.forEach((light) => {
+    light.intensity = galleryVisibility * (light.userData.galleryBaseIntensity ?? 1);
+  });
   heroAnchor.visible = heroExit < 0.98;
   heroAnchor.position.set(0.08, towerHeroY + heroExit * 1.35, -1.04 - heroExit * 0.44);
   heroAnchor.scale.setScalar(isMobile ? 0.45 : 1);
@@ -2086,10 +2286,10 @@ function animate() {
   mistAnchor.rotation.y += delta * (0.018 + scrollBreath * 0.028);
   particles.rotation.x = Math.sin(elapsed * 0.11) * 0.08;
   particleMaterial.size = 0.025 + scrollBreath * 0.026;
-  particleMaterial.opacity = 0.55 + scrollBreath * 0.28;
+  particleMaterial.opacity = (0.55 + scrollBreath * 0.28) * (1 - galleryVisibility * 0.64);
   chameleonParticles.rotation.y -= delta * 0.014;
   chameleonParticles.position.y = THREE.MathUtils.lerp(towerHeroY - 2.4, cameraTrackY, towerEnter) * 0.18;
-  chameleonMaterial.opacity = 0.18 + towerEnter * 0.18 + (scrollProgress > projectsRevealProgress ? 0.12 : 0);
+  chameleonMaterial.opacity = (0.18 + towerEnter * 0.18) * (1 - galleryVisibility * 0.58) + galleryVisibility * 0.045;
 
   const heroCamera = new THREE.Vector3(0.1, towerHeroY + 0.02, isMobile ? 9.15 : 8.3);
   const towerCamera = new THREE.Vector3(0.1, cameraTrackY + 0.02, isMobile ? 8.45 : 7.28);
@@ -2097,12 +2297,25 @@ function animate() {
   const heroLook = new THREE.Vector3(0.2, towerHeroY - 0.16, -0.82);
   const towerLook = new THREE.Vector3(0.28, cameraTrackY - 0.08, towerCenterZ + 0.24);
   const targetLook = heroLook.lerp(towerLook, towerEnter);
+  const galleryCamera = new THREE.Vector3(
+    pointer.x * 0.18 * galleryMouseStrength,
+    1.04 + pointer.y * 0.1 * galleryMouseStrength,
+    (isMobile ? 8.2 : 7.55) - galleryZoom * (isMobile ? 2.05 : 3.55),
+  );
+  const galleryLook = new THREE.Vector3(
+    pointer.x * 0.24 * galleryMouseStrength,
+    0.76 + pointer.y * 0.08 * galleryMouseStrength,
+    -3.1 - galleryZoom * 4.9,
+  );
+  targetCamera.lerp(galleryCamera, galleryVisibility);
+  targetLook.lerp(galleryLook, galleryVisibility);
   camera.position.copy(targetCamera);
   camera.lookAt(targetLook);
 
-  keyLight.intensity = 76 + scrollBreath * 34;
-  magentaLight.intensity = 62 + scrollBreath * 44;
-  backLight.intensity = 44 + scrollBreath * 38;
+  const mainLightFade = 1 - galleryVisibility * 0.62;
+  keyLight.intensity = (76 + scrollBreath * 34) * mainLightFade;
+  magentaLight.intensity = (62 + scrollBreath * 44) * mainLightFade;
+  backLight.intensity = (44 + scrollBreath * 38) * mainLightFade;
 
   renderer.render(scene, camera);
   renderSmoke(delta, elapsed);
