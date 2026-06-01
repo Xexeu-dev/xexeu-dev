@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Animator X">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="46%" r="62%">
+      <stop offset="0" stop-color="#15171c"/>
+      <stop offset=".62" stop-color="#06070a"/>
+      <stop offset="1" stop-color="#000"/>
+    </radialGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff2930"/>
+      <stop offset=".48" stop-color="#ff0712"/>
+      <stop offset="1" stop-color="#920006"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 1 0 0 0 0 .05 0 0 0 0 .05 0 0 0 .88 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="#000"/>
+  <circle cx="800" cy="450" r="380" fill="url(#bg)" stroke="#111827" stroke-width="10"/>
+  <g filter="url(#glow)" fill="url(#red)">
+    <path d="M472 704 734 191h84l273 513H941l-45-96H659l-45 96H472Zm234-218h142l-70-156-72 156Z"/>
+    <path d="M875 704 1065 456 894 226h171l92 133 91-133h174l-172 226 191 252h-181l-103-151-104 151H875Z"/>
+  </g>
+  <path d="M635 546h250l42 86H595l40-86Z" fill="#08090c" opacity=".55"/>
+  <text x="800" y="820" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="58" fill="#f5f5f5" opacity=".9">ANIMATOR X</text>
+</svg>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Animator X studio">
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#151b24"/>
+      <stop offset="1" stop-color="#080b10"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3da3ff"/>
+      <stop offset="1" stop-color="#0d4f9e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="#080b10"/>
+  <rect x="0" y="0" width="1600" height="72" fill="#05070b"/>
+  <text x="46" y="47" font-family="Arial Black, sans-serif" font-size="28" fill="#f2f5ff">AX  Animator X</text>
+  <g transform="translate(900 16)">
+    <rect x="0" y="0" width="138" height="42" rx="10" fill="url(#blue)"/>
+    <rect x="152" y="0" width="120" height="42" rx="10" fill="#151b24" stroke="#394252"/>
+    <rect x="286" y="0" width="120" height="42" rx="10" fill="#151b24" stroke="#394252"/>
+    <text x="69" y="28" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="16">CRIAR CENA</text>
+    <text x="212" y="28" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="16" fill="#e9eef9">SALVAR</text>
+    <text x="346" y="28" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="16" fill="#e9eef9">PROJETO</text>
+  </g>
+  <rect x="18" y="86" width="1160" height="780" fill="#0b1119"/>
+  <g stroke="#314052" stroke-width="1" opacity=".75">
+    <path d="M0 698H1180"/>
+    <path d="M70 866 730 200 1510 866"/>
+    <path d="M160 866 760 220 1420 866"/>
+    <path d="M250 866 790 244 1330 866"/>
+    <path d="M340 866 820 268 1240 866"/>
+    <path d="M430 866 850 292 1150 866"/>
+    <path d="M520 866 880 316 1060 866"/>
+  </g>
+  <polygon points="355,672 728,400 1048,635 705,758" fill="#bbd0c1"/>
+  <ellipse cx="645" cy="575" rx="142" ry="52" fill="#70f6e9" opacity=".78"/>
+  <polygon points="567,582 662,220 760,582" fill="#eef7ff"/>
+  <rect x="884" y="462" width="72" height="204" fill="#8a7569"/>
+  <path d="M918 272 823 498h190z" fill="#8cf6d4"/>
+  <path d="M918 384 800 568h236z" fill="#78eac7"/>
+  <g transform="translate(665 515)">
+    <circle cx="0" cy="-82" r="40" fill="#ecc3b4"/>
+    <path d="M-48 -112c45-42 86-20 95 16-46-6-70 6-112 35 3-19 8-35 17-51Z" fill="#8a1f25"/>
+    <rect x="-37" y="-42" width="74" height="180" rx="28" fill="#3d6fae"/>
+    <path d="M-82 30c40-20 50-42 74-51" stroke="#f1ded0" stroke-width="18" fill="none" stroke-linecap="round"/>
+    <path d="M40 -14c26 24 36 58 58 96" stroke="#f1ded0" stroke-width="18" fill="none" stroke-linecap="round"/>
+    <rect x="-52" y="126" width="32" height="106" fill="#232936"/>
+    <rect x="20" y="126" width="32" height="106" fill="#232936"/>
+  </g>
+  <rect x="1202" y="92" width="370" height="780" rx="18" fill="url(#panel)" stroke="#35404f"/>
+  <text x="1232" y="144" font-family="Arial Black, sans-serif" font-size="22" fill="#d8e2f0">CENA</text>
+  <g font-family="Arial Black, sans-serif" font-size="18">
+    <rect x="1232" y="176" width="300" height="48" rx="10" fill="#202733" stroke="#465061"/>
+    <text x="1250" y="207" fill="#f1f6ff">Relevo 0</text>
+    <rect x="1232" y="238" width="300" height="48" rx="10" fill="#202733" stroke="#d4a51f"/>
+    <text x="1250" y="269" fill="#ffd84f">Arvore 1</text>
+    <rect x="1232" y="300" width="300" height="48" rx="10" fill="#202733" stroke="#465061"/>
+    <text x="1250" y="331" fill="#f1f6ff">Caverna 2</text>
+    <rect x="1232" y="362" width="300" height="48" rx="10" fill="#202733" stroke="#465061"/>
+    <text x="1250" y="393" fill="#f1f6ff">Montanha 3</text>
+  </g>
+</svg>

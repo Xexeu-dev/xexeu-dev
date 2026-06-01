@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XEXEU DEV,S</title>
-    <link rel="stylesheet" href="./styles.css?v=78" />
+    <link rel="stylesheet" href="./styles.css?v=82" />
   </head>
   <body>
     <div class="loading-screen" data-loader aria-live="polite">
@@ -130,6 +130,11 @@
             <span class="frame-art"><img src="./assets/projects/launcher-mobile.png" alt="Launcher mobile" /></span>
             <span class="frame-plaque">Launcher mobile</span>
           </button>
+          <button class="museum-frame" type="button" data-project-open data-project-title="ANIMATOR X" data-project-kicker="PROJETO: SISTEMAS" data-project-image="./assets/projects/animator-x.svg" data-project-gallery-images="./assets/projects/animator-x-gallery/animator-x-studio.svg|./assets/projects/animator-x-gallery/animator-x-rig.svg" data-project-description="Animator X e um studio de animacao desenvolvido especialmente por mim para fazer animacoes e cenas para jogos, Minecraft e mods. Ele foi criado para tirar duvidas, ser simples e facil de utilizar, sem quebrar a cabeca. O Animator X consegue ler mods de Minecraft, extrair animacoes do mod e aplicar no seu modelo 3D. Tambem trabalha com animacoes vindas de videos e transforma movimentos em animacoes, usando uma IA de movimentos integrada capaz de ler e integrar movimentos de um video diretamente no modelo 3D.">
+            <span class="frame-name">Animator X</span>
+            <span class="frame-art"><img src="./assets/projects/animator-x.svg" alt="Animator X" /></span>
+            <span class="frame-plaque">Sistemas</span>
+          </button>
         </div>
 
         <div class="museum-book-stand" aria-hidden="true">
@@ -159,12 +164,9 @@
     <section class="final-gate" data-final-gate aria-hidden="true">
       <canvas id="endSmoke" aria-hidden="true"></canvas>
       <div class="final-gate__text" aria-label="THE END">
-        <span class="final-gate__letter">T</span>
-        <span class="final-gate__letter">H</span>
-        <span class="final-gate__letter">E</span>
-        <span class="final-gate__letter final-gate__letter--gap">E</span>
-        <span class="final-gate__letter">N</span>
-        <span class="final-gate__letter">D</span>
+        <div class="final-gate__panel" tabindex="0" role="button">
+          <span>THE END</span>
+        </div>
       </div>
     </section>
 
@@ -178,6 +180,6 @@
         }
       }
     </script>
-    <script type="module" src="./app.js?v=78"></script>
+    <script type="module" src="./app.js?v=82"></script>
   </body>
 </html>

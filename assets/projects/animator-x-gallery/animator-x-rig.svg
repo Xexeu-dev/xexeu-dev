@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Animator X rig">
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#202a2f"/>
+      <stop offset="1" stop-color="#10151b"/>
+    </linearGradient>
+    <linearGradient id="timeline" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2674d8"/>
+      <stop offset="1" stop-color="#8fd5ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="#080b10"/>
+  <rect width="1600" height="64" fill="#05070b"/>
+  <text x="30" y="42" font-family="Arial Black, sans-serif" font-size="26" fill="#f2f5ff">AX Animator X</text>
+  <rect x="18" y="78" width="456" height="678" fill="url(#panel)" stroke="#343c48"/>
+  <rect x="1200" y="78" width="376" height="678" rx="16" fill="#0f151d" stroke="#343c48"/>
+  <rect x="0" y="756" width="1600" height="144" fill="#10151d" stroke="#303744"/>
+  <g transform="translate(52 112)" font-family="Arial Black, sans-serif" font-size="20">
+    <rect x="0" y="0" width="76" height="48" rx="10" fill="#3b99ff"/>
+    <rect x="86" y="0" width="118" height="48" rx="10" fill="#202733" stroke="#465061"/>
+    <rect x="214" y="0" width="62" height="48" rx="10" fill="#202733" stroke="#465061"/>
+    <text x="38" y="31" text-anchor="middle" fill="#fff">Mapa</text>
+    <text x="145" y="31" text-anchor="middle" fill="#fff">Animacao</text>
+    <text x="245" y="31" text-anchor="middle" fill="#fff">Rig</text>
+  </g>
+  <g stroke="#3b4658" opacity=".8">
+    <path d="M480 690H1200"/>
+    <path d="M475 760 790 218 1180 760"/>
+    <path d="M545 760 805 242 1110 760"/>
+    <path d="M615 760 820 266 1040 760"/>
+    <path d="M685 760 835 290 970 760"/>
+  </g>
+  <polygon points="555,610 743,420 1035,610 840,700" fill="#bed2bf"/>
+  <ellipse cx="735" cy="562" rx="94" ry="34" fill="#7cf7ef" opacity=".72"/>
+  <polygon points="655,578 746,218 838,578" fill="#eff8ff"/>
+  <g transform="translate(826 500)">
+    <circle cx="0" cy="-92" r="36" fill="#edc2b0"/>
+    <path d="M-43 -120c46-34 82-8 92 26-42-12-70-3-104 24 2-20 5-35 12-50Z" fill="#8a1f25"/>
+    <rect x="-34" y="-52" width="68" height="176" rx="25" fill="#3d6fae"/>
+    <g stroke="#81e6ff" stroke-width="7" fill="none">
+      <circle cx="-24" cy="-10" r="8"/>
+      <circle cx="28" cy="24" r="8"/>
+      <circle cx="-42" cy="78" r="8"/>
+      <circle cx="36" cy="122" r="8"/>
+      <path d="M-24 -10 28 24 -42 78 36 122"/>
+    </g>
+  </g>
+  <g font-family="Arial Black, sans-serif" font-size="18" fill="#eaf2ff">
+    <text x="1230" y="128">CENA</text>
+    <rect x="1230" y="154" width="306" height="46" rx="9" fill="#202733" stroke="#465061"/>
+    <text x="1250" y="184">Relevo 0</text>
+    <rect x="1230" y="214" width="306" height="46" rx="9" fill="#202733" stroke="#465061"/>
+    <text x="1250" y="244">Arvore 1</text>
+    <rect x="1230" y="274" width="306" height="46" rx="9" fill="#202733" stroke="#d4a51f"/>
+    <text x="1250" y="304" fill="#ffd84f">Montanha 3</text>
+  </g>
+  <g transform="translate(548 805)">
+    <rect x="0" y="0" width="860" height="44" rx="16" fill="#16202b" stroke="#334254"/>
+    <path d="M16 22h828" stroke="url(#timeline)" stroke-width="12" stroke-linecap="round" stroke-dasharray="8 10"/>
+    <circle cx="150" cy="22" r="10" fill="#42a5ff"/>
+    <circle cx="844" cy="22" r="10" fill="#42a5ff"/>
+  </g>
+</svg>

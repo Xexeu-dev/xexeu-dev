@@ -8,7 +8,7 @@ const smokeCanvas = document.querySelector("#toxicSmoke");
 const smokeCtx = smokeCanvas?.getContext("2d");
 const endSmokeCanvas = document.querySelector("#endSmoke");
 const endSmokeCtx = endSmokeCanvas?.getContext("2d");
-const endLetters = Array.from(document.querySelectorAll(".final-gate__letter"));
+const endLetters = Array.from(document.querySelectorAll(".final-gate__panel, .final-gate__letter"));
 const codeColumns = Array.from(document.querySelectorAll("[data-code-column]"));
 const loaderOverlay = document.querySelector("[data-loader]");
 const loaderPercent = document.querySelector("[data-loader-percent]");
@@ -17,6 +17,9 @@ const carouselCount = 14;
 const progressParam = new URLSearchParams(window.location.search).get("progress");
 const previewProgress = progressParam === null ? NaN : Number(progressParam);
 const hasPreviewProgress = Number.isFinite(previewProgress);
+let pageLoaded = false;
+let visualLoadingProgress = 0;
+let loaderInterval = null;
 
 if ("scrollRestoration" in history) {
   history.scrollRestoration = "manual";
@@ -38,14 +41,15 @@ window.setTimeout(() => {
 
 function updateLoader(delta) {
   if (!loaderOverlay || document.body.classList.contains("is-loaded")) return;
+  const forcedReady = pageLoaded || performance.now() > 5200;
   const assetBonus = (state.loadedColumn ? 12 : 0) + (state.loadedGallery ? 12 : 0);
-  const target = pageLoaded ? 100 : 78 + assetBonus;
-  visualLoadingProgress = THREE.MathUtils.damp(visualLoadingProgress, target, pageLoaded ? 5.5 : 1.8, delta);
+  const target = forcedReady ? 100 : 78 + assetBonus;
+  visualLoadingProgress = THREE.MathUtils.damp(visualLoadingProgress, target, forcedReady ? 5.5 : 1.8, delta);
   const visibleProgress = Math.min(100, Math.round(visualLoadingProgress));
   if (loaderPercent) loaderPercent.textContent = `${visibleProgress}%`;
   if (loaderBar) loaderBar.style.width = `${visibleProgress}%`;
   if (loaderOverlay) loaderOverlay.style.setProperty("--loader-fill", visibleProgress);
-  if (visibleProgress >= 100 && pageLoaded) {
+  if (visibleProgress >= 100 && forcedReady) {
     if (loaderInterval !== null) {
       window.clearInterval(loaderInterval);
       loaderInterval = null;
@@ -84,9 +88,6 @@ let dragSpinTarget = 0;
 let isDragging = false;
 let pointerWasDragged = false;
 let hoveredCardIndex = -1;
-let pageLoaded = false;
-let visualLoadingProgress = 0;
-let loaderInterval = null;
 
 const state = {
   loadedColumn: false,
@@ -478,6 +479,54 @@ const endSmokeParticles = [];
 let endSceneWasActive = false;
 let endSmokeStartTime = 0;
 let endSmokeEmitCarry = 0;
+const endPanelDrag = {
+  active: false,
+  pointerId: null,
+  startX: 0,
+  startY: 0,
+  baseX: 0,
+  baseY: 0,
+  x: 0,
+  y: 0
+};
+
+function clampEndPanelDrag() {
+  const maxX = Math.max(70, window.innerWidth * 0.24);
+  const maxY = Math.max(46, window.innerHeight * 0.18);
+  endPanelDrag.x = THREE.MathUtils.clamp(endPanelDrag.x, -maxX, maxX);
+  endPanelDrag.y = THREE.MathUtils.clamp(endPanelDrag.y, -maxY, maxY);
+}
+
+function applyEndPanelDrag() {
+  endLetters.forEach((panel) => {
+    panel.style.setProperty("--end-drag-x", `${endPanelDrag.x.toFixed(2)}px`);
+    panel.style.setProperty("--end-drag-y", `${endPanelDrag.y.toFixed(2)}px`);
+  });
+}
+
+function updateEndPanelMotion(event) {
+  endSmokeMouse.vx = event.clientX - endSmokeMouse.x;
+  endSmokeMouse.vy = event.clientY - endSmokeMouse.y;
+  endSmokeMouse.x = event.clientX;
+  endSmokeMouse.y = event.clientY;
+  const endMove = Math.hypot(endSmokeMouse.vx, endSmokeMouse.vy);
+  if (endMove <= 0.8) return;
+
+  const endAngle = Math.atan2(endSmokeMouse.vy, endSmokeMouse.vx) * 180 / Math.PI;
+  const endPower = THREE.MathUtils.clamp(endMove / 42, 0, 1);
+  const endScale = 1 + endPower * 0.045;
+  const endTilt = THREE.MathUtils.clamp(endAngle * 0.035, -7, 7);
+  const endShiftX = ((event.clientX / window.innerWidth) - 0.5) * 42;
+  const endShiftY = ((event.clientY / window.innerHeight) - 0.5) * 30;
+  document.documentElement.style.setProperty("--end-spin-angle", `${endTilt.toFixed(2)}deg`);
+  document.documentElement.style.setProperty("--end-spin-scale", endScale.toFixed(3));
+  endLetters.forEach((panel) => {
+    panel.style.setProperty("--end-shift-x", `${endShiftX.toFixed(2)}px`);
+    panel.style.setProperty("--end-shift-y", `${endShiftY.toFixed(2)}px`);
+    panel.style.setProperty("--end-spin-angle", `${endTilt.toFixed(2)}deg`);
+    panel.style.setProperty("--end-spin-scale", endScale.toFixed(3));
+  });
+}
 
 function resizeEndSmokeCanvas() {
   if (!endSmokeCanvas) return;
@@ -499,16 +548,16 @@ function createEndSmokeParticle(source) {
   const angle = fromGreen
     ? 0.62 + Math.random() * 0.44
     : Math.PI + 0.62 + Math.random() * 0.44;
-  const speed = fromGreen ? 560 + Math.random() * 720 : 520 + Math.random() * 680;
+  const speed = fromGreen ? 700 + Math.random() * 860 : 660 + Math.random() * 820;
   return {
     x,
     y,
     vx: Math.cos(angle) * speed,
     vy: Math.sin(angle) * speed,
-    radius: 22 + Math.random() * 52,
-    alpha: 0.7 + Math.random() * 0.24,
+    radius: 42 + Math.random() * 86,
+    alpha: 0.78 + Math.random() * 0.22,
     life: 0,
-    maxLife: 8.5 + Math.random() * 5.5,
+    maxLife: 18 + Math.random() * 10,
     hue: fromGreen ? "green" : "purple",
     phase: Math.random() * Math.PI * 2,
     spin: (Math.random() - 0.5) * 1.7,
@@ -516,21 +565,21 @@ function createEndSmokeParticle(source) {
 }
 
 function drawSmokeBlob(ctx, x, y, radius, alpha, hue, phase) {
-  const lobes = 4;
+  const lobes = 6;
   for (let i = 0; i < lobes; i += 1) {
-    const offsetAngle = phase + i * Math.PI * 0.5;
-    const lobeRadius = radius * (0.55 + i * 0.09);
-    const lx = x + Math.cos(offsetAngle) * radius * 0.22;
-    const ly = y + Math.sin(offsetAngle * 1.17) * radius * 0.18;
+    const offsetAngle = phase + i * Math.PI * 0.37;
+    const lobeRadius = radius * (0.44 + i * 0.055);
+    const lx = x + Math.cos(offsetAngle) * radius * 0.3;
+    const ly = y + Math.sin(offsetAngle * 1.17) * radius * 0.24;
     const gradient = ctx.createRadialGradient(lx, ly, 0, lx, ly, lobeRadius);
     if (hue === "green") {
-      gradient.addColorStop(0, `rgba(195, 255, 126, ${Math.min(0.88, alpha * 0.86)})`);
-      gradient.addColorStop(0.28, `rgba(73, 255, 63, ${Math.min(0.76, alpha * 0.76)})`);
-      gradient.addColorStop(0.62, `rgba(27, 116, 35, ${Math.min(0.62, alpha * 0.58)})`);
+      gradient.addColorStop(0, `rgba(210, 255, 158, ${Math.min(0.96, alpha * 0.95)})`);
+      gradient.addColorStop(0.28, `rgba(62, 255, 55, ${Math.min(0.88, alpha * 0.88)})`);
+      gradient.addColorStop(0.64, `rgba(10, 95, 24, ${Math.min(0.78, alpha * 0.72)})`);
     } else {
-      gradient.addColorStop(0, `rgba(245, 149, 255, ${Math.min(0.88, alpha * 0.86)})`);
-      gradient.addColorStop(0.3, `rgba(191, 43, 255, ${Math.min(0.78, alpha * 0.78)})`);
-      gradient.addColorStop(0.64, `rgba(78, 16, 124, ${Math.min(0.66, alpha * 0.6)})`);
+      gradient.addColorStop(0, `rgba(250, 170, 255, ${Math.min(0.96, alpha * 0.95)})`);
+      gradient.addColorStop(0.3, `rgba(191, 39, 255, ${Math.min(0.9, alpha * 0.9)})`);
+      gradient.addColorStop(0.66, `rgba(82, 8, 132, ${Math.min(0.82, alpha * 0.75)})`);
     }
     gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
     ctx.fillStyle = gradient;
@@ -542,8 +591,6 @@ function drawSmokeBlob(ctx, x, y, radius, alpha, hue, phase) {
 
 function renderEndSmoke(delta, elapsed, active) {
   if (!endSmokeCtx || !endSmokeCanvas) return;
-  const scaleX = endSmokeCanvas.width / window.innerWidth;
-  const scaleY = endSmokeCanvas.height / window.innerHeight;
   endSmokeCtx.clearRect(0, 0, endSmokeCanvas.width, endSmokeCanvas.height);
   if (!active) {
     endSceneWasActive = false;
@@ -552,83 +599,7 @@ function renderEndSmoke(delta, elapsed, active) {
 
   if (!endSceneWasActive) {
     endSceneWasActive = true;
-    resetEndSmoke(elapsed);
   }
-
-  const emitAge = elapsed - endSmokeStartTime - 1.15;
-  if (emitAge > 0 && emitAge < 5.2 && endSmokeParticles.length < 720) {
-    endSmokeEmitCarry += delta * (emitAge < 1.8 ? 310 : 210);
-    while (endSmokeEmitCarry >= 1 && endSmokeParticles.length < 720) {
-      endSmokeParticles.push(createEndSmokeParticle(Math.random() > 0.5 ? "green" : "purple"));
-      endSmokeEmitCarry -= 1;
-    }
-  }
-
-  endSmokeCtx.globalCompositeOperation = "source-over";
-  if (emitAge > 0 && emitAge < 4.2) {
-    const jetPower = Math.min(1, emitAge * 2) * Math.max(0, 1 - emitAge / 4.2);
-    const jetLength = Math.max(endSmokeCanvas.width, endSmokeCanvas.height) * 0.74;
-    for (let i = 0; i < 24; i += 1) {
-      const t = i / 23;
-      drawSmokeBlob(
-        endSmokeCtx,
-        t * jetLength * 0.72,
-        t * jetLength * 0.48,
-        (28 + t * 132) * scaleX,
-        jetPower * (0.34 + t * 0.38),
-        "green",
-        elapsed + i,
-      );
-      drawSmokeBlob(
-        endSmokeCtx,
-        endSmokeCanvas.width - t * jetLength * 0.72,
-        endSmokeCanvas.height - t * jetLength * 0.48,
-        (30 + t * 138) * scaleX,
-        jetPower * (0.36 + t * 0.4),
-        "purple",
-        elapsed - i,
-      );
-    }
-  }
-
-  endSmokeCtx.globalCompositeOperation = "source-over";
-  endSmokeCtx.filter = "blur(7px) saturate(1.45)";
-
-  for (let index = endSmokeParticles.length - 1; index >= 0; index -= 1) {
-    const particle = endSmokeParticles[index];
-    particle.life += delta;
-
-    const dx = particle.x - endSmokeMouse.x;
-    const dy = particle.y - endSmokeMouse.y;
-    const distance = Math.hypot(dx, dy);
-    if (distance < 260) {
-      const power = (1 - distance / 260) * 1.18;
-      particle.vx += endSmokeMouse.vx * power * 2.8 + (dx / Math.max(distance, 1)) * power * 62;
-      particle.vy += endSmokeMouse.vy * power * 2.8 + (dy / Math.max(distance, 1)) * power * 48;
-    }
-
-    particle.vx *= 0.982;
-    particle.vy *= 0.982;
-    particle.x += particle.vx * delta + Math.sin(elapsed * 0.7 + particle.phase) * 0.8;
-    particle.y += particle.vy * delta + Math.cos(elapsed * 0.62 + particle.phase) * 0.72;
-    particle.radius += delta * 48;
-
-    if (particle.life > particle.maxLife) {
-      endSmokeParticles.splice(index, 1);
-      continue;
-    }
-
-    const fadeIn = Math.min(1, particle.life * 1.8);
-    const fadeOut = 1 - Math.max(0, particle.life - particle.maxLife + 3.2) / 3.2;
-    const alpha = particle.alpha * fadeIn * Math.max(0, fadeOut);
-    const x = particle.x * scaleX;
-    const y = particle.y * scaleY;
-    const radius = particle.radius * Math.max(scaleX, scaleY) * (0.92 + Math.sin(elapsed + particle.phase) * 0.08);
-    drawSmokeBlob(endSmokeCtx, x, y, radius, alpha, particle.hue, particle.phase + elapsed * particle.spin);
-  }
-
-  endSmokeMouse.vx *= 0.7;
-  endSmokeMouse.vy *= 0.7;
   endSmokeCtx.filter = "none";
   endSmokeCtx.globalCompositeOperation = "source-over";
 }
@@ -740,6 +711,7 @@ const galleryPedestalSlots = [
   { x: 2.66, z: -1.2, scale: 0.88, yaw: -0.11 },
   { x: -2.22, z: -3.65, scale: 0.72, yaw: 0.07 },
   { x: 2.22, z: -3.65, scale: 0.72, yaw: -0.07 },
+  { x: 0, z: -4.95, scale: 0.78, yaw: 0 },
 ];
 const projectButtons = Array.from(document.querySelectorAll("[data-project-open]"));
 const galleryBackDoorClosed = {
@@ -901,6 +873,76 @@ function createGalleryTextTexture(title, subtitle, width = 512, height = 192) {
   return texture;
 }
 
+function createAnimatorProjectTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 1024;
+  canvas.height = 576;
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const bg = ctx.createRadialGradient(512, 260, 40, 512, 288, 620);
+  bg.addColorStop(0, "#191b20");
+  bg.addColorStop(0.58, "#06070b");
+  bg.addColorStop(1, "#010102");
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.save();
+  ctx.globalAlpha = 0.22;
+  ctx.strokeStyle = "#273341";
+  ctx.lineWidth = 1;
+  for (let x = -80; x < canvas.width + 80; x += 34) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x - 260, canvas.height);
+    ctx.stroke();
+  }
+  for (let y = 36; y < canvas.height; y += 36) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(canvas.width, y);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  ctx.save();
+  ctx.shadowColor = "rgba(255, 0, 18, 0.85)";
+  ctx.shadowBlur = 38;
+  const red = ctx.createLinearGradient(260, 116, 760, 470);
+  red.addColorStop(0, "#ff3a42");
+  red.addColorStop(0.52, "#ff0613");
+  red.addColorStop(1, "#950006");
+  ctx.fillStyle = red;
+  ctx.font = "900 330px Arial Black, Impact, sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("AX", 512, 278);
+  ctx.restore();
+
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.16)";
+  ctx.strokeRect(44, 38, canvas.width - 88, canvas.height - 76);
+  ctx.strokeStyle = "rgba(255, 0, 18, 0.42)";
+  ctx.strokeRect(58, 52, canvas.width - 116, canvas.height - 104);
+
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.shadowColor = "rgba(255, 0, 18, 0.72)";
+  ctx.shadowBlur = 20;
+  ctx.fillStyle = "#f7f7f7";
+  ctx.font = "900 54px Courier New, monospace";
+  ctx.fillText("ANIMATOR X", 512, 504);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.generateMipmaps = false;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  return texture;
+}
+
+const animatorProjectTexture = createAnimatorProjectTexture();
+
 function createGalleryProjectExhibit(slot, index, button) {
   if (!button) return;
   const group = new THREE.Group();
@@ -956,7 +998,10 @@ function createGalleryProjectExhibit(slot, index, button) {
   group.add(imagePlane);
   galleryProjectRayTargets.push(imagePlane);
 
-  if (imageSrc) {
+  if (title.toLowerCase().includes("animator")) {
+    imageMaterial.map = animatorProjectTexture;
+    imageMaterial.needsUpdate = true;
+  } else if (imageSrc) {
     textureLoader.load(imageSrc, (texture) => {
       texture.colorSpace = THREE.SRGBColorSpace;
       texture.minFilter = THREE.LinearFilter;
@@ -2371,22 +2416,7 @@ window.addEventListener("pointermove", (event) => {
   smokeMouse.vy = event.clientY - smokeMouse.y;
   smokeMouse.x = event.clientX;
   smokeMouse.y = event.clientY;
-  endSmokeMouse.vx = event.clientX - endSmokeMouse.x;
-  endSmokeMouse.vy = event.clientY - endSmokeMouse.y;
-  endSmokeMouse.x = event.clientX;
-  endSmokeMouse.y = event.clientY;
-  const endMove = Math.hypot(endSmokeMouse.vx, endSmokeMouse.vy);
-  if (endMove > 0.8) {
-    const endAngle = Math.atan2(endSmokeMouse.vy, endSmokeMouse.vx) * 180 / Math.PI;
-    const endPower = THREE.MathUtils.clamp(endMove / 42, 0, 1);
-    const endScale = 1 + endPower * 0.14;
-    document.documentElement.style.setProperty("--end-spin-angle", `${endAngle.toFixed(2)}deg`);
-    document.documentElement.style.setProperty("--end-spin-scale", endScale.toFixed(3));
-    endLetters.forEach((letter, index) => {
-      letter.style.setProperty("--end-spin-angle", `${(endAngle + index * 10).toFixed(2)}deg`);
-      letter.style.setProperty("--end-spin-scale", endScale.toFixed(3));
-    });
-  }
+  updateEndPanelMotion(event);
   setPointerFromEvent(event);
   updateHoveredCardFromPointer();
   if (isDragging) {
@@ -2417,6 +2447,46 @@ window.addEventListener("pointercancel", () => {
   hoveredCardIndex = -1;
   document.body.classList.remove("is-dragging");
 });
+endLetters.forEach((panel) => {
+  panel.addEventListener("pointerdown", (event) => {
+    if (!document.body.classList.contains("show-final-gate")) return;
+    event.preventDefault();
+    event.stopPropagation();
+    endPanelDrag.active = true;
+    endPanelDrag.pointerId = event.pointerId;
+    endPanelDrag.startX = event.clientX;
+    endPanelDrag.startY = event.clientY;
+    endPanelDrag.baseX = endPanelDrag.x;
+    endPanelDrag.baseY = endPanelDrag.y;
+    panel.classList.add("is-moving");
+    panel.setPointerCapture?.(event.pointerId);
+    updateEndPanelMotion(event);
+  });
+
+  panel.addEventListener("pointermove", (event) => {
+    if (!endPanelDrag.active || endPanelDrag.pointerId !== event.pointerId) return;
+    event.preventDefault();
+    event.stopPropagation();
+    endPanelDrag.x = endPanelDrag.baseX + event.clientX - endPanelDrag.startX;
+    endPanelDrag.y = endPanelDrag.baseY + event.clientY - endPanelDrag.startY;
+    clampEndPanelDrag();
+    applyEndPanelDrag();
+    updateEndPanelMotion(event);
+  });
+
+  const finishEndPanelDrag = (event) => {
+    if (!endPanelDrag.active || endPanelDrag.pointerId !== event.pointerId) return;
+    event.preventDefault();
+    event.stopPropagation();
+    endPanelDrag.active = false;
+    endPanelDrag.pointerId = null;
+    panel.classList.remove("is-moving");
+    panel.releasePointerCapture?.(event.pointerId);
+  };
+
+  panel.addEventListener("pointerup", finishEndPanelDrag);
+  panel.addEventListener("pointercancel", finishEndPanelDrag);
+});
 window.addEventListener("pointerleave", () => {
   hoveredCardIndex = -1;
 });
@@ -2440,6 +2510,7 @@ serviceLinks.forEach((link) => {
 function openProjectGallery(trigger) {
   if (!projectGalleryModal) return;
   const title = trigger.dataset.projectTitle || trigger.dataset.projectGallery || "Projeto";
+  const kicker = trigger.dataset.projectKicker || "PROJETO EM EXPOSICAO";
   const image = trigger.dataset.projectImage || "";
   const description = trigger.dataset.projectDescription || "Projeto criado por XEXEU DEV'S com foco em visual, funcionamento e entrega personalizada.";
   const link = trigger.dataset.projectLink || "";
@@ -2448,6 +2519,8 @@ function openProjectGallery(trigger) {
     .map((item) => item.trim())
     .filter(Boolean);
 
+  const projectGalleryKicker = document.querySelector("[data-project-gallery-kicker]");
+  if (projectGalleryKicker) projectGalleryKicker.textContent = kicker;
   if (projectGalleryTitle) projectGalleryTitle.textContent = title;
   if (projectGalleryImage) {
     projectGalleryImage.src = image;
@@ -2496,11 +2569,13 @@ function animate() {
   updateScroll();
   scrollProgress = scrollTarget;
   const towerTarget = getTowerProgress(scrollTarget);
-  const springForce = (towerTarget - towerVisualProgress) * 42;
-  towerVisualVelocity += springForce * delta;
-  towerVisualVelocity = THREE.MathUtils.damp(towerVisualVelocity, 0, 8.5, delta);
-  towerVisualProgress += towerVisualVelocity * delta;
+  const previousTowerProgress = towerVisualProgress;
+  const towerGap = Math.abs(towerTarget - towerVisualProgress);
+  const towerFollow = towerGap > 0.16 ? 22 : 13;
+  towerVisualProgress = THREE.MathUtils.damp(towerVisualProgress, towerTarget, towerFollow, delta);
+  if (Math.abs(towerTarget - towerVisualProgress) < 0.0008) towerVisualProgress = towerTarget;
   towerVisualProgress = THREE.MathUtils.clamp(towerVisualProgress, 0, 1);
+  towerVisualVelocity = delta > 0 ? (towerVisualProgress - previousTowerProgress) / delta : 0;
   const towerProgress = towerVisualProgress;
   const heroExit = THREE.MathUtils.smoothstep(scrollProgress, 0.1, 0.2);
   const towerEnter = THREE.MathUtils.smoothstep(scrollProgress, 0.215, towerScrollStart);
@@ -2537,6 +2612,13 @@ function animate() {
 
   const clampedProgress = THREE.MathUtils.clamp(towerProgress, 0, 1);
   const activeFloat = orbitPosition;
+  window.__xexeuDebug = {
+    scrollTarget,
+    towerTarget,
+    towerProgress,
+    orbitPosition,
+    activeCard: Math.round(activeFloat),
+  };
   const scrollBreath = Math.sin(clampedProgress * Math.PI);
   const isMobile = window.innerWidth < 720;
   const mobileScale = isMobile ? 0.72 : 1;
