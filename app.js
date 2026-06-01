@@ -1891,6 +1891,10 @@ function openProjectGallery(trigger) {
   const image = trigger.dataset.projectImage || "";
   const description = trigger.dataset.projectDescription || "Projeto criado por XEXEU DEV'S com foco em visual, funcionamento e entrega personalizada.";
   const link = trigger.dataset.projectLink || "";
+  const galleryImages = (trigger.dataset.projectGalleryImages || "")
+    .split("|")
+    .map((item) => item.trim())
+    .filter(Boolean);
 
   if (projectGalleryTitle) projectGalleryTitle.textContent = title;
   if (projectGalleryImage) {
@@ -1902,7 +1906,16 @@ function openProjectGallery(trigger) {
     projectGalleryLink.href = link || "#";
     projectGalleryLink.classList.toggle("is-hidden", !link);
   }
-  projectGalleryPlaceholders?.classList.toggle("is-hidden", Boolean(link));
+  if (projectGalleryPlaceholders) {
+    projectGalleryPlaceholders.replaceChildren(...galleryImages.map((src, index) => {
+      const shot = document.createElement("img");
+      shot.src = src;
+      shot.alt = `${title} foto ${index + 1}`;
+      shot.loading = "lazy";
+      return shot;
+    }));
+    projectGalleryPlaceholders.classList.toggle("is-hidden", galleryImages.length === 0);
+  }
   projectGalleryModal.classList.add("is-open");
   projectGalleryModal.setAttribute("aria-hidden", "false");
 }
