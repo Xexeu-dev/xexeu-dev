@@ -545,12 +545,12 @@ const galleryGlowMaterial = new THREE.MeshBasicMaterial({
 });
 
 const galleryPedestalSlots = [
-  { x: -3.55, z: 0.75, scale: 1.08, yaw: 0.18 },
-  { x: -1.68, z: -0.55, scale: 0.92, yaw: 0.08 },
-  { x: -0.08, z: -1.72, scale: 0.78, yaw: 0.02 },
-  { x: 1.68, z: -0.92, scale: 0.88, yaw: -0.08 },
-  { x: 3.34, z: -0.18, scale: 0.86, yaw: -0.16 },
-  { x: 2.9, z: 1.36, scale: 1.02, yaw: -0.22 },
+  { x: -4.08, z: 1.04, scale: 1.18, yaw: 0.2 },
+  { x: -2.45, z: -0.72, scale: 0.98, yaw: 0.12 },
+  { x: -0.76, z: -2.32, scale: 0.82, yaw: 0.04 },
+  { x: 0.94, z: -2.32, scale: 0.82, yaw: -0.04 },
+  { x: 2.56, z: -0.72, scale: 0.98, yaw: -0.12 },
+  { x: 4.08, z: 1.04, scale: 1.18, yaw: -0.2 },
 ];
 
 function addGalleryBox(width, height, depth, x, y, z, material) {
@@ -586,87 +586,53 @@ galleryPedestalSlots.forEach((slot, index) => {
 
 function addFallbackGalleryPedestal(slot) {
   const pedestalGroup = new THREE.Group();
-  const baseMaterial = galleryWallMaterial.clone();
-  const topMaterial = new THREE.MeshStandardMaterial({
-    color: 0xe8e8e2,
-    roughness: 0.48,
-    metalness: 0.04,
+  const baseMaterial = new THREE.MeshStandardMaterial({
+    color: 0x8f938d,
+    roughness: 0.54,
+    metalness: 0.08,
   });
-  const column = new THREE.Mesh(new THREE.BoxGeometry(0.56, 1.46, 0.56), baseMaterial);
-  column.position.y = -0.55;
-  const base = new THREE.Mesh(new THREE.BoxGeometry(0.92, 0.13, 0.92), galleryDarkMaterial.clone());
-  base.position.y = -1.27;
-  const top = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.11, 0.82), topMaterial);
-  top.position.y = 0.2;
-  pedestalGroup.add(base, column, top);
-  pedestalGroup.position.set(slot.x, -0.08, slot.z);
+  const topMaterial = new THREE.MeshStandardMaterial({
+    color: 0x253531,
+    roughness: 0.34,
+    metalness: 0.24,
+    emissive: 0x06170f,
+    emissiveIntensity: 0.22,
+  });
+  const trimMaterial = new THREE.MeshStandardMaterial({
+    color: 0xc99d3b,
+    roughness: 0.28,
+    metalness: 0.62,
+    emissive: 0x201202,
+    emissiveIntensity: 0.18,
+  });
+  const column = new THREE.Mesh(new THREE.BoxGeometry(0.72, 1.64, 0.72), baseMaterial);
+  column.position.y = -0.54;
+  const base = new THREE.Mesh(new THREE.BoxGeometry(1.18, 0.14, 1.08), galleryDarkMaterial.clone());
+  base.position.y = -1.36;
+  const top = new THREE.Mesh(new THREE.BoxGeometry(1.18, 0.13, 1.02), topMaterial);
+  top.position.y = 0.33;
+  const upperTrim = new THREE.Mesh(new THREE.BoxGeometry(1.28, 0.055, 1.12), trimMaterial);
+  upperTrim.position.y = 0.22;
+  const lowerTrim = new THREE.Mesh(new THREE.BoxGeometry(1.08, 0.055, 0.98), trimMaterial);
+  lowerTrim.position.y = -1.17;
+  pedestalGroup.add(base, column, lowerTrim, upperTrim, top);
+  pedestalGroup.position.set(slot.x, -0.04, slot.z);
   pedestalGroup.rotation.y = slot.yaw;
   pedestalGroup.scale.setScalar(slot.scale);
   galleryDisplays.add(pedestalGroup);
   return pedestalGroup;
 }
 
+function buildGalleryPedestalCorridor() {
+  galleryPedestalSlots.forEach(addFallbackGalleryPedestal);
+  galleryModel = galleryDisplays;
+  state.loadedGallery = true;
+}
+
 galleryAnchor.position.set(0, 0, 0);
 galleryAnchor.rotation.set(0, 0, 0);
 
-gltfLoader.load(
-  "./assets/model/gallery-display-pedestal.glb",
-  (gltf) => {
-    const source = gltf.scene;
-    const bounds = new THREE.Box3().setFromObject(source);
-    const size = new THREE.Vector3();
-    const center = new THREE.Vector3();
-    bounds.getSize(size);
-    bounds.getCenter(center);
-    const wideScene = Math.max(size.x, size.z) > Math.max(size.y, 0.001) * 2.2;
-
-    source.traverse((child) => {
-      if (!child.isMesh) return;
-      const materials = Array.isArray(child.material) ? child.material : [child.material];
-      child.material = materials.map((material) => {
-        const tuned = material ? material.clone() : galleryWallMaterial.clone();
-        tuned.side = THREE.DoubleSide;
-        if ("color" in tuned && tuned.color) tuned.color.lerp(new THREE.Color(0xd0d0ca), 0.36);
-        if ("metalness" in tuned) tuned.metalness = Math.min(tuned.metalness ?? 0.08, 0.12);
-        if ("roughness" in tuned) tuned.roughness = Math.max(tuned.roughness ?? 0.45, 0.48);
-        return tuned;
-      });
-      if (child.material.length === 1) child.material = child.material[0];
-      child.castShadow = false;
-      child.receiveShadow = false;
-      child.frustumCulled = false;
-    });
-
-    if (wideScene) {
-      const maxAxis = Math.max(size.x, size.y, size.z, 1);
-      source.position.sub(center);
-      source.scale.setScalar(8.2 / maxAxis);
-      source.position.y -= 0.8;
-      galleryModel = source;
-      galleryDisplays.add(source);
-    } else {
-      const normalized = source;
-      normalized.position.set(-center.x, -bounds.min.y, -center.z);
-      normalized.scale.setScalar(1.28 / Math.max(size.y, 1));
-
-      galleryPedestalSlots.forEach((slot, index) => {
-        const pedestal = index === 0 ? normalized : normalized.clone(true);
-        pedestal.position.set(slot.x, -1.34, slot.z);
-        pedestal.rotation.y = slot.yaw;
-        pedestal.scale.multiplyScalar(slot.scale);
-        galleryDisplays.add(pedestal);
-      });
-      galleryModel = galleryDisplays;
-    }
-    state.loadedGallery = true;
-  },
-  undefined,
-  () => {
-    galleryPedestalSlots.forEach(addFallbackGalleryPedestal);
-    galleryModel = galleryDisplays;
-    state.loadedGallery = true;
-  },
-);
+buildGalleryPedestalCorridor();
 
 gltfLoader.load(
   "./assets/model/coluna-site.glb",
@@ -2130,7 +2096,7 @@ function animate() {
   const galleryMouseStrength = galleryVisibility * (0.55 + galleryZoom * 0.45);
 
   document.documentElement.style.setProperty("--gallery-zoom", galleryZoom.toFixed(4));
-  document.documentElement.style.setProperty("--gallery-scale", (1 + galleryZoom * 0.34).toFixed(4));
+  document.documentElement.style.setProperty("--gallery-scale", (1 + galleryZoom * 0.08).toFixed(4));
   document.documentElement.style.setProperty("--gallery-mouse-x", pointer.x.toFixed(4));
   document.documentElement.style.setProperty("--gallery-mouse-y", pointer.y.toFixed(4));
   document.documentElement.style.setProperty("--gallery-shift-x", `${(-pointer.x * 16 * galleryMouseStrength).toFixed(2)}px`);

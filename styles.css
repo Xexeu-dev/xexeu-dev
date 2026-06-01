@@ -2062,43 +2062,43 @@ body.show-projects .museum-frame:nth-child(5) { animation-delay: 780ms !importan
 body.show-projects .museum-frame:nth-child(6) { animation-delay: 920ms !important; }
 
 .museum-frame:nth-child(1) {
-  --x: -38.5vw;
-  --y: 11.5vh;
-  --s: 0.98;
+  --x: -39vw;
+  --y: 19vh;
+  --s: 0.9;
   --yaw: 15deg;
 }
 
 .museum-frame:nth-child(2) {
-  --x: -22.8vw;
-  --y: 5.5vh;
-  --s: 0.78;
+  --x: -24vw;
+  --y: 10vh;
+  --s: 0.74;
   --yaw: 9deg;
 }
 
 .museum-frame:nth-child(3) {
-  --x: -4.8vw;
-  --y: 1vh;
-  --s: 0.68;
+  --x: -7vw;
+  --y: 4vh;
+  --s: 0.64;
   --yaw: 3deg;
 }
 
 .museum-frame:nth-child(4) {
-  --x: 16.5vw;
-  --y: 3vh;
-  --s: 0.72;
+  --x: 11vw;
+  --y: 4vh;
+  --s: 0.64;
   --yaw: -8deg;
 }
 
 .museum-frame:nth-child(5) {
-  --x: 34.2vw;
-  --y: 5.5vh;
-  --s: 0.72;
+  --x: 27vw;
+  --y: 10vh;
+  --s: 0.74;
   --yaw: -14deg;
 }
 
 .museum-frame:nth-child(6) {
-  --x: 26.8vw;
-  --y: 16vh;
+  --x: 40vw;
+  --y: 19vh;
   --s: 0.9;
   --yaw: -16deg;
 }
@@ -2204,12 +2204,12 @@ body.show-projects .museum-frame:nth-child(6) { animation-delay: 920ms !importan
     width: min(38vw, 154px) !important;
   }
 
-  .museum-frame:nth-child(1) { --x: -24vw; --y: 12vh; --s: 0.92; --yaw: 12deg; }
-  .museum-frame:nth-child(2) { --x: -9vw; --y: 5vh; --s: 0.76; --yaw: 7deg; }
-  .museum-frame:nth-child(3) { --x: 8vw; --y: 1vh; --s: 0.64; --yaw: -2deg; }
-  .museum-frame:nth-child(4) { --x: 24vw; --y: 7vh; --s: 0.72; --yaw: -10deg; }
-  .museum-frame:nth-child(5) { --x: -15vw; --y: 28vh; --s: 0.76; --yaw: 8deg; }
-  .museum-frame:nth-child(6) { --x: 17vw; --y: 25vh; --s: 0.82; --yaw: -10deg; }
+  .museum-frame:nth-child(1) { --x: -27vw; --y: 20vh; --s: 0.82; --yaw: 12deg; }
+  .museum-frame:nth-child(2) { --x: -11vw; --y: 11vh; --s: 0.68; --yaw: 7deg; }
+  .museum-frame:nth-child(3) { --x: 5vw; --y: 5vh; --s: 0.58; --yaw: -2deg; }
+  .museum-frame:nth-child(4) { --x: 20vw; --y: 11vh; --s: 0.68; --yaw: -10deg; }
+  .museum-frame:nth-child(5) { --x: -18vw; --y: 36vh; --s: 0.72; --yaw: 8deg; }
+  .museum-frame:nth-child(6) { --x: 19vw; --y: 34vh; --s: 0.78; --yaw: -10deg; }
 
   .frame-name {
     max-width: 150%;
