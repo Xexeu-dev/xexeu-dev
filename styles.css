@@ -640,8 +640,10 @@ body.show-services-list .query-panel {
   inset: 0;
   z-index: 5;
   display: grid;
-  place-items: center;
-  padding: clamp(18px, 4vw, 54px);
+  place-items: start center;
+  padding: clamp(58px, 8vh, 82px) clamp(16px, 3vw, 42px) 58px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   opacity: 0;
   pointer-events: none;
   transform: translateY(42px) scale(0.96);
@@ -655,7 +657,9 @@ body.show-projects .projects-stage {
 }
 
 .projects-stage__inner {
-  width: min(1160px, 94vw);
+  width: min(1080px, 94vw);
+  margin: 0 auto;
+  padding-bottom: 34px;
 }
 
 .projects-stage__kicker {
@@ -667,9 +671,9 @@ body.show-projects .projects-stage {
 }
 
 .projects-stage h2 {
-  margin: 0 0 clamp(20px, 4vh, 38px);
+  margin: 0 0 clamp(16px, 3vh, 26px);
   color: #f7fff5;
-  font-size: clamp(2.1rem, 6vw, 5.7rem);
+  font-size: clamp(1.8rem, 4.5vw, 4.25rem);
   line-height: 0.95;
   text-align: center;
   text-shadow:
@@ -679,16 +683,17 @@ body.show-projects .projects-stage {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: clamp(12px, 1.7vw, 22px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 1.5vw, 18px);
 }
 
 .project-tile {
   position: relative;
   display: grid;
+  grid-template-rows: auto auto 1fr auto;
   align-content: start;
   gap: 0;
-  min-height: 300px;
+  min-height: 238px;
   padding: 12px;
   border: 1px solid rgba(124, 255, 88, 0.34);
   border-radius: 14px;
@@ -704,7 +709,7 @@ body.show-projects .projects-stage {
 .project-tile img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   border-radius: 9px;
   opacity: 0.88;
@@ -712,7 +717,7 @@ body.show-projects .projects-stage {
 }
 
 .project-tile h3 {
-  margin: 13px 0 6px;
+  margin: 10px 0 5px;
   color: #dfff78;
   font-size: 1rem;
 }
@@ -720,7 +725,7 @@ body.show-projects .projects-stage {
 .project-tile p {
   margin: 0;
   color: rgba(235, 255, 240, 0.76);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   line-height: 1.42;
 }
 
@@ -728,7 +733,7 @@ body.show-projects .projects-stage {
   justify-self: start;
   min-width: 74px;
   min-height: 34px;
-  margin-top: 14px;
+  margin-top: 10px;
   display: inline-grid;
   place-items: center;
   padding: 0 13px;
@@ -849,6 +854,12 @@ body::after {
   background:
     radial-gradient(circle at 50% 48%, transparent 0 42%, rgba(0, 0, 0, 0.72) 100%),
     linear-gradient(180deg, rgba(0, 0, 0, 0.42), transparent 18%, transparent 78%, rgba(0, 0, 0, 0.62));
+}
+
+@media (max-width: 950px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 720px) {
