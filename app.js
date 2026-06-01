@@ -7,6 +7,9 @@ const canvas = document.querySelector("#universe");
 const smokeCanvas = document.querySelector("#toxicSmoke");
 const smokeCtx = smokeCanvas?.getContext("2d");
 const codeColumns = Array.from(document.querySelectorAll("[data-code-column]"));
+const loaderOverlay = document.querySelector("[data-loader]");
+const loaderPercent = document.querySelector("[data-loader-percent]");
+const loaderBar = document.querySelector("[data-loader-bar]");
 const carouselCount = 14;
 const progressParam = new URLSearchParams(window.location.search).get("progress");
 const previewProgress = progressParam === null ? NaN : Number(progressParam);
@@ -18,6 +21,34 @@ if ("scrollRestoration" in history) {
 
 if (!hasPreviewProgress) {
   window.scrollTo(0, 0);
+}
+
+window.addEventListener("load", () => {
+  pageLoaded = true;
+});
+if (document.readyState === "complete") {
+  pageLoaded = true;
+}
+window.setTimeout(() => {
+  pageLoaded = true;
+}, 3600);
+
+function updateLoader(delta) {
+  if (!loaderOverlay || document.body.classList.contains("is-loaded")) return;
+  const assetBonus = state.loadedColumn ? 18 : 0;
+  const target = pageLoaded ? 100 : 78 + assetBonus;
+  visualLoadingProgress = THREE.MathUtils.damp(visualLoadingProgress, target, pageLoaded ? 5.5 : 1.8, delta);
+  const visibleProgress = Math.min(100, Math.round(visualLoadingProgress));
+  if (loaderPercent) loaderPercent.textContent = `${visibleProgress}%`;
+  if (loaderBar) loaderBar.style.width = `${visibleProgress}%`;
+  if (loaderOverlay) loaderOverlay.style.setProperty("--loader-fill", visibleProgress);
+  if (visibleProgress >= 100 && pageLoaded) {
+    if (loaderInterval !== null) {
+      window.clearInterval(loaderInterval);
+      loaderInterval = null;
+    }
+    window.setTimeout(() => document.body.classList.add("is-loaded"), 180);
+  }
 }
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true, powerPreference: "high-performance" });
@@ -47,6 +78,10 @@ let dragSpin = 0;
 let dragSpinTarget = 0;
 let isDragging = false;
 let pointerWasDragged = false;
+let hoveredCardIndex = -1;
+let pageLoaded = false;
+let visualLoadingProgress = 0;
+let loaderInterval = null;
 
 const state = {
   loadedColumn: false,
@@ -64,11 +99,13 @@ const state = {
   },
 };
 
-const towerScrollStart = 0.34;
+loaderInterval = window.setInterval(() => updateLoader(1 / 30), 33);
+
+const towerScrollStart = 0.285;
 const towerScrollEnd = 0.78;
 const serviceListRevealProgress = towerScrollStart - 0.015;
-const projectsGateStart = 0.8;
-const projectsRevealProgress = 0.86;
+const projectsGateStart = 0.805;
+const projectsRevealProgress = 0.865;
 const towerTopY = 3.35;
 const towerCardSpacing = 1.62;
 const towerBottomY = towerTopY - (carouselCount - 1) * towerCardSpacing;
@@ -99,19 +136,19 @@ const serviceItems = [
 
 const serviceCardArt = [
   null,
-  "./assets/service-cards-clean/02-servidor-samp.png?v=59",
-  "./assets/service-cards-clean/03-servidor-mta.png?v=59",
-  "./assets/service-cards-clean/04-java.png?v=59",
-  "./assets/service-cards-clean/05-cpp-csharp.png?v=59",
-  "./assets/service-cards-clean/06-correcoes.png?v=59",
-  "./assets/service-cards-clean/07-bot-discord.png?v=59",
-  "./assets/service-cards-clean/08-aplicativos-launchers.png?v=59",
-  "./assets/service-cards-clean/09-sites-repositorios.png?v=59",
-  "./assets/service-cards-clean/10-projetos-escolares.png?v=59",
-  "./assets/service-cards-clean/11-banco-mysql.png?v=59",
-  "./assets/service-cards-clean/12-renda-extra.png?v=59",
-  "./assets/service-cards-clean/13-ant-xiter-ant-ddos.png?v=59",
-  "./assets/service-cards-clean/14-aula-personalizada.png?v=59",
+  "./assets/service-cards-clean/02-servidor-samp.png?v=60",
+  "./assets/service-cards-clean/03-servidor-mta.png?v=60",
+  "./assets/service-cards-clean/04-java.png?v=60",
+  "./assets/service-cards-clean/05-cpp-csharp.png?v=60",
+  "./assets/service-cards-clean/06-correcoes.png?v=60",
+  "./assets/service-cards-clean/07-bot-discord.png?v=60",
+  "./assets/service-cards-clean/08-aplicativos-launchers.png?v=60",
+  "./assets/service-cards-clean/09-sites-repositorios.png?v=60",
+  "./assets/service-cards-clean/10-projetos-escolares.png?v=60",
+  "./assets/service-cards-clean/11-banco-mysql.png?v=60",
+  "./assets/service-cards-clean/12-renda-extra.png?v=60",
+  "./assets/service-cards-clean/13-ant-xiter-ant-ddos.png?v=60",
+  "./assets/service-cards-clean/14-aula-personalizada.png?v=60",
 ];
 
 const serviceDetails = [
@@ -352,10 +389,10 @@ function buildCodeWall() {
 buildCodeWall();
 
 const smokeMouse = { x: -9999, y: -9999, vx: 0, vy: 0 };
-const smokeParticles = Array.from({ length: 68 }, (_, index) => ({
-  x: 26 + Math.random() * 210,
+const smokeParticles = Array.from({ length: 112 }, (_, index) => ({
+  x: 18 + Math.random() * Math.max(260, window.innerWidth * 0.48),
   y: window.innerHeight * (0.24 + Math.random() * 0.62),
-  baseX: 24 + Math.random() * 220,
+  baseX: 18 + Math.random() * Math.max(260, window.innerWidth * 0.48),
   radius: 34 + Math.random() * 86,
   drift: 0.18 + Math.random() * 0.72,
   phase: index * 0.61 + Math.random() * 6,
@@ -386,9 +423,10 @@ function renderSmoke(delta, elapsed) {
     particle.x += Math.sin(elapsed * particle.drift + particle.phase) * 0.22 + delta * 4.4;
     particle.y += Math.cos(elapsed * (particle.drift * 0.72) + particle.phase) * 0.34;
     particle.x += (particle.baseX - particle.x) * 0.006;
-    if (particle.x > window.innerWidth * 0.42) {
+    if (particle.x > window.innerWidth * 0.54) {
       particle.x = -particle.radius;
       particle.y = window.innerHeight * (0.18 + Math.random() * 0.7);
+      particle.baseX = 18 + Math.random() * Math.max(260, window.innerWidth * 0.48);
     }
 
     const x = particle.x * scaleX;
@@ -578,12 +616,12 @@ const glassParticleMaterial = new THREE.PointsMaterial({
 const glassParticles = new THREE.Points(glassParticleGeometry, glassParticleMaterial);
 columnAnchor.add(glassParticles);
 
-const debrisCount = 132;
+const debrisCount = 280;
 const debrisDummy = new THREE.Object3D();
 const debrisData = Array.from({ length: debrisCount }, (_, index) => ({
   angle: Math.random() * Math.PI * 2,
-  radius: 1.05 + Math.random() * 2.65,
-  height: (Math.random() - 0.5) * 8.2,
+  radius: 0.9 + Math.random() * 3.25,
+  height: (Math.random() - 0.5) * ((towerTopY - towerBottomY) + 6.2),
   speed: 0.08 + Math.random() * 0.24,
   spin: new THREE.Vector3(Math.random() * 2, Math.random() * 2, Math.random() * 2),
   scale: 0.035 + Math.random() * 0.105,
@@ -666,6 +704,93 @@ const particleMaterial = new THREE.PointsMaterial({
 
 const particles = new THREE.Points(particleGeometry, particleMaterial);
 mistAnchor.add(particles);
+
+const chameleonParticleCount = 520;
+const chameleonPositions = new Float32Array(chameleonParticleCount * 3);
+const chameleonColors = new Float32Array(chameleonParticleCount * 3);
+const chameleonSeeds = new Float32Array(chameleonParticleCount);
+const chameleonPalette = [
+  new THREE.Color("#7cff00"),
+  new THREE.Color("#00ffc8"),
+  new THREE.Color("#fff200"),
+  new THREE.Color("#7df9ff"),
+  new THREE.Color("#111827"),
+];
+
+for (let i = 0; i < chameleonParticleCount; i += 1) {
+  const i3 = i * 3;
+  const angle = Math.random() * Math.PI * 2;
+  const radius = 3.4 + Math.random() * 9.5;
+  const color = chameleonPalette[i % chameleonPalette.length];
+  chameleonPositions[i3] = 1.2 + Math.cos(angle) * radius + Math.random() * 5.4;
+  chameleonPositions[i3 + 1] = (Math.random() - 0.5) * 18;
+  chameleonPositions[i3 + 2] = -1.8 + Math.sin(angle) * radius * 0.48;
+  chameleonSeeds[i] = Math.random() * Math.PI * 2;
+  chameleonColors[i3] = color.r;
+  chameleonColors[i3 + 1] = color.g;
+  chameleonColors[i3 + 2] = color.b;
+}
+
+const chameleonGeometry = new THREE.BufferGeometry();
+chameleonGeometry.setAttribute("position", new THREE.BufferAttribute(chameleonPositions, 3));
+chameleonGeometry.setAttribute("color", new THREE.BufferAttribute(chameleonColors, 3));
+const chameleonMaterial = new THREE.PointsMaterial({
+  size: 0.02,
+  map: starSpriteTexture,
+  vertexColors: true,
+  transparent: true,
+  opacity: 0.28,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+});
+const chameleonParticles = new THREE.Points(chameleonGeometry, chameleonMaterial);
+mistAnchor.add(chameleonParticles);
+
+const pyramidCount = 22;
+const pyramidDummy = new THREE.Object3D();
+const pyramidData = Array.from({ length: pyramidCount }, (_, index) => ({
+  angle: (index / pyramidCount) * Math.PI * 2 + Math.random() * 0.4,
+  radius: 2.1 + Math.random() * 4.8,
+  y: towerBottomY + Math.random() * (towerTopY - towerBottomY),
+  speed: 0.06 + Math.random() * 0.12,
+  scale: 0.08 + Math.random() * 0.12,
+  phase: Math.random() * Math.PI * 2,
+}));
+const pyramidGeometry = new THREE.ConeGeometry(0.5, 0.78, 4, 1);
+const pyramidMaterial = new THREE.MeshStandardMaterial({
+  color: 0xffd700,
+  emissive: 0x7a5100,
+  emissiveIntensity: 0.48,
+  metalness: 0.72,
+  roughness: 0.28,
+  transparent: true,
+  opacity: 0.88,
+});
+const pyramidMesh = new THREE.InstancedMesh(pyramidGeometry, pyramidMaterial, pyramidCount);
+pyramidMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+columnAnchor.add(pyramidMesh);
+
+function updatePyramids(elapsed, visibleAmount) {
+  pyramidMesh.visible = visibleAmount > 0.08;
+  pyramidMaterial.opacity = 0.34 + visibleAmount * 0.54;
+  pyramidData.forEach((piece, index) => {
+    const angle = piece.angle + elapsed * piece.speed;
+    pyramidDummy.position.set(
+      Math.cos(angle) * piece.radius,
+      piece.y + Math.sin(elapsed * 0.48 + piece.phase) * 0.2,
+      Math.sin(angle) * piece.radius * 0.62,
+    );
+    pyramidDummy.rotation.set(
+      elapsed * (0.2 + index * 0.01),
+      -angle + elapsed * 0.42,
+      Math.sin(elapsed + piece.phase) * 0.22,
+    );
+    pyramidDummy.scale.setScalar(piece.scale);
+    pyramidDummy.updateMatrix();
+    pyramidMesh.setMatrixAt(index, pyramidDummy.matrix);
+  });
+  pyramidMesh.instanceMatrix.needsUpdate = true;
+}
 
 function createCeilingTexture() {
   const ceilingCanvas = document.createElement("canvas");
@@ -759,10 +884,11 @@ for (let i = 0; i < 4; i += 1) {
 
 function createHeroInfoTexture() {
   const infoCanvas = document.createElement("canvas");
-  infoCanvas.width = 1400;
-  infoCanvas.height = 520;
+  infoCanvas.width = 1720;
+  infoCanvas.height = 620;
   const ctx = infoCanvas.getContext("2d");
   ctx.clearRect(0, 0, infoCanvas.width, infoCanvas.height);
+  const cx = infoCanvas.width / 2;
 
   const bg = ctx.createLinearGradient(0, 0, infoCanvas.width, infoCanvas.height);
   bg.addColorStop(0, "rgba(0, 217, 255, 0.1)");
@@ -770,7 +896,7 @@ function createHeroInfoTexture() {
   bg.addColorStop(1, "rgba(0, 255, 200, 0.08)");
   ctx.fillStyle = bg;
   ctx.beginPath();
-  ctx.roundRect(52, 42, infoCanvas.width - 104, infoCanvas.height - 84, 46);
+  ctx.roundRect(58, 48, infoCanvas.width - 116, infoCanvas.height - 96, 52);
   ctx.fill();
   ctx.strokeStyle = "rgba(125, 249, 255, 0.56)";
   ctx.lineWidth = 3;
@@ -781,19 +907,19 @@ function createHeroInfoTexture() {
   ctx.shadowColor = "rgba(125, 249, 255, 0.65)";
   ctx.shadowBlur = 18;
   ctx.fillStyle = "rgba(239, 255, 255, 0.94)";
-  ctx.font = '700 48px "Courier New", monospace';
-  ctx.fillText("FULL STACK • SAMP/MTA • BOTS • SITES • LAUNCHERS", 700, 116);
+  ctx.font = '700 46px "Courier New", monospace';
+  ctx.fillText("FULL STACK  |  SAMP/MTA  |  BOTS  |  SITES  |  LAUNCHERS", cx, 136);
 
   ctx.shadowBlur = 10;
   ctx.fillStyle = "rgba(190, 255, 216, 0.92)";
-  ctx.font = '700 34px "Courier New", monospace';
-  ctx.fillText("Scripts Pawno/Lua, automações, painéis, apps e integrações.", 700, 214);
-  ctx.fillText("Correções, anti-xiter, MySQL, projetos escolares e aulas.", 700, 282);
-  ctx.fillText("4+ anos programando • atendimento 24/7 • Pix facilitado.", 700, 348);
+  ctx.font = '700 35px "Courier New", monospace';
+  ctx.fillText("Scripts Pawno/Lua, automacoes, paineis, apps e integracoes.", cx, 250);
+  ctx.fillText("Correcoes, anti-xiter, MySQL, projetos escolares e aulas.", cx, 324);
+  ctx.fillText("4+ anos programando  |  atendimento 24/7  |  Pix facilitado.", cx, 398);
 
   ctx.fillStyle = "rgba(255, 226, 94, 0.92)";
-  ctx.font = '700 30px "Courier New", monospace';
-  ctx.fillText("Deslize para entrar na torre de serviços", 700, 418);
+  ctx.font = '700 31px "Courier New", monospace';
+  ctx.fillText("Deslize para entrar na torre de servicos", cx, 500);
 
   const texture = new THREE.CanvasTexture(infoCanvas);
   texture.colorSpace = THREE.SRGBColorSpace;
@@ -843,8 +969,8 @@ function buildHeroInfoPlane() {
     side: THREE.DoubleSide,
     depthWrite: false,
   });
-  const infoPlane = new THREE.Mesh(new THREE.PlaneGeometry(5.75, 2.14), infoMaterial);
-  infoPlane.position.set(0, -1.24, 0.02);
+  const infoPlane = new THREE.Mesh(new THREE.PlaneGeometry(6.65, 2.4), infoMaterial);
+  infoPlane.position.set(0, -1.27, 0.02);
   heroAnchor.add(infoPlane);
 }
 
@@ -1398,6 +1524,41 @@ function createCardReflectionTexture() {
 }
 
 const cardReflectionTexture = createCardReflectionTexture();
+const expandHintGeometry = createRoundedShapeGeometry(1.08, 0.3, 0.08);
+
+function createExpandHintTexture() {
+  const hintCanvas = document.createElement("canvas");
+  hintCanvas.width = 512;
+  hintCanvas.height = 160;
+  const ctx = hintCanvas.getContext("2d");
+  ctx.clearRect(0, 0, hintCanvas.width, hintCanvas.height);
+  const bg = ctx.createLinearGradient(0, 0, hintCanvas.width, hintCanvas.height);
+  bg.addColorStop(0, "rgba(0, 0, 0, 0.44)");
+  bg.addColorStop(0.5, "rgba(124, 255, 88, 0.22)");
+  bg.addColorStop(1, "rgba(0, 0, 0, 0.52)");
+  ctx.fillStyle = bg;
+  ctx.beginPath();
+  ctx.roundRect(16, 26, hintCanvas.width - 32, hintCanvas.height - 52, 34);
+  ctx.fill();
+  ctx.strokeStyle = "rgba(216, 255, 120, 0.9)";
+  ctx.lineWidth = 4;
+  ctx.stroke();
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.shadowColor = "rgba(124, 255, 88, 0.95)";
+  ctx.shadowBlur = 18;
+  ctx.fillStyle = "rgba(239, 255, 255, 0.96)";
+  ctx.font = '900 46px "Courier New", monospace';
+  ctx.fillText("EXPANDIR", 256, 82);
+  const texture = new THREE.CanvasTexture(hintCanvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.generateMipmaps = false;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  return texture;
+}
+
+const expandHintTexture = createExpandHintTexture();
 
 Array.from({ length: carouselCount }).forEach((_, index) => {
   const card = new THREE.Group();
@@ -1474,6 +1635,15 @@ Array.from({ length: carouselCount }).forEach((_, index) => {
     depthWrite: false,
     depthTest: true,
   });
+  const expandMaterial = new THREE.MeshBasicMaterial({
+    map: expandHintTexture,
+    transparent: true,
+    opacity: 0,
+    blending: THREE.AdditiveBlending,
+    side: THREE.FrontSide,
+    depthWrite: false,
+    depthTest: true,
+  });
 
   const slab = new THREE.Mesh(slabGeometry, slabMaterial);
   const back = new THREE.Mesh(backGeometry, backMaterial);
@@ -1483,6 +1653,7 @@ Array.from({ length: carouselCount }).forEach((_, index) => {
   const reflection = new THREE.Mesh(cardGeometry, reflectionMaterial);
   const label = new THREE.Mesh(cardGeometry, labelMaterial);
   const border = new THREE.LineLoop(borderGeometry, borderMaterial);
+  const expandHint = new THREE.Mesh(expandHintGeometry, expandMaterial);
   back.position.z = -0.047;
   back.rotation.y = Math.PI;
   glow.position.z = 0.052;
@@ -1491,8 +1662,9 @@ Array.from({ length: carouselCount }).forEach((_, index) => {
   reflection.position.z = 0.074;
   label.position.z = 0.081;
   border.position.z = 0.088;
+  expandHint.position.set(1.24, -0.86, 0.102);
 
-  card.add(slab, back, glow, image, glass, reflection, label, border);
+  card.add(slab, back, glow, image, glass, reflection, label, border, expandHint);
   card.userData = {
     index,
     baseAngle: index * towerCardAngleStep,
@@ -1508,6 +1680,7 @@ Array.from({ length: carouselCount }).forEach((_, index) => {
     borderMaterial,
     slabMaterial,
     backMaterial,
+    expandMaterial,
   };
   orbitAnchor.add(card);
   orbitCards.push(card);
@@ -1526,6 +1699,7 @@ function pushOrbit(deltaY) {
 
 function resize() {
   camera.aspect = window.innerWidth / window.innerHeight;
+  camera.fov = window.innerWidth < 720 ? 54 : 44;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
   resizeSmokeCanvas();
@@ -1574,6 +1748,9 @@ const detailPrice = document.querySelector("[data-detail-price]");
 const detailIntro = document.querySelector("[data-detail-intro]");
 const detailHeading = document.querySelector("[data-detail-heading]");
 const detailList = document.querySelector("[data-detail-list]");
+const projectGalleryModal = document.querySelector("[data-project-gallery-modal]");
+const projectGalleryTitle = document.querySelector("[data-project-gallery-title]");
+const projectGalleryClose = document.querySelector("[data-project-gallery-close]");
 
 function setPointerFromEvent(event) {
   pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -1631,6 +1808,18 @@ function handleCardClick(event) {
   else scrollToCard(index);
 }
 
+function updateHoveredCardFromPointer() {
+  hoveredCardIndex = -1;
+  if (detailOverlay?.classList.contains("is-open") || !orbitAnchor.visible) return;
+  raycaster.setFromCamera(pointer, camera);
+  const intersections = raycaster.intersectObjects(orbitCards, true);
+  if (!intersections.length) return;
+  const card = getCardFromObject(intersections[0].object);
+  if (card?.visible && (card.userData.focus ?? 0) > 0.32) {
+    hoveredCardIndex = card.userData.index;
+  }
+}
+
 window.addEventListener("scroll", updateScroll, { passive: true });
 window.addEventListener("wheel", (event) => {
   pushOrbit(event.deltaY);
@@ -1641,8 +1830,8 @@ window.addEventListener("pointermove", (event) => {
   smokeMouse.vy = event.clientY - smokeMouse.y;
   smokeMouse.x = event.clientX;
   smokeMouse.y = event.clientY;
-  pointer.x = (event.clientX / window.innerWidth - 0.5) * 2;
-  pointer.y = (event.clientY / window.innerHeight - 0.5) * 2;
+  setPointerFromEvent(event);
+  updateHoveredCardFromPointer();
   if (isDragging) {
     if (Math.hypot(event.clientX - pointerDown.x, event.clientY - pointerDown.y) > 9) {
       pointerWasDragged = true;
@@ -1667,14 +1856,21 @@ window.addEventListener("pointerup", (event) => {
 window.addEventListener("pointercancel", () => {
   isDragging = false;
   pointerWasDragged = false;
+  hoveredCardIndex = -1;
   document.body.classList.remove("is-dragging");
+});
+window.addEventListener("pointerleave", () => {
+  hoveredCardIndex = -1;
 });
 detailClose?.addEventListener("click", closeServiceDetail);
 detailOverlay?.addEventListener("click", (event) => {
   if (event.target === detailOverlay) closeServiceDetail();
 });
 window.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") closeServiceDetail();
+  if (event.key === "Escape") {
+    closeServiceDetail();
+    closeProjectGallery();
+  }
 });
 serviceLinks.forEach((link) => {
   link.addEventListener("click", (event) => {
@@ -1682,23 +1878,40 @@ serviceLinks.forEach((link) => {
     scrollToCard(Number(link.dataset.cardIndex));
   });
 });
-document.querySelectorAll(".work-pill a").forEach((link) => {
-  link.addEventListener("click", (event) => event.preventDefault());
+
+document.querySelectorAll("[data-project-gallery]").forEach((button) => {
+  button.addEventListener("click", () => {
+    if (!projectGalleryModal) return;
+    if (projectGalleryTitle) projectGalleryTitle.textContent = button.dataset.projectGallery || "Projeto";
+    projectGalleryModal.classList.add("is-open");
+    projectGalleryModal.setAttribute("aria-hidden", "false");
+  });
+});
+
+function closeProjectGallery() {
+  projectGalleryModal?.classList.remove("is-open");
+  projectGalleryModal?.setAttribute("aria-hidden", "true");
+}
+
+projectGalleryClose?.addEventListener("click", closeProjectGallery);
+projectGalleryModal?.addEventListener("click", (event) => {
+  if (event.target === projectGalleryModal) closeProjectGallery();
 });
 
 function animate() {
   const elapsed = clock.getElapsedTime();
   const delta = clock.getDelta();
+  updateLoader(delta);
   updateScroll();
   scrollProgress = scrollTarget;
   const towerTarget = getTowerProgress(scrollTarget);
   const towerProgress = getTowerProgress(scrollProgress);
   const heroExit = THREE.MathUtils.smoothstep(scrollProgress, 0.1, 0.2);
-  const towerEnter = THREE.MathUtils.smoothstep(scrollProgress, 0.24, towerScrollStart);
-  const towerReveal = THREE.MathUtils.smoothstep(scrollProgress, 0.3, towerScrollStart);
+  const towerEnter = THREE.MathUtils.smoothstep(scrollProgress, 0.215, towerScrollStart);
+  const towerReveal = THREE.MathUtils.smoothstep(scrollProgress, 0.235, towerScrollStart);
   const towerExit = 1 - THREE.MathUtils.smoothstep(scrollProgress, towerScrollEnd + 0.015, projectsRevealProgress);
   const towerVisibility = towerReveal * towerExit;
-  const introCeilingPhase = THREE.MathUtils.smoothstep(scrollProgress, 0.15, 0.24) * (1 - THREE.MathUtils.smoothstep(scrollProgress, 0.28, 0.34));
+  const introCeilingPhase = THREE.MathUtils.smoothstep(scrollProgress, 0.145, 0.225) * (1 - THREE.MathUtils.smoothstep(scrollProgress, 0.25, 0.305));
   const projectsGatePhase = THREE.MathUtils.smoothstep(scrollProgress, towerScrollEnd - 0.015, projectsGateStart) * (1 - THREE.MathUtils.smoothstep(scrollProgress, projectsGateStart + 0.025, projectsRevealProgress));
   const ceilingPhase = Math.min(1, introCeilingPhase + projectsGatePhase * 0.95);
   const cameraTrackY = THREE.MathUtils.lerp(towerTopY + 0.08, towerBottomY - 0.08, towerProgress);
@@ -1716,6 +1929,8 @@ function animate() {
   const clampedProgress = THREE.MathUtils.clamp(towerProgress, 0, 1);
   const activeFloat = orbitPosition;
   const scrollBreath = Math.sin(clampedProgress * Math.PI);
+  const isMobile = window.innerWidth < 720;
+  const mobileScale = isMobile ? 0.72 : 1;
   dragSpin = THREE.MathUtils.damp(dragSpin, dragSpinTarget, 9, delta);
   const activeIndex = THREE.MathUtils.clamp(Math.round(activeFloat), 0, serviceLinks.length - 1);
   serviceLinks.forEach((link, index) => {
@@ -1724,11 +1939,12 @@ function animate() {
 
   root.position.set(0.28, 0, 0);
   root.rotation.set(0, 0, 0);
-  document.body.classList.toggle("hide-hero-code", scrollProgress > 0.18);
+  document.body.classList.toggle("hide-hero-code", false);
   document.body.classList.toggle("show-services-list", scrollProgress >= serviceListRevealProgress && scrollProgress < projectsGateStart);
   document.body.classList.toggle("show-projects", scrollProgress >= projectsRevealProgress);
   heroAnchor.visible = heroExit < 0.98;
   heroAnchor.position.set(0.08, towerHeroY + heroExit * 1.35, -1.04 - heroExit * 0.44);
+  heroAnchor.scale.setScalar(isMobile ? 0.68 : 1);
   heroLetterAnchor.children.forEach((letter) => {
     const entry = letter.userData;
     const entrance = THREE.MathUtils.smoothstep(elapsed - entry.delay, 0, 1.05);
@@ -1754,7 +1970,7 @@ function animate() {
   orbitAnchor.visible = towerVisibility > 0.04;
   columnAnchor.rotation.set(0, towerSpin * 0.42, 0);
   columnAnchor.position.set(0, 0, towerCenterZ);
-  columnAnchor.scale.setScalar(1);
+  columnAnchor.scale.setScalar(isMobile ? 0.84 : 1);
 
   ceilingAnchor.visible = ceilingPhase > 0.015;
   ceilingAnchor.position.y = Math.sin(elapsed * 0.28) * 0.04;
@@ -1786,6 +2002,7 @@ function animate() {
   glassParticles.scale.set(1.24, 4.35, 1.24);
   glassParticleMaterial.opacity = towerVisibility * (0.42 + scrollBreath * 0.34);
   updateDebris(elapsed, towerVisibility);
+  updatePyramids(elapsed, towerVisibility);
 
   if (orbitCards.length) orbitCards.forEach((card, index) => {
     const y = card.userData.towerY;
@@ -1807,7 +2024,9 @@ function animate() {
     cardTilt.setFromAxisAngle(cardTiltAxis, THREE.MathUtils.degToRad(Math.sin(angle * 1.3) * 4.8));
     card.quaternion.multiply(cardTilt);
 
-    card.scale.setScalar(0.56 + front * 0.18 + focus * 0.22);
+    const hovered = hoveredCardIndex === index;
+    const hoverPulse = hovered ? 0.045 + Math.sin(elapsed * 8) * 0.018 : 0;
+    card.scale.setScalar((0.56 + front * 0.18 + focus * 0.22 + hoverPulse) * mobileScale);
     card.visible = visible > 0.025;
     card.children.forEach((child) => {
       child.renderOrder = 0;
@@ -1822,15 +2041,19 @@ function animate() {
     card.userData.borderMaterial.opacity = visible * THREE.MathUtils.clamp(0.22 + focus * 0.32 + sideAmount * 0.1, 0.16, 0.58);
     card.userData.slabMaterial.opacity = visible * THREE.MathUtils.clamp(0.2 + sideAmount * 0.2, 0.16, 0.4);
     card.userData.backMaterial.opacity = visible * THREE.MathUtils.clamp(0.62 + (1 - front) * 0.3 + sideAmount * 0.1, 0.54, 0.96);
+    card.userData.expandMaterial.opacity = visible * frontContent * THREE.MathUtils.clamp((focus - 0.28) * 1.65 + (hovered ? 0.38 : 0), 0, 0.88);
   });
 
   mistAnchor.rotation.y += delta * (0.018 + scrollBreath * 0.028);
   particles.rotation.x = Math.sin(elapsed * 0.11) * 0.08;
   particleMaterial.size = 0.025 + scrollBreath * 0.026;
   particleMaterial.opacity = 0.55 + scrollBreath * 0.28;
+  chameleonParticles.rotation.y -= delta * 0.014;
+  chameleonParticles.position.y = THREE.MathUtils.lerp(towerHeroY - 2.4, cameraTrackY, towerEnter) * 0.18;
+  chameleonMaterial.opacity = 0.18 + towerEnter * 0.18 + (scrollProgress > projectsRevealProgress ? 0.12 : 0);
 
-  const heroCamera = new THREE.Vector3(0.1, towerHeroY + 0.02, 8.3);
-  const towerCamera = new THREE.Vector3(0.1, cameraTrackY + 0.02, 7.28);
+  const heroCamera = new THREE.Vector3(0.1, towerHeroY + 0.02, isMobile ? 9.15 : 8.3);
+  const towerCamera = new THREE.Vector3(0.1, cameraTrackY + 0.02, isMobile ? 8.45 : 7.28);
   const targetCamera = heroCamera.lerp(towerCamera, towerEnter);
   const heroLook = new THREE.Vector3(0.2, towerHeroY - 0.16, -0.82);
   const towerLook = new THREE.Vector3(0.28, cameraTrackY - 0.08, towerCenterZ + 0.24);
