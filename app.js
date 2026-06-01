@@ -74,6 +74,8 @@ const pointer = new THREE.Vector2();
 const pointerDown = new THREE.Vector2();
 let scrollTarget = 0;
 let scrollProgress = 0;
+let towerVisualProgress = 0;
+let towerVisualVelocity = 0;
 let orbitPosition = 0;
 let orbitImpulse = 0;
 let orbitVelocity = 0;
@@ -91,10 +93,10 @@ const state = {
   loadedGallery: false,
   phase: 0,
   orbitScrollRange: carouselCount - 1,
-  orbitImpulseStrength: 0.032,
-  orbitImpulseReturn: 2.2,
-  orbitDrag: 3.6,
-  maxOrbitVelocity: 38,
+  orbitImpulseStrength: 0.046,
+  orbitImpulseReturn: 1.35,
+  orbitDrag: 2.25,
+  maxOrbitVelocity: 56,
   colors: {
     cyan: new THREE.Color("#78f7ff"),
     pink: new THREE.Color("#ff4bd8"),
@@ -492,25 +494,50 @@ function resetEndSmoke(elapsed) {
 
 function createEndSmokeParticle(source) {
   const fromGreen = source === "green";
-  const x = fromGreen ? -window.innerWidth * 0.02 : window.innerWidth * 1.02;
-  const y = fromGreen ? -window.innerHeight * 0.02 : window.innerHeight * 1.02;
+  const x = fromGreen ? -window.innerWidth * 0.03 + Math.random() * 18 : window.innerWidth * 1.03 - Math.random() * 18;
+  const y = fromGreen ? -window.innerHeight * 0.03 + Math.random() * 18 : window.innerHeight * 1.03 - Math.random() * 18;
   const angle = fromGreen
-    ? 0.7 + Math.random() * 0.48
-    : Math.PI + 0.7 + Math.random() * 0.48;
-  const speed = fromGreen ? 380 + Math.random() * 520 : 350 + Math.random() * 500;
+    ? 0.62 + Math.random() * 0.44
+    : Math.PI + 0.62 + Math.random() * 0.44;
+  const speed = fromGreen ? 560 + Math.random() * 720 : 520 + Math.random() * 680;
   return {
     x,
     y,
     vx: Math.cos(angle) * speed,
     vy: Math.sin(angle) * speed,
-    radius: 96 + Math.random() * 220,
-    alpha: 0.66 + Math.random() * 0.34,
+    radius: 22 + Math.random() * 52,
+    alpha: 0.7 + Math.random() * 0.24,
     life: 0,
-    maxLife: 13 + Math.random() * 8,
+    maxLife: 8.5 + Math.random() * 5.5,
     hue: fromGreen ? "green" : "purple",
     phase: Math.random() * Math.PI * 2,
     spin: (Math.random() - 0.5) * 1.7,
   };
+}
+
+function drawSmokeBlob(ctx, x, y, radius, alpha, hue, phase) {
+  const lobes = 4;
+  for (let i = 0; i < lobes; i += 1) {
+    const offsetAngle = phase + i * Math.PI * 0.5;
+    const lobeRadius = radius * (0.55 + i * 0.09);
+    const lx = x + Math.cos(offsetAngle) * radius * 0.22;
+    const ly = y + Math.sin(offsetAngle * 1.17) * radius * 0.18;
+    const gradient = ctx.createRadialGradient(lx, ly, 0, lx, ly, lobeRadius);
+    if (hue === "green") {
+      gradient.addColorStop(0, `rgba(195, 255, 126, ${Math.min(0.88, alpha * 0.86)})`);
+      gradient.addColorStop(0.28, `rgba(73, 255, 63, ${Math.min(0.76, alpha * 0.76)})`);
+      gradient.addColorStop(0.62, `rgba(27, 116, 35, ${Math.min(0.62, alpha * 0.58)})`);
+    } else {
+      gradient.addColorStop(0, `rgba(245, 149, 255, ${Math.min(0.88, alpha * 0.86)})`);
+      gradient.addColorStop(0.3, `rgba(191, 43, 255, ${Math.min(0.78, alpha * 0.78)})`);
+      gradient.addColorStop(0.64, `rgba(78, 16, 124, ${Math.min(0.66, alpha * 0.6)})`);
+    }
+    gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.ellipse(lx, ly, lobeRadius * 1.22, lobeRadius * 0.82, offsetAngle * 0.28, 0, Math.PI * 2);
+    ctx.fill();
+  }
 }
 
 function renderEndSmoke(delta, elapsed, active) {
@@ -528,44 +555,44 @@ function renderEndSmoke(delta, elapsed, active) {
     resetEndSmoke(elapsed);
   }
 
-  const emitAge = elapsed - endSmokeStartTime;
-  if (emitAge < 5.4 && endSmokeParticles.length < 620) {
-    endSmokeEmitCarry += delta * 185;
-    while (endSmokeEmitCarry >= 1 && endSmokeParticles.length < 620) {
+  const emitAge = elapsed - endSmokeStartTime - 1.15;
+  if (emitAge > 0 && emitAge < 5.2 && endSmokeParticles.length < 720) {
+    endSmokeEmitCarry += delta * (emitAge < 1.8 ? 310 : 210);
+    while (endSmokeEmitCarry >= 1 && endSmokeParticles.length < 720) {
       endSmokeParticles.push(createEndSmokeParticle(Math.random() > 0.5 ? "green" : "purple"));
       endSmokeEmitCarry -= 1;
     }
   }
 
   endSmokeCtx.globalCompositeOperation = "source-over";
-  endSmokeCtx.fillStyle = "rgba(0, 0, 0, 0.42)";
-  endSmokeCtx.fillRect(0, 0, endSmokeCanvas.width, endSmokeCanvas.height);
-
-  if (emitAge < 5.4) {
-    const burst = Math.max(0, 1 - emitAge / 5.4);
-    const greenJet = endSmokeCtx.createRadialGradient(0, 0, 0, 0, 0, Math.max(endSmokeCanvas.width, endSmokeCanvas.height) * 0.78);
-    greenJet.addColorStop(0, `rgba(143, 255, 34, ${0.98 * burst})`);
-    greenJet.addColorStop(0.28, `rgba(33, 255, 91, ${0.82 * burst})`);
-    greenJet.addColorStop(0.72, "rgba(0, 0, 0, 0)");
-    endSmokeCtx.fillStyle = greenJet;
-    endSmokeCtx.fillRect(0, 0, endSmokeCanvas.width, endSmokeCanvas.height);
-
-    const purpleJet = endSmokeCtx.createRadialGradient(
-      endSmokeCanvas.width,
-      endSmokeCanvas.height,
-      0,
-      endSmokeCanvas.width,
-      endSmokeCanvas.height,
-      Math.max(endSmokeCanvas.width, endSmokeCanvas.height) * 0.82,
-    );
-    purpleJet.addColorStop(0, `rgba(232, 43, 255, ${0.98 * burst})`);
-    purpleJet.addColorStop(0.3, `rgba(136, 32, 255, ${0.86 * burst})`);
-    purpleJet.addColorStop(0.76, "rgba(0, 0, 0, 0)");
-    endSmokeCtx.fillStyle = purpleJet;
-    endSmokeCtx.fillRect(0, 0, endSmokeCanvas.width, endSmokeCanvas.height);
+  if (emitAge > 0 && emitAge < 4.2) {
+    const jetPower = Math.min(1, emitAge * 2) * Math.max(0, 1 - emitAge / 4.2);
+    const jetLength = Math.max(endSmokeCanvas.width, endSmokeCanvas.height) * 0.74;
+    for (let i = 0; i < 24; i += 1) {
+      const t = i / 23;
+      drawSmokeBlob(
+        endSmokeCtx,
+        t * jetLength * 0.72,
+        t * jetLength * 0.48,
+        (28 + t * 132) * scaleX,
+        jetPower * (0.34 + t * 0.38),
+        "green",
+        elapsed + i,
+      );
+      drawSmokeBlob(
+        endSmokeCtx,
+        endSmokeCanvas.width - t * jetLength * 0.72,
+        endSmokeCanvas.height - t * jetLength * 0.48,
+        (30 + t * 138) * scaleX,
+        jetPower * (0.36 + t * 0.4),
+        "purple",
+        elapsed - i,
+      );
+    }
   }
 
-  endSmokeCtx.globalCompositeOperation = "lighter";
+  endSmokeCtx.globalCompositeOperation = "source-over";
+  endSmokeCtx.filter = "blur(7px) saturate(1.45)";
 
   for (let index = endSmokeParticles.length - 1; index >= 0; index -= 1) {
     const particle = endSmokeParticles[index];
@@ -580,11 +607,11 @@ function renderEndSmoke(delta, elapsed, active) {
       particle.vy += endSmokeMouse.vy * power * 2.8 + (dy / Math.max(distance, 1)) * power * 48;
     }
 
-    particle.vx *= 0.986;
-    particle.vy *= 0.986;
+    particle.vx *= 0.982;
+    particle.vy *= 0.982;
     particle.x += particle.vx * delta + Math.sin(elapsed * 0.7 + particle.phase) * 0.8;
     particle.y += particle.vy * delta + Math.cos(elapsed * 0.62 + particle.phase) * 0.72;
-    particle.radius += delta * 13;
+    particle.radius += delta * 48;
 
     if (particle.life > particle.maxLife) {
       endSmokeParticles.splice(index, 1);
@@ -597,25 +624,12 @@ function renderEndSmoke(delta, elapsed, active) {
     const x = particle.x * scaleX;
     const y = particle.y * scaleY;
     const radius = particle.radius * Math.max(scaleX, scaleY) * (0.92 + Math.sin(elapsed + particle.phase) * 0.08);
-    const gradient = endSmokeCtx.createRadialGradient(x, y, 0, x, y, radius);
-    if (particle.hue === "green") {
-      gradient.addColorStop(0, `rgba(143, 255, 34, ${Math.min(1, alpha * 2.1)})`);
-      gradient.addColorStop(0.34, `rgba(33, 255, 91, ${Math.min(0.98, alpha * 1.45)})`);
-      gradient.addColorStop(0.78, `rgba(2, 65, 22, ${alpha * 0.86})`);
-    } else {
-      gradient.addColorStop(0, `rgba(226, 50, 255, ${Math.min(1, alpha * 2.1)})`);
-      gradient.addColorStop(0.38, `rgba(148, 30, 255, ${Math.min(0.98, alpha * 1.48)})`);
-      gradient.addColorStop(0.78, `rgba(39, 3, 67, ${alpha * 0.9})`);
-    }
-    gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
-    endSmokeCtx.fillStyle = gradient;
-    endSmokeCtx.beginPath();
-    endSmokeCtx.arc(x, y, radius, 0, Math.PI * 2);
-    endSmokeCtx.fill();
+    drawSmokeBlob(endSmokeCtx, x, y, radius, alpha, particle.hue, particle.phase + elapsed * particle.spin);
   }
 
   endSmokeMouse.vx *= 0.7;
   endSmokeMouse.vy *= 0.7;
+  endSmokeCtx.filter = "none";
   endSmokeCtx.globalCompositeOperation = "source-over";
 }
 
@@ -2482,7 +2496,12 @@ function animate() {
   updateScroll();
   scrollProgress = scrollTarget;
   const towerTarget = getTowerProgress(scrollTarget);
-  const towerProgress = getTowerProgress(scrollProgress);
+  const springForce = (towerTarget - towerVisualProgress) * 42;
+  towerVisualVelocity += springForce * delta;
+  towerVisualVelocity = THREE.MathUtils.damp(towerVisualVelocity, 0, 8.5, delta);
+  towerVisualProgress += towerVisualVelocity * delta;
+  towerVisualProgress = THREE.MathUtils.clamp(towerVisualProgress, 0, 1);
+  const towerProgress = towerVisualProgress;
   const heroExit = THREE.MathUtils.smoothstep(scrollProgress, 0.1, 0.2);
   const towerEnter = THREE.MathUtils.smoothstep(scrollProgress, 0.215, towerScrollStart);
   const towerReveal = THREE.MathUtils.smoothstep(scrollProgress, 0.235, towerScrollStart);
@@ -2496,6 +2515,7 @@ function animate() {
   const galleryZoom = THREE.MathUtils.smoothstep(scrollProgress, projectsRevealProgress + 0.012, 0.995);
   const galleryMouseStrength = galleryVisibility * (1.05 + galleryZoom * 0.75);
   const finalGatePhase = THREE.MathUtils.smoothstep(scrollProgress, 0.982, 0.998);
+  const finalExitPhase = THREE.MathUtils.smoothstep(scrollProgress, 0.989, 1);
   const finalGateActive = finalGatePhase > 0.01;
 
   document.documentElement.style.setProperty("--gallery-zoom", galleryZoom.toFixed(4));
@@ -2508,10 +2528,10 @@ function animate() {
   orbitImpulse += orbitVelocity * delta;
   orbitImpulse = THREE.MathUtils.damp(orbitImpulse, 0, state.orbitImpulseReturn, delta);
   orbitVelocity = THREE.MathUtils.damp(orbitVelocity, 0, state.orbitDrag, delta);
-  const rawOrbitPosition = towerTarget * state.orbitScrollRange + orbitImpulse;
+  const rawOrbitPosition = towerProgress * state.orbitScrollRange + orbitImpulse;
   orbitPosition = THREE.MathUtils.clamp(rawOrbitPosition, 0, state.orbitScrollRange);
   if (orbitPosition !== rawOrbitPosition) {
-    orbitImpulse = orbitPosition - towerTarget * state.orbitScrollRange;
+    orbitImpulse = orbitPosition - towerProgress * state.orbitScrollRange;
     orbitVelocity = 0;
   }
 
@@ -2689,13 +2709,13 @@ function animate() {
   const targetLook = heroLook.lerp(towerLook, towerEnter);
   const galleryCamera = new THREE.Vector3(
     pointer.x * 0.72 * galleryMouseStrength,
-    1.12 + pointer.y * 0.26 * galleryMouseStrength,
-    (isMobile ? 10.4 : 9.85) - galleryZoom * (isMobile ? 5.7 : 10.05),
+    1.12 + pointer.y * 0.26 * galleryMouseStrength - finalExitPhase * 0.2,
+    (isMobile ? 10.4 : 9.85) - galleryZoom * (isMobile ? 5.7 : 10.05) - finalExitPhase * (isMobile ? 11.8 : 15.2),
   );
   const galleryLook = new THREE.Vector3(
     pointer.x * 0.58 * galleryMouseStrength,
-    0.62 + pointer.y * 0.18 * galleryMouseStrength,
-    -4.9 - galleryZoom * (isMobile ? 6.7 : 9.45),
+    0.62 + pointer.y * 0.18 * galleryMouseStrength - finalExitPhase * 0.14,
+    -4.9 - galleryZoom * (isMobile ? 6.7 : 9.45) - finalExitPhase * (isMobile ? 11.6 : 15.8),
   );
   targetCamera.lerp(galleryCamera, galleryVisibility);
   targetLook.lerp(galleryLook, galleryVisibility);
@@ -2723,6 +2743,8 @@ if (hasPreviewProgress) {
     window.scrollTo(0, maxScroll * THREE.MathUtils.clamp(previewProgress, 0, 1));
     updateScroll();
     scrollProgress = scrollTarget;
+    towerVisualProgress = getTowerProgress(scrollTarget);
+    towerVisualVelocity = 0;
     orbitPosition = getTowerProgress(scrollTarget) * state.orbitScrollRange;
     orbitImpulse = 0;
     orbitVelocity = 0;
