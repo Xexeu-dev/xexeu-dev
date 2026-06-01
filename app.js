@@ -455,12 +455,13 @@ const ceilingAnchor = new THREE.Group();
 const galleryAnchor = new THREE.Group();
 const galleryRoom = new THREE.Group();
 const galleryDisplays = new THREE.Group();
+const galleryProjects = new THREE.Group();
 const mistAnchor = new THREE.Group();
 const heroLetterAnchor = new THREE.Group();
 scene.add(root, mistAnchor, galleryAnchor);
 root.add(columnAnchor, orbitAnchor, heroAnchor, ceilingAnchor);
 heroAnchor.add(heroLetterAnchor);
-galleryAnchor.add(galleryRoom, galleryDisplays);
+galleryAnchor.add(galleryRoom, galleryDisplays, galleryProjects);
 galleryAnchor.visible = false;
 
 const ambient = new THREE.HemisphereLight(0x9bdfff, 0x110014, 1.55);
@@ -495,6 +496,8 @@ let columnModel = null;
 let galleryModel = null;
 const columnSegments = [];
 const galleryLightPoints = [];
+const galleryProjectRayTargets = [];
+const galleryProjectGroups = [];
 const auraMaterials = [
   new THREE.MeshBasicMaterial({ color: state.colors.cyan, transparent: true, opacity: 0.36, blending: THREE.AdditiveBlending, depthWrite: false }),
   new THREE.MeshBasicMaterial({ color: state.colors.pink, transparent: true, opacity: 0.24, blending: THREE.AdditiveBlending, depthWrite: false }),
@@ -552,6 +555,7 @@ const galleryPedestalSlots = [
   { x: 2.56, z: -0.72, scale: 0.98, yaw: -0.12 },
   { x: 4.08, z: 1.04, scale: 1.18, yaw: -0.2 },
 ];
+const projectButtons = Array.from(document.querySelectorAll("[data-project-open]"));
 
 function addGalleryBox(width, height, depth, x, y, z, material) {
   const mesh = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
@@ -569,6 +573,49 @@ addGalleryBox(11.2, 4.8, 0.08, 0, 1.02, -11.55, galleryWallMaterial);
 addGalleryBox(11.2, 0.08, 16.4, 0, 3.42, -3.35, galleryWallMaterial);
 addGalleryBox(0.06, 0.08, 12.8, -2.55, 3.27, -3.35, galleryDarkMaterial);
 addGalleryBox(0.06, 0.08, 12.8, 2.55, 3.27, -3.35, galleryDarkMaterial);
+
+function createWallGlowTexture() {
+  const glowCanvas = document.createElement("canvas");
+  glowCanvas.width = 512;
+  glowCanvas.height = 512;
+  const ctx = glowCanvas.getContext("2d");
+  const gradient = ctx.createRadialGradient(256, 108, 0, 256, 108, 250);
+  gradient.addColorStop(0, "rgba(255, 255, 255, 0.82)");
+  gradient.addColorStop(0.28, "rgba(255, 255, 255, 0.34)");
+  gradient.addColorStop(0.68, "rgba(255, 255, 255, 0.08)");
+  gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, 512, 512);
+  const texture = new THREE.CanvasTexture(glowCanvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  return texture;
+}
+
+const wallGlowTexture = createWallGlowTexture();
+const wallGlowMaterial = new THREE.MeshBasicMaterial({
+  map: wallGlowTexture,
+  transparent: true,
+  opacity: 0.42,
+  depthWrite: false,
+  blending: THREE.AdditiveBlending,
+  side: THREE.DoubleSide,
+});
+
+[-4.4, -2.65, -0.95, 0.85, 2.72].forEach((z, index) => {
+  const leftGlow = new THREE.Mesh(new THREE.PlaneGeometry(1.95, 2.4), wallGlowMaterial.clone());
+  leftGlow.position.set(-5.525, 1.18 + Math.sin(index) * 0.05, z);
+  leftGlow.rotation.y = Math.PI / 2;
+  leftGlow.material.opacity = 0.2 + (index % 2) * 0.08;
+  galleryRoom.add(leftGlow);
+
+  const rightGlow = new THREE.Mesh(new THREE.PlaneGeometry(1.95, 2.4), wallGlowMaterial.clone());
+  rightGlow.position.set(5.525, 1.18 + Math.cos(index) * 0.05, z);
+  rightGlow.rotation.y = -Math.PI / 2;
+  rightGlow.material.opacity = 0.2 + ((index + 1) % 2) * 0.08;
+  galleryRoom.add(rightGlow);
+});
 
 galleryPedestalSlots.forEach((slot, index) => {
   const glow = new THREE.Mesh(new THREE.CircleGeometry(0.78 * slot.scale, 48), galleryGlowMaterial.clone());
@@ -623,8 +670,137 @@ function addFallbackGalleryPedestal(slot) {
   return pedestalGroup;
 }
 
+function createGalleryTextTexture(title, subtitle, width = 512, height = 192) {
+  const labelCanvas = document.createElement("canvas");
+  labelCanvas.width = width;
+  labelCanvas.height = height;
+  const ctx = labelCanvas.getContext("2d");
+  ctx.clearRect(0, 0, width, height);
+  const gradient = ctx.createLinearGradient(0, 0, width, height);
+  gradient.addColorStop(0, "#fff6bd");
+  gradient.addColorStop(0.55, "#d9a538");
+  gradient.addColorStop(1, "#8c641a");
+  ctx.fillStyle = "rgba(8, 7, 5, 0.88)";
+  ctx.beginPath();
+  ctx.roundRect(18, 18, width - 36, height - 36, 26);
+  ctx.fill();
+  ctx.strokeStyle = "rgba(255, 215, 112, 0.92)";
+  ctx.lineWidth = 7;
+  ctx.stroke();
+  ctx.fillStyle = gradient;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.font = "900 44px Courier New, monospace";
+  ctx.fillText(title.toUpperCase(), width * 0.5, height * 0.42, width - 64);
+  ctx.fillStyle = "#fff0a0";
+  ctx.font = "900 28px Courier New, monospace";
+  ctx.fillText(subtitle.toUpperCase(), width * 0.5, height * 0.72, width - 76);
+  const texture = new THREE.CanvasTexture(labelCanvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  return texture;
+}
+
+function createGalleryProjectExhibit(slot, index, button) {
+  if (!button) return;
+  const group = new THREE.Group();
+  const topY = -0.04 + 0.395 * slot.scale;
+  const frameWidth = 1.18 * slot.scale;
+  const frameHeight = 0.66 * slot.scale;
+  const frameDepth = 0.06 * slot.scale;
+  const imageSrc = button.dataset.projectImage || button.querySelector("img")?.getAttribute("src") || "";
+  const title = button.dataset.projectTitle || button.querySelector(".frame-name")?.textContent || "Projeto";
+  const subtitle = button.querySelector(".frame-plaque")?.textContent || "Projeto";
+
+  group.position.set(slot.x, topY + frameHeight * 0.45, slot.z - 0.22 * slot.scale);
+  group.rotation.y = slot.yaw * 0.7;
+  group.userData.projectIndex = index;
+
+  const frameBack = new THREE.Mesh(
+    new THREE.BoxGeometry(frameWidth + 0.14 * slot.scale, frameHeight + 0.13 * slot.scale, frameDepth),
+    new THREE.MeshStandardMaterial({
+      color: 0x090806,
+      metalness: 0.74,
+      roughness: 0.24,
+      emissive: 0x261500,
+      emissiveIntensity: 0.18,
+    }),
+  );
+  frameBack.userData.projectIndex = index;
+  group.add(frameBack);
+  galleryProjectRayTargets.push(frameBack);
+
+  const goldLip = new THREE.Mesh(
+    new THREE.BoxGeometry(frameWidth + 0.05 * slot.scale, frameHeight + 0.04 * slot.scale, frameDepth * 1.14),
+    new THREE.MeshStandardMaterial({
+      color: 0xc99d3b,
+      metalness: 0.7,
+      roughness: 0.2,
+      emissive: 0x2b1700,
+      emissiveIntensity: 0.18,
+    }),
+  );
+  goldLip.position.z = 0.012 * slot.scale;
+  goldLip.scale.set(1, 1, 0.62);
+  goldLip.userData.projectIndex = index;
+  group.add(goldLip);
+  galleryProjectRayTargets.push(goldLip);
+
+  const imageMaterial = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide,
+  });
+  const imagePlane = new THREE.Mesh(new THREE.PlaneGeometry(frameWidth, frameHeight), imageMaterial);
+  imagePlane.position.z = frameDepth * 0.78;
+  imagePlane.userData.projectIndex = index;
+  group.add(imagePlane);
+  galleryProjectRayTargets.push(imagePlane);
+
+  if (imageSrc) {
+    textureLoader.load(imageSrc, (texture) => {
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.minFilter = THREE.LinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+      imageMaterial.map = texture;
+      imageMaterial.needsUpdate = true;
+    });
+  }
+
+  const plaqueTexture = createGalleryTextTexture(title, subtitle);
+  const plaque = new THREE.Mesh(
+    new THREE.PlaneGeometry(frameWidth * 0.95, 0.26 * slot.scale),
+    new THREE.MeshBasicMaterial({
+      map: plaqueTexture,
+      transparent: true,
+      side: THREE.DoubleSide,
+    }),
+  );
+  plaque.position.set(0, -frameHeight * 0.5 - 0.22 * slot.scale, frameDepth * 0.9);
+  plaque.userData.projectIndex = index;
+  group.add(plaque);
+  galleryProjectRayTargets.push(plaque);
+
+  const shadow = new THREE.Mesh(
+    new THREE.CircleGeometry(0.64 * slot.scale, 40),
+    new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      transparent: true,
+      opacity: 0.28,
+      depthWrite: false,
+    }),
+  );
+  shadow.position.set(0, -frameHeight * 0.5 - 0.05 * slot.scale, -0.03);
+  shadow.rotation.x = -Math.PI / 2;
+  group.add(shadow);
+
+  galleryProjects.add(group);
+  galleryProjectGroups.push(group);
+}
+
 function buildGalleryPedestalCorridor() {
   galleryPedestalSlots.forEach(addFallbackGalleryPedestal);
+  galleryPedestalSlots.forEach((slot, index) => createGalleryProjectExhibit(slot, index, projectButtons[index]));
   galleryModel = galleryDisplays;
   state.loadedGallery = true;
 }
@@ -1938,6 +2114,28 @@ function getCardFromObject(object) {
   return null;
 }
 
+function getGalleryProjectFromObject(object) {
+  let current = object;
+  while (current) {
+    if (current.userData && Number.isInteger(current.userData.projectIndex)) return current;
+    current = current.parent;
+  }
+  return null;
+}
+
+function handleGalleryProjectClick(event) {
+  if (!galleryAnchor.visible || !galleryProjectRayTargets.length || !projectButtons.length) return false;
+  setPointerFromEvent(event);
+  raycaster.setFromCamera(pointer, camera);
+  const intersections = raycaster.intersectObjects(galleryProjectRayTargets, true);
+  if (!intersections.length) return false;
+  const project = getGalleryProjectFromObject(intersections[0].object);
+  const index = project?.userData.projectIndex;
+  if (!Number.isInteger(index) || !projectButtons[index]) return false;
+  openProjectGallery(projectButtons[index]);
+  return true;
+}
+
 function handleCardClick(event) {
   if (detailOverlay?.classList.contains("is-open")) return;
   setPointerFromEvent(event);
@@ -1993,6 +2191,7 @@ window.addEventListener("pointerup", (event) => {
   isDragging = false;
   document.body.classList.remove("is-dragging");
   if (!pointerWasDragged && event.target === canvas) {
+    if (handleGalleryProjectClick(event)) return;
     handleCardClick(event);
   }
 });

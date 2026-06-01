@@ -1973,7 +1973,7 @@ body::after {
 
 body.show-projects .museum-room {
   opacity: 1;
-  pointer-events: auto;
+  pointer-events: none;
   animation: none !important;
 }
 
@@ -2026,6 +2026,7 @@ body.show-projects .museum-room {
   transform: translate3d(var(--gallery-shift-x), var(--gallery-shift-y), 0) scale(var(--gallery-scale));
   transform-origin: 50% 58%;
   will-change: transform;
+  opacity: 0;
 }
 
 .museum-frame,
@@ -2052,6 +2053,26 @@ body.show-projects .museum-room {
 
 body.show-projects .museum-frame {
   animation: realGalleryFrameDrop 940ms cubic-bezier(.15,.9,.2,1) both !important;
+}
+
+body.show-projects .projects-stage,
+body.show-projects .museum-gallery,
+body.show-projects .museum-frame {
+  pointer-events: none !important;
+}
+
+body.show-projects .museum-frame,
+body.show-projects .museum-frame * {
+  opacity: 0 !important;
+}
+
+body.show-projects .code-wall {
+  opacity: 0.08;
+  filter: grayscale(1);
+}
+
+body.show-projects #toxicSmoke {
+  opacity: 0.08;
 }
 
 body.show-projects .museum-frame:nth-child(1) { animation-delay: 220ms !important; }
