@@ -2609,13 +2609,14 @@ function animate() {
   const towerReveal = THREE.MathUtils.smoothstep(scrollProgress, 0.235, towerScrollStart);
   const towerExit = 1 - THREE.MathUtils.smoothstep(scrollProgress, towerScrollEnd + 0.015, projectsRevealProgress);
   const towerVisibility = towerReveal * towerExit;
+  const isMobile = window.innerWidth < 720;
   const introCeilingPhase = THREE.MathUtils.smoothstep(scrollProgress, 0.145, 0.225) * (1 - THREE.MathUtils.smoothstep(scrollProgress, 0.25, 0.305));
   const projectsGatePhase = THREE.MathUtils.smoothstep(scrollProgress, towerScrollEnd - 0.015, projectsGateStart) * (1 - THREE.MathUtils.smoothstep(scrollProgress, projectsGateStart + 0.025, projectsRevealProgress));
   const ceilingPhase = Math.min(1, introCeilingPhase + projectsGatePhase * 0.95);
   const cameraTrackY = THREE.MathUtils.lerp(towerTopY + 0.08, towerBottomY - 0.08, towerProgress);
   const galleryVisibility = THREE.MathUtils.smoothstep(scrollProgress, projectsRevealProgress - 0.018, projectsRevealProgress + 0.025);
   const galleryZoom = THREE.MathUtils.smoothstep(scrollProgress, projectsRevealProgress + 0.012, 0.995);
-  const galleryMouseStrength = galleryVisibility * (1.05 + galleryZoom * 0.75);
+  const galleryMouseStrength = isMobile ? 0 : galleryVisibility * (1.05 + galleryZoom * 0.75);
   const finalGatePhase = THREE.MathUtils.smoothstep(scrollProgress, 0.982, 0.998);
   const finalExitPhase = THREE.MathUtils.smoothstep(scrollProgress, 0.989, 1);
   const finalGateActive = finalGatePhase > 0.01;
@@ -2647,7 +2648,6 @@ function animate() {
     activeCard: Math.round(activeFloat),
   };
   const scrollBreath = Math.sin(clampedProgress * Math.PI);
-  const isMobile = window.innerWidth < 720;
   const mobileScale = isMobile ? 0.72 : 1;
   dragSpin = THREE.MathUtils.damp(dragSpin, dragSpinTarget, 9, delta);
   const activeIndex = THREE.MathUtils.clamp(Math.round(activeFloat), 0, serviceLinks.length - 1);
@@ -2683,17 +2683,17 @@ function animate() {
   }
   galleryAnchor.visible = galleryVisibility > 0.01;
   galleryAnchor.position.set(
-    pointer.x * 0.28 * galleryMouseStrength,
-    -0.1 + pointer.y * 0.14 * galleryMouseStrength,
+    isMobile ? 0 : pointer.x * 0.28 * galleryMouseStrength,
+    isMobile ? -0.1 : -0.1 + pointer.y * 0.14 * galleryMouseStrength,
     -0.22 - galleryZoom * 0.38,
   );
   galleryAnchor.rotation.set(
-    -pointer.y * 0.058 * galleryMouseStrength,
-    pointer.x * 0.13 * galleryMouseStrength,
-    pointer.x * 0.014 * galleryMouseStrength,
+    isMobile ? 0 : -pointer.y * 0.058 * galleryMouseStrength,
+    isMobile ? 0 : pointer.x * 0.13 * galleryMouseStrength,
+    isMobile ? 0 : pointer.x * 0.014 * galleryMouseStrength,
   );
   galleryRoom.position.z = -galleryZoom * 0.24;
-  galleryDisplays.rotation.y = Math.sin(elapsed * 0.18) * 0.012 * galleryVisibility;
+  galleryDisplays.rotation.y = isMobile ? 0 : Math.sin(elapsed * 0.18) * 0.012 * galleryVisibility;
   galleryAmbient.intensity = galleryVisibility * 0.82;
   galleryKeyLight.intensity = galleryVisibility * (11 + galleryZoom * 4.5);
   galleryFillLight.intensity = galleryVisibility * (2.4 + galleryZoom * 1.4);
@@ -2817,14 +2817,14 @@ function animate() {
   const towerLook = new THREE.Vector3(0.28, cameraTrackY - 0.08, towerCenterZ + 0.24);
   const targetLook = heroLook.lerp(towerLook, towerEnter);
   const galleryCamera = new THREE.Vector3(
-    pointer.x * 0.72 * galleryMouseStrength,
-    1.12 + pointer.y * 0.26 * galleryMouseStrength - finalExitPhase * 0.2,
-    (isMobile ? 10.4 : 9.85) - galleryZoom * (isMobile ? 5.7 : 10.05) - finalExitPhase * (isMobile ? 11.8 : 15.2),
+    isMobile ? 0 : pointer.x * 0.72 * galleryMouseStrength,
+    (isMobile ? 1.04 : 1.12 + pointer.y * 0.26 * galleryMouseStrength) - finalExitPhase * 0.2,
+    (isMobile ? 14.2 : 9.85) - galleryZoom * (isMobile ? 12.2 : 10.05) - finalExitPhase * (isMobile ? 11.8 : 15.2),
   );
   const galleryLook = new THREE.Vector3(
-    pointer.x * 0.58 * galleryMouseStrength,
-    0.62 + pointer.y * 0.18 * galleryMouseStrength - finalExitPhase * 0.14,
-    -4.9 - galleryZoom * (isMobile ? 6.7 : 9.45) - finalExitPhase * (isMobile ? 11.6 : 15.8),
+    isMobile ? 0 : pointer.x * 0.58 * galleryMouseStrength,
+    (isMobile ? 0.62 : 0.62 + pointer.y * 0.18 * galleryMouseStrength) - finalExitPhase * 0.14,
+    -4.9 - galleryZoom * (isMobile ? 4.2 : 9.45) - finalExitPhase * (isMobile ? 11.6 : 15.8),
   );
   targetCamera.lerp(galleryCamera, galleryVisibility);
   targetLook.lerp(galleryLook, galleryVisibility);
