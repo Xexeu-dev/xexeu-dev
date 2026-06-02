@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XEXEU DEV,S</title>
-    <link rel="stylesheet" href="./styles.css?v=85" />
+    <link rel="stylesheet" href="./styles.css?v=86" />
   </head>
   <body>
     <div class="loading-screen" data-loader aria-live="polite">
@@ -38,6 +38,12 @@
       <a class="whatsapp-orb" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20e%20tenho%20interesse%20no%20seu%20trabalho%21%20me%20chamo%3A" target="_blank" rel="noreferrer" aria-label="Chamar no WhatsApp">
         <img src="./assets/ui/whatsapp-icon.svg" alt="" aria-hidden="true" />
       </a>
+
+      <div class="swipe-hint" aria-hidden="true">
+        <span class="swipe-hint__arrow">↑</span>
+        <span class="swipe-hint__hand">☝</span>
+        <span class="swipe-hint__label">ARRASTE PARA CIMA</span>
+      </div>
 
       <aside class="query-panel" aria-label="Categorias">
         <p>OQUE VOCE PRECISA ?</p>
@@ -165,8 +171,7 @@
       <canvas id="endSmoke" aria-hidden="true"></canvas>
       <div class="final-gate__text" aria-label="THE END">
         <div class="final-gate__panel" tabindex="0" role="button">
-          <div class="final-gate__octagons" data-end-octagons aria-hidden="true"></div>
-          <span class="final-gate__label">THE END</span>
+          <span class="final-gate__label" data-text="THE END">THE END</span>
         </div>
       </div>
     </section>
@@ -181,6 +186,6 @@
         }
       }
     </script>
-    <script type="module" src="./app.js?v=85"></script>
+    <script type="module" src="./app.js?v=86"></script>
   </body>
 </html>
