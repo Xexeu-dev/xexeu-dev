@@ -94,7 +94,7 @@ const state = {
   loadedGallery: false,
   phase: 0,
   orbitScrollRange: carouselCount - 1,
-  orbitImpulseStrength: 0.046,
+  orbitImpulseStrength: 0.055,
   orbitImpulseReturn: 1.35,
   orbitDrag: 2.25,
   maxOrbitVelocity: 56,
@@ -109,10 +109,10 @@ const state = {
 loaderInterval = window.setInterval(() => updateLoader(1 / 30), 33);
 
 const towerScrollStart = 0.285;
-const towerScrollEnd = 0.78;
+const towerScrollEnd = 0.515;
 const serviceListRevealProgress = towerScrollStart - 0.015;
-const projectsGateStart = 0.805;
-const projectsRevealProgress = 0.865;
+const projectsGateStart = 0.57;
+const projectsRevealProgress = 0.67;
 const towerTopY = 3.35;
 const towerCardSpacing = 1.62;
 const towerBottomY = towerTopY - (carouselCount - 1) * towerCardSpacing;
@@ -2570,10 +2570,7 @@ function animate() {
   scrollProgress = scrollTarget;
   const towerTarget = getTowerProgress(scrollTarget);
   const previousTowerProgress = towerVisualProgress;
-  const towerGap = Math.abs(towerTarget - towerVisualProgress);
-  const towerFollow = towerGap > 0.16 ? 22 : 13;
-  towerVisualProgress = THREE.MathUtils.damp(towerVisualProgress, towerTarget, towerFollow, delta);
-  if (Math.abs(towerTarget - towerVisualProgress) < 0.0008) towerVisualProgress = towerTarget;
+  towerVisualProgress = towerTarget;
   towerVisualProgress = THREE.MathUtils.clamp(towerVisualProgress, 0, 1);
   towerVisualVelocity = delta > 0 ? (towerVisualProgress - previousTowerProgress) / delta : 0;
   const towerProgress = towerVisualProgress;
