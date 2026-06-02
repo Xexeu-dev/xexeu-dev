@@ -8,6 +8,36 @@ const smokeCanvas = document.querySelector("#toxicSmoke");
 const smokeCtx = smokeCanvas?.getContext("2d");
 const endSmokeCanvas = document.querySelector("#endSmoke");
 const endSmokeCtx = endSmokeCanvas?.getContext("2d");
+const endOctagonGrid = document.querySelector("[data-end-octagons]");
+
+function createEndOctagonField() {
+  if (!endOctagonGrid || endOctagonGrid.childElementCount > 0) return;
+  const fragment = document.createDocumentFragment();
+  const columns = 20;
+  const rows = 9;
+
+  Array.from({ length: columns * rows }).forEach((_, index) => {
+    const column = index % columns;
+    const row = Math.floor(index / columns);
+    const edgeDistance = Math.min(column, columns - 1 - column, row, rows - 1 - row);
+    const direction = (index * 2.399) % (Math.PI * 2);
+    const scatterDistance = 150 + ((index * 47) % 310);
+    const octagon = document.createElement("span");
+
+    octagon.className = "final-gate__octagon";
+    octagon.style.setProperty("--octagon-scatter-x", `${(Math.cos(direction) * scatterDistance).toFixed(1)}px`);
+    octagon.style.setProperty("--octagon-scatter-y", `${(Math.sin(direction) * scatterDistance).toFixed(1)}px`);
+    octagon.style.setProperty("--octagon-scatter-r", `${-150 + ((index * 61) % 300)}deg`);
+    octagon.style.setProperty("--octagon-depth", `${(-18 + ((index * 19) % 58)).toFixed(1)}px`);
+    octagon.style.setProperty("--octagon-delay", `${90 + ((index * 37 + edgeDistance * 63) % 720)}ms`);
+    octagon.style.setProperty("--octagon-brightness", `${(0.72 + ((index * 29) % 44) / 100).toFixed(2)}`);
+    fragment.append(octagon);
+  });
+
+  endOctagonGrid.append(fragment);
+}
+
+createEndOctagonField();
 const endLetters = Array.from(document.querySelectorAll(".final-gate__panel, .final-gate__letter"));
 const codeColumns = Array.from(document.querySelectorAll("[data-code-column]"));
 const loaderOverlay = document.querySelector("[data-loader]");
