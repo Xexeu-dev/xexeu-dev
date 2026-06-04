@@ -3,6 +3,45 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
 
+try {
+  if (window.top !== window.self) {
+    window.top.location.replace(window.location.href);
+  }
+} catch (error) {
+  // Some browsers block frame-busting across origins; CSP/meta still reduces casual embedding.
+}
+
+function enableClientProtection() {
+  const blockedCtrlKeys = new Set(["s", "u", "p"]);
+  const blockedShiftKeys = new Set(["i", "j", "c"]);
+  const isEditable = (target) => target?.closest?.("input, textarea, [contenteditable='true']");
+
+  document.addEventListener("contextmenu", (event) => {
+    if (!isEditable(event.target)) event.preventDefault();
+  });
+
+  document.addEventListener("dragstart", (event) => {
+    if (!isEditable(event.target)) event.preventDefault();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (isEditable(event.target)) return;
+    const key = event.key.toLowerCase();
+    const hasModifier = event.ctrlKey || event.metaKey;
+    const isBlockedShortcut =
+      event.key === "F12" ||
+      (hasModifier && event.shiftKey && blockedShiftKeys.has(key)) ||
+      (hasModifier && blockedCtrlKeys.has(key));
+
+    if (isBlockedShortcut) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }, true);
+}
+
+enableClientProtection();
+
 const canvas = document.querySelector("#universe");
 const smokeCanvas = document.querySelector("#toxicSmoke");
 const smokeCtx = smokeCanvas?.getContext("2d");
@@ -2359,13 +2398,52 @@ function getGalleryProjectFromObject(object) {
   return null;
 }
 
+function getBestCardFromIntersections(intersections, minimumFocus = 0) {
+  const seen = new Set();
+  let best = null;
+
+  intersections.forEach((hit) => {
+    const card = getCardFromObject(hit.object);
+    const index = card?.userData.index;
+    if (!card || !card.visible || !Number.isInteger(index) || !serviceDetails[index] || seen.has(card.uuid)) return;
+    seen.add(card.uuid);
+
+    const focus = card.userData.focus ?? 0;
+    const visibleAmount = card.userData.visibleAmount ?? 0;
+    if (focus < minimumFocus && visibleAmount < minimumFocus * 0.75) return;
+
+    const orbitDistance = Math.abs(index - orbitPosition);
+    const score = focus * 130 + visibleAmount * 30 - orbitDistance * 11 - hit.distance * 0.22;
+    if (!best || score > best.score) best = { card, score };
+  });
+
+  return best?.card ?? null;
+}
+
+function getBestGalleryProjectFromIntersections(intersections) {
+  const seen = new Set();
+  let best = null;
+
+  intersections.forEach((hit) => {
+    const project = getGalleryProjectFromObject(hit.object);
+    const index = project?.userData.projectIndex;
+    if (!project || !Number.isInteger(index) || !projectButtons[index] || seen.has(project.uuid)) return;
+    seen.add(project.uuid);
+
+    const score = -hit.distance;
+    if (!best || score > best.score) best = { project, score };
+  });
+
+  return best?.project ?? null;
+}
+
 function handleGalleryProjectClick(event) {
   if (!galleryAnchor.visible || !galleryProjectRayTargets.length || !projectButtons.length) return false;
   setPointerFromEvent(event);
   raycaster.setFromCamera(pointer, camera);
   const intersections = raycaster.intersectObjects(galleryProjectRayTargets, true);
   if (!intersections.length) return false;
-  const project = getGalleryProjectFromObject(intersections[0].object);
+  const project = getBestGalleryProjectFromIntersections(intersections);
   const index = project?.userData.projectIndex;
   if (!Number.isInteger(index) || !projectButtons[index]) return false;
   openProjectGallery(projectButtons[index]);
@@ -2378,7 +2456,7 @@ function handleCardClick(event) {
   raycaster.setFromCamera(pointer, camera);
   const intersections = raycaster.intersectObjects(orbitCards, true);
   if (!intersections.length) return;
-  const card = getCardFromObject(intersections[0].object);
+  const card = getBestCardFromIntersections(intersections);
   if (!card || !card.visible) return;
   const index = card.userData.index;
   if ((card.userData.focus ?? 0) > 0.42) openServiceDetail(index);
@@ -2391,7 +2469,7 @@ function updateHoveredCardFromPointer() {
   raycaster.setFromCamera(pointer, camera);
   const intersections = raycaster.intersectObjects(orbitCards, true);
   if (!intersections.length) return;
-  const card = getCardFromObject(intersections[0].object);
+  const card = getBestCardFromIntersections(intersections, 0.12);
   if (card?.visible && (card.userData.focus ?? 0) > 0.32) {
     hoveredCardIndex = card.userData.index;
   }

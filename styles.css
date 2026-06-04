@@ -19,10 +19,26 @@ body {
   overscroll-behavior-y: none;
   font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 body.is-dragging {
   cursor: grabbing;
+}
+
+img,
+canvas,
+svg {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+input,
+textarea,
+[contenteditable="true"] {
+  user-select: text;
+  -webkit-user-select: text;
 }
 
 .loading-screen {

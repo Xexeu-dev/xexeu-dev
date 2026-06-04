@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https://unpkg.com; font-src 'self' https://unpkg.com data:; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; upgrade-insecure-requests" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), interest-cohort=()" />
     <title>XEXEU DEV,S</title>
-    <link rel="stylesheet" href="./styles.css?v=86" />
+    <link rel="stylesheet" href="./styles.css?v=87" />
   </head>
   <body>
     <div class="loading-screen" data-loader aria-live="polite">
@@ -35,13 +38,13 @@
     <canvas id="universe" aria-label="Cena 3D interativa com imagens orbitando uma coluna"></canvas>
 
     <div class="ui-layer" aria-label="Navegacao da vitrine">
-      <a class="whatsapp-orb" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20e%20tenho%20interesse%20no%20seu%20trabalho%21%20me%20chamo%3A" target="_blank" rel="noreferrer" aria-label="Chamar no WhatsApp">
+      <a class="whatsapp-orb" href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20analisei%20sua%20vitrine%20e%20tenho%20interesse%20no%20seu%20trabalho%21%20me%20chamo%3A" target="_blank" rel="noopener noreferrer" aria-label="Chamar no WhatsApp">
         <img src="./assets/ui/whatsapp-icon.svg" alt="" aria-hidden="true" />
       </a>
 
       <div class="swipe-hint" aria-hidden="true">
-        <span class="swipe-hint__arrow">↑</span>
-        <span class="swipe-hint__hand">☝</span>
+        <span class="swipe-hint__arrow">&#8593;</span>
+        <span class="swipe-hint__hand">&#9757;</span>
         <span class="swipe-hint__label">ARRASTE PARA CIMA</span>
       </div>
 
@@ -156,7 +159,7 @@
         <h2 data-project-gallery-title>Projeto</h2>
         <img class="project-gallery__image" data-project-gallery-image src="./assets/projects/nova-roleplay.png" alt="" />
         <p class="project-gallery__description" data-project-gallery-description></p>
-        <a class="project-gallery__link" data-project-gallery-link href="#" target="_blank" rel="noreferrer">ABRIR PROJETO</a>
+        <a class="project-gallery__link" data-project-gallery-link href="#" target="_blank" rel="noopener noreferrer">ABRIR PROJETO</a>
         <div class="project-gallery__grid" data-project-gallery-placeholders>
           <span>FOTO 01</span>
           <span>FOTO 02</span>
@@ -186,6 +189,6 @@
         }
       }
     </script>
-    <script type="module" src="./app.js?v=86"></script>
+    <script type="module" src="./app.js?v=87"></script>
   </body>
 </html>
