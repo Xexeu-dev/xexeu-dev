@@ -717,6 +717,32 @@ const fallbackColumnMaterial = new THREE.MeshStandardMaterial({
 
 const gltfLoader = new GLTFLoader();
 
+function prepareColumnMaterial(material) {
+  const tuned = material ? material.clone() : fallbackColumnMaterial.clone();
+  const hasTexture = Boolean(tuned.map);
+
+  tuned.side = THREE.DoubleSide;
+  if (tuned.map) {
+    tuned.map.colorSpace = THREE.SRGBColorSpace;
+    tuned.map.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 4);
+    tuned.map.needsUpdate = true;
+  }
+  if (tuned.normalMap) tuned.normalMap.needsUpdate = true;
+  if (tuned.roughnessMap) tuned.roughnessMap.needsUpdate = true;
+  if (tuned.metalnessMap) tuned.metalnessMap.needsUpdate = true;
+  if ("metalness" in tuned) tuned.metalness = hasTexture ? Math.max(tuned.metalness ?? 0, 0.28) : 0.74;
+  if ("roughness" in tuned) tuned.roughness = hasTexture ? Math.min(tuned.roughness ?? 0.45, 0.5) : 0.28;
+  if ("emissive" in tuned) {
+    tuned.emissive = new THREE.Color(hasTexture ? 0x010f06 : 0x092d15);
+    tuned.emissiveIntensity = hasTexture ? Math.min(Math.max(tuned.emissiveIntensity ?? 0, 0.03), 0.11) : 0.72;
+  }
+  if ("color" in tuned && hasTexture) {
+    tuned.color.lerp(new THREE.Color(0xffffff), 0.32);
+  }
+  tuned.needsUpdate = true;
+  return tuned;
+}
+
 const galleryWallMaterial = new THREE.MeshStandardMaterial({
   color: 0xb5b7b1,
   roughness: 0.68,
@@ -1110,17 +1136,7 @@ gltfLoader.load(
     model.traverse((child) => {
       if (!child.isMesh) return;
       const materials = Array.isArray(child.material) ? child.material : [child.material];
-      child.material = materials.map((material) => {
-        const tuned = material ? material.clone() : fallbackColumnMaterial.clone();
-        tuned.side = THREE.DoubleSide;
-        if ("metalness" in tuned) tuned.metalness = Math.max(tuned.metalness ?? 0, 0.42);
-        if ("roughness" in tuned) tuned.roughness = Math.min(tuned.roughness ?? 0.45, 0.42);
-        if ("emissive" in tuned) {
-          tuned.emissive = new THREE.Color(0x082814);
-          tuned.emissiveIntensity = Math.max(tuned.emissiveIntensity ?? 0, 0.28);
-        }
-        return tuned;
-      });
+      child.material = materials.map(prepareColumnMaterial);
       if (child.material.length === 1) {
         child.material = child.material[0];
       }
