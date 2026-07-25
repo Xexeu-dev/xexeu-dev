@@ -7,16 +7,16 @@
       name="description"
       content="Portal Xexeu Dev: serviços de desenvolvimento, modpacks Java e outras soluções."
     />
-    <meta name="theme-color" content="#07070c" />
+    <meta name="theme-color" content="#070604" />
     <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; img-src 'self' data:; script-src 'self'; style-src 'self'; upgrade-insecure-requests"
     />
     <title>XEXEU DEV'S | Tudo em um só lugar</title>
     <link rel="preload" href="./assets/portal/portal-background.webp" as="image" />
-    <link rel="stylesheet" href="./home.css?v=4" />
+    <link rel="stylesheet" href="./home.css?v=6" />
   </head>
-  <body id="inicio">
+  <body>
     <div class="page-backdrop" aria-hidden="true"></div>
 
     <header class="site-header">
@@ -31,33 +31,34 @@
 
         <a class="brand-mark" href="#inicio" aria-label="Logo Xexeu Dev, ir ao início">
           <img
-            src="./assets/portal/brand-bird-v3-pixel.webp"
+            src="./assets/portal/brand-bird-v4-minimal.webp"
             alt="Passarinho segurando uma chave inglesa"
-            width="384"
-            height="384"
+            width="512"
+            height="512"
           />
         </a>
       </div>
 
       <nav class="main-nav" aria-label="Navegação principal">
         <a class="nav-card is-active" href="#inicio">Início</a>
-        <a class="nav-card" href="./servicos.html?progress=0.72">Projetos</a>
-        <a class="nav-card" href="./servicos.html?progress=0.22">Sobre</a>
+        <a class="nav-card" href="#projetos">Projetos</a>
+        <a class="nav-card" href="#sobre">Sobre</a>
       </nav>
     </header>
 
-    <main class="hero">
-      <section class="hero__intro" aria-labelledby="hero-title">
-        <p class="hero__eyebrow">Tudo que você precisa</p>
-        <h1 id="hero-title">Em um só lugar</h1>
-        <p class="hero__description">
-          Explore serviços, conteúdos e soluções pensadas para transformar suas ideias
-          em projetos de verdade.
-        </p>
-        <span class="hero__rule" aria-hidden="true"></span>
-      </section>
+    <main>
+      <section class="hero" id="inicio" aria-labelledby="hero-title">
+        <div class="hero__intro">
+          <p class="hero__eyebrow">Tudo que você precisa</p>
+          <h1 id="hero-title">Em um só lugar</h1>
+          <p class="hero__description">
+            Explore serviços, conteúdos e soluções pensadas para transformar suas ideias
+            em projetos de verdade.
+          </p>
+          <span class="hero__rule" aria-hidden="true"></span>
+        </div>
 
-      <section class="card-grid" aria-label="Áreas disponíveis">
+        <section class="card-grid" aria-label="Áreas disponíveis">
         <a
           class="category-card category-card--services"
           href="./servicos.html"
@@ -146,19 +147,229 @@
             <span class="category-card__arrow" aria-hidden="true">→</span>
           </span>
         </button>
+        </section>
+
+        <p class="scroll-note">
+          <span aria-hidden="true">↓</span>
+          Conheça os projetos
+        </p>
       </section>
 
-      <p class="scroll-note">
-        <span aria-hidden="true">↓</span>
-        Escolha uma categoria para continuar
-      </p>
+      <section class="projects-section section-shell" id="projetos" aria-labelledby="projects-title">
+        <div class="section-heading">
+          <p>Projetos selecionados</p>
+          <h2 id="projects-title">Minha oficina digital</h2>
+          <span>Clique em uma plataforma para abrir os detalhes e imagens do projeto.</span>
+        </div>
+
+        <div class="project-platforms">
+          <button
+            class="project-platform"
+            type="button"
+            data-project-card
+            data-title="Nova Roleplay"
+            data-type="Servidor RP"
+            data-image="./assets/projects/nova-roleplay.png"
+            data-link="https://discord.gg/qjzc24UeVy"
+            data-description="Servidor RP com sistemas, mapas, interface e módulos personalizados."
+          >
+            <span class="project-platform__icon">
+              <img src="./assets/projects/nova-roleplay.png" alt="" width="540" height="340" loading="lazy" decoding="async" />
+            </span>
+            <span class="project-platform__name">Nova Roleplay</span>
+            <span class="project-platform__type">Servidor RP</span>
+          </button>
+
+          <button
+            class="project-platform"
+            type="button"
+            data-project-card
+            data-title="Site Piscinas"
+            data-type="Vitrine comercial"
+            data-image="./assets/projects/site-piscinas.png"
+            data-gallery="./assets/projects/site-piscinas-gallery/site-piscinas-01.png|./assets/projects/site-piscinas-gallery/site-piscinas-02.png"
+            data-link="https://kalyan-piscinas.github.io/site/"
+            data-description="Site visual para serviços de piscina, contato rápido e chamada por WhatsApp."
+          >
+            <span class="project-platform__icon">
+              <img src="./assets/projects/site-piscinas.png" alt="" width="540" height="340" loading="lazy" decoding="async" />
+            </span>
+            <span class="project-platform__name">Site Piscinas</span>
+            <span class="project-platform__type">Site comercial</span>
+          </button>
+
+          <button
+            class="project-platform"
+            type="button"
+            data-project-card
+            data-title="Site PetLoven"
+            data-type="Pet shop"
+            data-image="./assets/projects/site-petloven.png"
+            data-gallery="./assets/projects/site-petloven-gallery/site-petloven-01.png|./assets/projects/site-petloven-gallery/site-petloven-02.png"
+            data-link="https://pet-lovevan.github.io/love/"
+            data-description="Vitrine responsiva para pet shop, serviços, fotos, contato e agendamento."
+          >
+            <span class="project-platform__icon">
+              <img src="./assets/projects/site-petloven.png" alt="" width="540" height="340" loading="lazy" decoding="async" />
+            </span>
+            <span class="project-platform__name">Site PetLoven</span>
+            <span class="project-platform__type">Site responsivo</span>
+          </button>
+
+          <button
+            class="project-platform"
+            type="button"
+            data-project-card
+            data-title="Distrito PVP"
+            data-type="Servidor PVP"
+            data-image="./assets/projects/distrito-pvp.png"
+            data-link="https://discord.gg/MhCAnmmEf9"
+            data-description="Projeto focado em gameplay, apresentação visual e presença digital."
+          >
+            <span class="project-platform__icon">
+              <img src="./assets/projects/distrito-pvp.png" alt="" width="540" height="340" loading="lazy" decoding="async" />
+            </span>
+            <span class="project-platform__name">Distrito PVP</span>
+            <span class="project-platform__type">Servidor PVP</span>
+          </button>
+
+          <button
+            class="project-platform"
+            type="button"
+            data-project-card
+            data-title="BOT Discord"
+            data-type="Automação"
+            data-image="./assets/projects/bot-discord.png"
+            data-gallery="./assets/projects/bot-discord-gallery/bot-discord-01.webp|./assets/projects/bot-discord-gallery/bot-discord-02.webp|./assets/projects/bot-discord-gallery/bot-discord-03.webp|./assets/projects/bot-discord-gallery/bot-discord-04.webp|./assets/projects/bot-discord-gallery/bot-discord-05.webp|./assets/projects/bot-discord-gallery/bot-discord-06.webp|./assets/projects/bot-discord-gallery/bot-discord-07.webp"
+            data-description="Automação, comandos, atendimento, moderação, logs, tickets e sistemas para comunidades no Discord."
+          >
+            <span class="project-platform__icon">
+              <img src="./assets/projects/bot-discord.png" alt="" width="540" height="340" loading="lazy" decoding="async" />
+            </span>
+            <span class="project-platform__name">BOT Discord</span>
+            <span class="project-platform__type">Automação</span>
+          </button>
+
+          <button
+            class="project-platform"
+            type="button"
+            data-project-card
+            data-title="Mobile Launcher"
+            data-type="Aplicativo"
+            data-image="./assets/projects/launcher-mobile.png"
+            data-gallery="./assets/projects/launcher-gallery/launcher-01.webp|./assets/projects/launcher-gallery/launcher-02.webp|./assets/projects/launcher-gallery/launcher-03.webp"
+            data-description="Interface mobile para acesso rápido, apresentação do servidor, configurações e navegação dos jogadores."
+          >
+            <span class="project-platform__icon">
+              <img src="./assets/projects/launcher-mobile.png" alt="" width="540" height="340" loading="lazy" decoding="async" />
+            </span>
+            <span class="project-platform__name">Mobile Launcher</span>
+            <span class="project-platform__type">Aplicativo</span>
+          </button>
+
+          <button
+            class="project-platform"
+            type="button"
+            data-project-card
+            data-title="Animator X"
+            data-type="Sistema de animação"
+            data-image="./assets/projects/animator-x.svg"
+            data-gallery="./assets/projects/animator-x-gallery/animator-x-studio.svg|./assets/projects/animator-x-gallery/animator-x-rig.svg"
+            data-description="Studio de animação para jogos, Minecraft e mods. Lê animações de mods, aplica movimentos em modelos 3D e transforma movimentos de vídeos com uma IA integrada."
+          >
+            <span class="project-platform__icon">
+              <img src="./assets/projects/animator-x.svg" alt="" width="540" height="340" loading="lazy" decoding="async" />
+            </span>
+            <span class="project-platform__name">Animator X</span>
+            <span class="project-platform__type">Sistema de animação</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="about-section section-shell" id="sobre" aria-labelledby="about-title">
+        <div class="about-card">
+          <div class="about-card__identity">
+            <span class="about-card__badge">
+              <img
+                src="./assets/portal/brand-bird-v4-minimal.webp"
+                alt=""
+                width="512"
+                height="512"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <p>Sobre mim</p>
+            <h2 id="about-title">Jhonatan, desenvolvimento sob medida.</h2>
+          </div>
+
+          <div class="about-card__content">
+            <p>
+              Sou freelancer de programação e desenvolvimento. Transformo ideias em sites,
+              sistemas, bots, aplicativos, servidores e ferramentas funcionais, com contato
+              direto do início ao fim.
+            </p>
+            <p>
+              Tenho 23 anos e trabalho para entregar soluções bem organizadas, com bom
+              desempenho e preço justo.
+            </p>
+
+            <ul class="about-skills" aria-label="Principais conhecimentos">
+              <li>Python</li>
+              <li>Java</li>
+              <li>C++ e C#</li>
+              <li>Sites</li>
+              <li>Bots Discord</li>
+              <li>MySQL</li>
+              <li>SAMP e MTA</li>
+              <li>Apps e launchers</li>
+            </ul>
+
+            <div class="about-actions">
+              <a href="./servicos.html" data-navigate>Ver serviços</a>
+              <a
+                class="about-actions__secondary"
+                href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20vi%20seu%20portf%C3%B3lio%20e%20quero%20conversar%20sobre%20um%20projeto."
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Conversar no WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <section
+      class="project-modal"
+      data-project-modal
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="project-modal-title"
+      inert
+    >
+      <button class="project-modal__backdrop" type="button" data-project-close aria-label="Fechar projeto"></button>
+      <article class="project-modal__panel">
+        <button class="project-modal__close" type="button" data-project-close aria-label="Fechar projeto">×</button>
+        <div class="project-modal__media">
+          <img data-project-image src="./assets/projects/nova-roleplay.png" alt="" />
+        </div>
+        <div class="project-modal__info">
+          <p data-project-type>Projeto</p>
+          <h2 id="project-modal-title" data-project-title>Projeto</h2>
+          <p class="project-modal__description" data-project-description></p>
+          <div class="project-modal__thumbs" data-project-thumbs></div>
+          <a data-project-link href="#" target="_blank" rel="noopener noreferrer">Abrir projeto ↗</a>
+        </div>
+      </article>
+    </section>
 
     <div class="toast" data-toast role="status" aria-live="polite" aria-hidden="true">
       <span class="toast__icon" aria-hidden="true">i</span>
       <span data-toast-message></span>
     </div>
 
-    <script src="./home.js?v=2"></script>
+    <script src="./home.js?v=3"></script>
   </body>
 </html>

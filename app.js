@@ -47,6 +47,8 @@ const smokeCanvas = document.querySelector("#toxicSmoke");
 const smokeCtx = smokeCanvas?.getContext("2d");
 const endSmokeCanvas = document.querySelector("#endSmoke");
 const endSmokeCtx = endSmokeCanvas?.getContext("2d");
+const codeWaterfallCanvas = document.querySelector("#codeWaterfall");
+const codeWaterfallCtx = codeWaterfallCanvas?.getContext("2d");
 const endLetters = Array.from(document.querySelectorAll(".final-gate__panel, .final-gate__letter"));
 const codeColumns = Array.from(document.querySelectorAll("[data-code-column]"));
 const loaderOverlay = document.querySelector("[data-loader]");
@@ -56,6 +58,9 @@ const carouselCount = 14;
 const progressParam = new URLSearchParams(window.location.search).get("progress");
 const previewProgress = progressParam === null ? NaN : Number(progressParam);
 const hasPreviewProgress = Number.isFinite(previewProgress);
+const lowPowerMode =
+  window.innerWidth < 720 ||
+  (Number.isFinite(navigator.hardwareConcurrency) && navigator.hardwareConcurrency <= 4);
 let pageLoaded = false;
 let visualLoadingProgress = 0;
 let loaderInterval = null;
@@ -130,7 +135,7 @@ let hoveredCardIndex = -1;
 
 const state = {
   loadedColumn: false,
-  loadedGallery: false,
+  loadedGallery: true,
   phase: 0,
   orbitScrollRange: carouselCount - 1,
   orbitImpulseStrength: 0.055,
@@ -434,8 +439,64 @@ function buildCodeWall() {
 
 buildCodeWall();
 
+const codeWaterfallGlyphs = "01{}[]<>/\\=+*#@$%&;:_-";
+let codeWaterfallDrops = [];
+let codeWaterfallFontSize = 18;
+let codeWaterfallWasActive = false;
+
+function resizeCodeWaterfallCanvas() {
+  if (!codeWaterfallCanvas || !codeWaterfallCtx) return;
+
+  const ratio = Math.min(window.devicePixelRatio || 1, lowPowerMode ? 1 : 1.25);
+  codeWaterfallFontSize = (window.innerWidth < 720 ? 15 : 18) * ratio;
+  codeWaterfallCanvas.width = Math.max(1, Math.floor(window.innerWidth * ratio));
+  codeWaterfallCanvas.height = Math.max(1, Math.floor(window.innerHeight * ratio));
+  const columnCount = Math.max(1, Math.floor(codeWaterfallCanvas.width / codeWaterfallFontSize));
+  codeWaterfallDrops = Array.from(
+    { length: columnCount },
+    () => -Math.random() * codeWaterfallCanvas.height,
+  );
+  codeWaterfallCtx.clearRect(0, 0, codeWaterfallCanvas.width, codeWaterfallCanvas.height);
+}
+
+function renderCodeWaterfall(delta, active) {
+  if (!codeWaterfallCtx || !codeWaterfallCanvas) return;
+
+  if (!active) {
+    if (codeWaterfallWasActive) {
+      codeWaterfallCtx.clearRect(0, 0, codeWaterfallCanvas.width, codeWaterfallCanvas.height);
+    }
+    codeWaterfallWasActive = false;
+    return;
+  }
+
+  codeWaterfallWasActive = true;
+  codeWaterfallCtx.fillStyle = "rgba(5, 3, 2, 0.14)";
+  codeWaterfallCtx.fillRect(0, 0, codeWaterfallCanvas.width, codeWaterfallCanvas.height);
+  codeWaterfallCtx.font = `700 ${codeWaterfallFontSize}px ui-monospace, Consolas, monospace`;
+  codeWaterfallCtx.textBaseline = "top";
+
+  codeWaterfallDrops.forEach((drop, index) => {
+    const glyph = codeWaterfallGlyphs[Math.floor(Math.random() * codeWaterfallGlyphs.length)];
+    const isGold = (index + Math.floor(drop / codeWaterfallFontSize)) % 4 !== 0;
+    codeWaterfallCtx.fillStyle = isGold
+      ? `rgba(255, 201, 40, ${0.52 + Math.random() * 0.4})`
+      : `rgba(239, 59, 47, ${0.55 + Math.random() * 0.36})`;
+    codeWaterfallCtx.fillText(glyph, index * codeWaterfallFontSize, drop);
+
+    const speed = codeWaterfallFontSize * (7.5 + (index % 7) * 0.55);
+    codeWaterfallDrops[index] += speed * Math.min(delta, 0.05);
+    if (
+      codeWaterfallDrops[index] > codeWaterfallCanvas.height + codeWaterfallFontSize * 2 &&
+      Math.random() > 0.91
+    ) {
+      codeWaterfallDrops[index] = -codeWaterfallFontSize * (2 + Math.random() * 26);
+    }
+  });
+}
+
 const smokeMouse = { x: -9999, y: -9999, vx: 0, vy: 0 };
-const smokeParticles = Array.from({ length: 162 }, (_, index) => {
+const smokeParticles = Array.from({ length: lowPowerMode ? 66 : 162 }, (_, index) => {
   const side = index % 3 === 0 ? "right" : "left";
   const range = Math.max(260, window.innerWidth * 0.46);
   const baseX = side === "left"
@@ -1117,7 +1178,7 @@ function buildGalleryPedestalCorridor() {
 galleryAnchor.position.set(0, 0, 0);
 galleryAnchor.rotation.set(0, 0, 0);
 
-buildGalleryPedestalCorridor();
+galleryAnchor.visible = false;
 
 gltfLoader.load(
   "./assets/model/coluna-site.glb",
@@ -1165,7 +1226,7 @@ function getTowerProgress(progress) {
   return THREE.MathUtils.clamp((progress - towerScrollStart) / (towerScrollEnd - towerScrollStart), 0, 1);
 }
 
-const glassParticleCount = 420;
+const glassParticleCount = lowPowerMode ? 180 : 420;
 const glassParticlePositions = new Float32Array(glassParticleCount * 3);
 const glassParticleColors = new Float32Array(glassParticleCount * 3);
 const glassParticleSeeds = new Float32Array(glassParticleCount);
@@ -1276,7 +1337,7 @@ function updateDebris(elapsed, visibleAmount) {
   debrisMesh.instanceMatrix.needsUpdate = true;
 }
 
-const particleCount = 900;
+const particleCount = lowPowerMode ? 360 : 900;
 const particlePositions = new Float32Array(particleCount * 3);
 const particleColors = new Float32Array(particleCount * 3);
 const particleSeeds = new Float32Array(particleCount);
@@ -1317,7 +1378,7 @@ const particleMaterial = new THREE.PointsMaterial({
 const particles = new THREE.Points(particleGeometry, particleMaterial);
 mistAnchor.add(particles);
 
-const chameleonParticleCount = 520;
+const chameleonParticleCount = lowPowerMode ? 210 : 520;
 const chameleonPositions = new Float32Array(chameleonParticleCount * 3);
 const chameleonColors = new Float32Array(chameleonParticleCount * 3);
 const chameleonSeeds = new Float32Array(chameleonParticleCount);
@@ -2309,6 +2370,7 @@ function resize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   resizeSmokeCanvas();
   resizeEndSmokeCanvas();
+  resizeCodeWaterfallCanvas();
 }
 
 function getMaxScroll() {
@@ -2669,12 +2731,15 @@ function animate() {
   const projectsGatePhase = THREE.MathUtils.smoothstep(scrollProgress, towerScrollEnd - 0.015, projectsGateStart) * (1 - THREE.MathUtils.smoothstep(scrollProgress, projectsGateStart + 0.025, projectsRevealProgress));
   const ceilingPhase = Math.min(1, introCeilingPhase + projectsGatePhase * 0.95);
   const cameraTrackY = THREE.MathUtils.lerp(towerTopY + 0.08, towerBottomY - 0.08, towerProgress);
-  const galleryVisibility = THREE.MathUtils.smoothstep(scrollProgress, projectsRevealProgress - 0.018, projectsRevealProgress + 0.025);
-  const galleryZoom = THREE.MathUtils.smoothstep(scrollProgress, projectsRevealProgress + 0.012, 0.995);
-  const galleryMouseStrength = isMobile ? 0 : galleryVisibility * (1.05 + galleryZoom * 0.75);
-  const finalGatePhase = THREE.MathUtils.smoothstep(scrollProgress, 0.982, 0.998);
-  const finalExitPhase = THREE.MathUtils.smoothstep(scrollProgress, 0.989, 1);
+  const galleryVisibility = 0;
+  const galleryZoom = 0;
+  const galleryMouseStrength = 0;
+  const finalGatePhase = THREE.MathUtils.smoothstep(scrollProgress, 0.968, 0.994);
+  const finalExitPhase = THREE.MathUtils.smoothstep(scrollProgress, 0.982, 1);
   const finalGateActive = finalGatePhase > 0.01;
+  const codeWaterfallActive =
+    scrollProgress >= projectsRevealProgress - 0.012 &&
+    !finalGateActive;
 
   document.documentElement.style.setProperty("--gallery-zoom", galleryZoom.toFixed(4));
   document.documentElement.style.setProperty("--gallery-scale", (1 + galleryZoom * 0.08).toFixed(4));
@@ -2716,7 +2781,8 @@ function animate() {
   document.body.classList.toggle("show-swipe-hint", scrollProgress < 0.135);
   document.body.classList.toggle("show-freelancer-info", scrollProgress >= 0.18 && scrollProgress < 0.265);
   document.body.classList.toggle("show-services-list", scrollProgress >= serviceListRevealProgress && scrollProgress < projectsGateStart);
-  document.body.classList.toggle("show-projects", scrollProgress >= projectsRevealProgress);
+  document.body.classList.toggle("show-projects", false);
+  document.body.classList.toggle("show-code-waterfall", codeWaterfallActive);
   document.body.classList.toggle("show-final-gate", finalGateActive);
   if (galleryBackDoorLeft && galleryBackDoorRight) {
     const open = finalGatePhase;
@@ -2737,7 +2803,7 @@ function animate() {
     galleryBackDoorLeft.material.emissiveIntensity = 0.05 + open * 0.18;
     galleryBackDoorRight.material.emissiveIntensity = 0.05 + open * 0.18;
   }
-  galleryAnchor.visible = galleryVisibility > 0.01;
+  galleryAnchor.visible = false;
   galleryAnchor.position.set(
     isMobile ? 0 : pointer.x * 0.28 * galleryMouseStrength,
     isMobile ? -0.1 : -0.1 + pointer.y * 0.14 * galleryMouseStrength,
@@ -2894,12 +2960,14 @@ function animate() {
 
   renderer.render(scene, camera);
   renderSmoke(delta, elapsed);
+  renderCodeWaterfall(delta, codeWaterfallActive);
   renderEndSmoke(delta, elapsed, finalGateActive);
   requestAnimationFrame(animate);
 }
 
 resizeSmokeCanvas();
 resizeEndSmokeCanvas();
+resizeCodeWaterfallCanvas();
 updateScroll();
 
 if (hasPreviewProgress) {
