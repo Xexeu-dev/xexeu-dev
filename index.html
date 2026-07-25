@@ -13,8 +13,17 @@
       content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; img-src 'self' data:; script-src 'self'; style-src 'self'; upgrade-insecure-requests"
     />
     <title>XEXEU DEV'S | Tudo em um só lugar</title>
-    <link rel="preload" href="./assets/portal/portal-background.webp" as="image" />
-    <link rel="stylesheet" href="./home.css?v=7" />
+    <link
+      rel="preload"
+      href="./assets/portal/portal-background.webp"
+      as="image"
+    />
+    <link
+      rel="preload"
+      href="./assets/portal/card-services-exact.webp"
+      as="image"
+    />
+    <link rel="stylesheet" href="./home.css?v=8" />
   </head>
   <body>
     <div class="page-backdrop" aria-hidden="true"></div>
@@ -29,7 +38,11 @@
           </svg>
         </a>
 
-        <a class="brand-mark" href="#inicio" aria-label="Logo Xexeu Dev, ir ao início">
+        <a
+          class="brand-mark"
+          href="#inicio"
+          aria-label="Logo Xexeu Dev, ir ao início"
+        >
           <img
             src="./assets/portal/brand-bird-v4-minimal.webp"
             alt="Passarinho segurando uma chave inglesa"
@@ -52,119 +65,110 @@
           <p class="hero__eyebrow">Tudo que você precisa</p>
           <h1 id="hero-title">Em um só lugar</h1>
           <p class="hero__description">
-            Explore serviços, conteúdos e soluções pensadas para transformar suas ideias
-            em projetos de verdade.
+            Explore serviços, conteúdos e soluções pensadas para transformar
+            suas ideias em projetos de verdade.
           </p>
           <span class="hero__rule" aria-hidden="true"></span>
         </div>
 
         <section class="card-grid" aria-label="Áreas disponíveis">
-        <div class="category-card-shell category-card-shell--services">
-          <span class="stone-fragments" aria-hidden="true">
-            <i></i><i></i><i></i><i></i><i></i><i></i>
-          </span>
-          <a
-            class="category-card category-card--services"
-            href="./servicos.html"
-            data-navigate
-          >
-          <span class="category-card__media">
-            <img
-              src="./assets/portal/services.webp"
-              alt=""
-              width="720"
-              height="720"
-              decoding="async"
-            />
-          </span>
+          <div class="category-card-shell category-card-shell--services">
+            <a
+              class="category-card category-card--services"
+              href="./servicos.html"
+              data-navigate
+            >
+              <span class="category-card__skin" aria-hidden="true">
+                <img
+                  src="./assets/portal/card-services-exact.webp"
+                  alt=""
+                  width="740"
+                  height="960"
+                  decoding="async"
+                />
+              </span>
 
-          <span class="category-card__body">
-            <span class="category-card__tag">Desenvolvimento</span>
-            <strong>[SERVIÇOS]</strong>
-            <span class="category-card__copy">
-              Sites, sistemas, bots, servidores, aplicativos e projetos personalizados.
-            </span>
-          </span>
+              <span class="category-card__body">
+                <span class="category-card__tag">Desenvolvimento</span>
+                <strong>SERVIÇOS</strong>
+                <span class="category-card__copy">
+                  Confira todos os serviços que oferecemos para você e sua
+                  comunidade.
+                </span>
+              </span>
 
-          <span class="category-card__action">
-            <span>Acessar serviços</span>
-            <span class="category-card__arrow" aria-hidden="true">→</span>
-          </span>
-          </a>
-          <span class="stone-plinth" aria-hidden="true"><i></i><i></i></span>
-        </div>
+              <span class="category-card__action">
+                <span>Acessar serviços</span>
+                <span class="category-card__arrow" aria-hidden="true">→</span>
+              </span>
+            </a>
+          </div>
 
-        <div class="category-card-shell category-card-shell--java">
-          <span class="stone-fragments" aria-hidden="true">
-            <i></i><i></i><i></i><i></i><i></i><i></i>
-          </span>
-          <button
-            class="category-card category-card--java"
-            type="button"
-            data-coming-soon="O catálogo de Modpacks Java está sendo preparado."
-          >
-          <span class="category-card__media">
-            <img
-              src="./assets/portal/modpacks-java.webp"
-              alt=""
-              width="720"
-              height="720"
-              loading="lazy"
-              decoding="async"
-            />
-          </span>
+          <div class="category-card-shell category-card-shell--java">
+            <button
+              class="category-card category-card--java"
+              type="button"
+              data-coming-soon="O catálogo de Modpacks Java está sendo preparado."
+            >
+              <span class="category-card__skin" aria-hidden="true">
+                <img
+                  src="./assets/portal/card-java-exact.webp"
+                  alt=""
+                  width="740"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
 
-          <span class="category-card__body">
-            <span class="category-card__tag">Minecraft para PC</span>
-            <strong>[MODPACKS JAVA]</strong>
-            <span class="category-card__copy">
-              Modpacks selecionados, desempenho ajustado e aventuras completas.
-            </span>
-          </span>
+              <span class="category-card__body">
+                <span class="category-card__tag">Minecraft para PC</span>
+                <strong>MODPACKS JAVA</strong>
+                <span class="category-card__copy">
+                  Os melhores modpacks para Minecraft Java Edition. Mais
+                  desempenho, mais aventura.
+                </span>
+              </span>
 
-          <span class="category-card__action">
-            <span>Em breve</span>
-            <span class="category-card__arrow" aria-hidden="true">→</span>
-          </span>
-          </button>
-          <span class="stone-plinth" aria-hidden="true"><i></i><i></i></span>
-        </div>
+              <span class="category-card__action">
+                <span>Em breve</span>
+                <span class="category-card__arrow" aria-hidden="true">→</span>
+              </span>
+            </button>
+          </div>
 
-        <div class="category-card-shell category-card-shell--others">
-          <span class="stone-fragments" aria-hidden="true">
-            <i></i><i></i><i></i><i></i><i></i><i></i>
-          </span>
-          <button
-            class="category-card category-card--others"
-            type="button"
-            data-coming-soon="A área Outros está sendo preparada."
-          >
-          <span class="category-card__media">
-            <img
-              src="./assets/portal/outros.webp"
-              alt=""
-              width="720"
-              height="720"
-              loading="lazy"
-              decoding="async"
-            />
-          </span>
+          <div class="category-card-shell category-card-shell--others">
+            <button
+              class="category-card category-card--others"
+              type="button"
+              data-coming-soon="A área Outros está sendo preparada."
+            >
+              <span class="category-card__skin" aria-hidden="true">
+                <img
+                  src="./assets/portal/card-others-exact.webp"
+                  alt=""
+                  width="740"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
 
-          <span class="category-card__body">
-            <span class="category-card__tag">Soluções variadas</span>
-            <strong>[OUTROS]</strong>
-            <span class="category-card__copy">
-              Ferramentas, ajustes e projetos que não cabem em uma única categoria.
-            </span>
-          </span>
+              <span class="category-card__body">
+                <span class="category-card__tag">Soluções variadas</span>
+                <strong>OUTROS</strong>
+                <span class="category-card__copy">
+                  Ferramentas e soluções para projetos personalizados. Tudo em
+                  um só lugar.
+                </span>
+              </span>
 
-          <span class="category-card__action">
-            <span>Em breve</span>
-            <span class="category-card__arrow" aria-hidden="true">→</span>
-          </span>
-          </button>
-          <span class="stone-plinth" aria-hidden="true"><i></i><i></i></span>
-        </div>
+              <span class="category-card__action">
+                <span>Em breve</span>
+                <span class="category-card__arrow" aria-hidden="true">→</span>
+              </span>
+            </button>
+          </div>
         </section>
 
         <p class="scroll-note">
@@ -173,11 +177,18 @@
         </p>
       </section>
 
-      <section class="projects-section section-shell" id="projetos" aria-labelledby="projects-title">
+      <section
+        class="projects-section section-shell"
+        id="projetos"
+        aria-labelledby="projects-title"
+      >
         <div class="section-heading">
           <p>Projetos selecionados</p>
           <h2 id="projects-title">Minha oficina digital</h2>
-          <span>Clique em uma plataforma para abrir os detalhes e imagens do projeto.</span>
+          <span
+            >Clique em uma plataforma para abrir os detalhes e imagens do
+            projeto.</span
+          >
         </div>
 
         <div class="project-platforms">
@@ -192,7 +203,14 @@
             data-description="Servidor RP com sistemas, mapas, interface e módulos personalizados."
           >
             <span class="project-platform__icon">
-              <img src="./assets/projects/nova-roleplay.png" alt="" width="540" height="340" loading="lazy" decoding="async" />
+              <img
+                src="./assets/projects/nova-roleplay.png"
+                alt=""
+                width="540"
+                height="340"
+                loading="lazy"
+                decoding="async"
+              />
             </span>
             <span class="project-platform__name">Nova Roleplay</span>
             <span class="project-platform__type">Servidor RP</span>
@@ -210,7 +228,14 @@
             data-description="Site visual para serviços de piscina, contato rápido e chamada por WhatsApp."
           >
             <span class="project-platform__icon">
-              <img src="./assets/projects/site-piscinas.png" alt="" width="540" height="340" loading="lazy" decoding="async" />
+              <img
+                src="./assets/projects/site-piscinas.png"
+                alt=""
+                width="540"
+                height="340"
+                loading="lazy"
+                decoding="async"
+              />
             </span>
             <span class="project-platform__name">Site Piscinas</span>
             <span class="project-platform__type">Site comercial</span>
@@ -228,7 +253,14 @@
             data-description="Vitrine responsiva para pet shop, serviços, fotos, contato e agendamento."
           >
             <span class="project-platform__icon">
-              <img src="./assets/projects/site-petloven.png" alt="" width="540" height="340" loading="lazy" decoding="async" />
+              <img
+                src="./assets/projects/site-petloven.png"
+                alt=""
+                width="540"
+                height="340"
+                loading="lazy"
+                decoding="async"
+              />
             </span>
             <span class="project-platform__name">Site PetLoven</span>
             <span class="project-platform__type">Site responsivo</span>
@@ -245,7 +277,14 @@
             data-description="Projeto focado em gameplay, apresentação visual e presença digital."
           >
             <span class="project-platform__icon">
-              <img src="./assets/projects/distrito-pvp.png" alt="" width="540" height="340" loading="lazy" decoding="async" />
+              <img
+                src="./assets/projects/distrito-pvp.png"
+                alt=""
+                width="540"
+                height="340"
+                loading="lazy"
+                decoding="async"
+              />
             </span>
             <span class="project-platform__name">Distrito PVP</span>
             <span class="project-platform__type">Servidor PVP</span>
@@ -262,7 +301,14 @@
             data-description="Automação, comandos, atendimento, moderação, logs, tickets e sistemas para comunidades no Discord."
           >
             <span class="project-platform__icon">
-              <img src="./assets/projects/bot-discord.png" alt="" width="540" height="340" loading="lazy" decoding="async" />
+              <img
+                src="./assets/projects/bot-discord.png"
+                alt=""
+                width="540"
+                height="340"
+                loading="lazy"
+                decoding="async"
+              />
             </span>
             <span class="project-platform__name">BOT Discord</span>
             <span class="project-platform__type">Automação</span>
@@ -279,7 +325,14 @@
             data-description="Interface mobile para acesso rápido, apresentação do servidor, configurações e navegação dos jogadores."
           >
             <span class="project-platform__icon">
-              <img src="./assets/projects/launcher-mobile.png" alt="" width="540" height="340" loading="lazy" decoding="async" />
+              <img
+                src="./assets/projects/launcher-mobile.png"
+                alt=""
+                width="540"
+                height="340"
+                loading="lazy"
+                decoding="async"
+              />
             </span>
             <span class="project-platform__name">Mobile Launcher</span>
             <span class="project-platform__type">Aplicativo</span>
@@ -296,7 +349,14 @@
             data-description="Studio de animação para jogos, Minecraft e mods. Lê animações de mods, aplica movimentos em modelos 3D e transforma movimentos de vídeos com uma IA integrada."
           >
             <span class="project-platform__icon">
-              <img src="./assets/projects/animator-x.svg" alt="" width="540" height="340" loading="lazy" decoding="async" />
+              <img
+                src="./assets/projects/animator-x.svg"
+                alt=""
+                width="540"
+                height="340"
+                loading="lazy"
+                decoding="async"
+              />
             </span>
             <span class="project-platform__name">Animator X</span>
             <span class="project-platform__type">Sistema de animação</span>
@@ -304,7 +364,11 @@
         </div>
       </section>
 
-      <section class="about-section section-shell" id="sobre" aria-labelledby="about-title">
+      <section
+        class="about-section section-shell"
+        id="sobre"
+        aria-labelledby="about-title"
+      >
         <div class="about-card">
           <div class="about-card__identity">
             <span class="about-card__badge">
@@ -323,13 +387,13 @@
 
           <div class="about-card__content">
             <p>
-              Sou freelancer de programação e desenvolvimento. Transformo ideias em sites,
-              sistemas, bots, aplicativos, servidores e ferramentas funcionais, com contato
-              direto do início ao fim.
+              Sou freelancer de programação e desenvolvimento. Transformo ideias
+              em sites, sistemas, bots, aplicativos, servidores e ferramentas
+              funcionais, com contato direto do início ao fim.
             </p>
             <p>
-              Tenho 23 anos e trabalho para entregar soluções bem organizadas, com bom
-              desempenho e preço justo.
+              Tenho 23 anos e trabalho para entregar soluções bem organizadas,
+              com bom desempenho e preço justo.
             </p>
 
             <ul class="about-skills" aria-label="Principais conhecimentos">
@@ -367,23 +431,51 @@
       aria-labelledby="project-modal-title"
       inert
     >
-      <button class="project-modal__backdrop" type="button" data-project-close aria-label="Fechar projeto"></button>
+      <button
+        class="project-modal__backdrop"
+        type="button"
+        data-project-close
+        aria-label="Fechar projeto"
+      ></button>
       <article class="project-modal__panel">
-        <button class="project-modal__close" type="button" data-project-close aria-label="Fechar projeto">×</button>
+        <button
+          class="project-modal__close"
+          type="button"
+          data-project-close
+          aria-label="Fechar projeto"
+        >
+          ×
+        </button>
         <div class="project-modal__media">
-          <img data-project-image src="./assets/projects/nova-roleplay.png" alt="" />
+          <img
+            data-project-image
+            src="./assets/projects/nova-roleplay.png"
+            alt=""
+          />
         </div>
         <div class="project-modal__info">
           <p data-project-type>Projeto</p>
           <h2 id="project-modal-title" data-project-title>Projeto</h2>
           <p class="project-modal__description" data-project-description></p>
           <div class="project-modal__thumbs" data-project-thumbs></div>
-          <a data-project-link href="#" target="_blank" rel="noopener noreferrer">Abrir projeto ↗</a>
+          <a
+            data-project-link
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Abrir projeto ↗</a
+          >
         </div>
       </article>
     </section>
 
-    <div class="toast" data-toast role="status" aria-live="polite" aria-hidden="true">
+    <div
+      class="toast"
+      data-toast
+      role="status"
+      aria-live="polite"
+      aria-hidden="true"
+    >
       <span class="toast__icon" aria-hidden="true">i</span>
       <span data-toast-message></span>
     </div>
