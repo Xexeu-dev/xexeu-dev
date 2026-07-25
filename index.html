@@ -14,7 +14,7 @@
     />
     <title>XEXEU DEV'S | Tudo em um só lugar</title>
     <link rel="preload" href="./assets/portal/portal-background.webp" as="image" />
-    <link rel="stylesheet" href="./home.css?v=6" />
+    <link rel="stylesheet" href="./home.css?v=7" />
   </head>
   <body>
     <div class="page-backdrop" aria-hidden="true"></div>
@@ -59,11 +59,15 @@
         </div>
 
         <section class="card-grid" aria-label="Áreas disponíveis">
-        <a
-          class="category-card category-card--services"
-          href="./servicos.html"
-          data-navigate
-        >
+        <div class="category-card-shell category-card-shell--services">
+          <span class="stone-fragments" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i>
+          </span>
+          <a
+            class="category-card category-card--services"
+            href="./servicos.html"
+            data-navigate
+          >
           <span class="category-card__media">
             <img
               src="./assets/portal/services.webp"
@@ -86,13 +90,19 @@
             <span>Acessar serviços</span>
             <span class="category-card__arrow" aria-hidden="true">→</span>
           </span>
-        </a>
+          </a>
+          <span class="stone-plinth" aria-hidden="true"><i></i><i></i></span>
+        </div>
 
-        <button
-          class="category-card category-card--java"
-          type="button"
-          data-coming-soon="O catálogo de Modpacks Java está sendo preparado."
-        >
+        <div class="category-card-shell category-card-shell--java">
+          <span class="stone-fragments" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i>
+          </span>
+          <button
+            class="category-card category-card--java"
+            type="button"
+            data-coming-soon="O catálogo de Modpacks Java está sendo preparado."
+          >
           <span class="category-card__media">
             <img
               src="./assets/portal/modpacks-java.webp"
@@ -116,13 +126,19 @@
             <span>Em breve</span>
             <span class="category-card__arrow" aria-hidden="true">→</span>
           </span>
-        </button>
+          </button>
+          <span class="stone-plinth" aria-hidden="true"><i></i><i></i></span>
+        </div>
 
-        <button
-          class="category-card category-card--others"
-          type="button"
-          data-coming-soon="A área Outros está sendo preparada."
-        >
+        <div class="category-card-shell category-card-shell--others">
+          <span class="stone-fragments" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i>
+          </span>
+          <button
+            class="category-card category-card--others"
+            type="button"
+            data-coming-soon="A área Outros está sendo preparada."
+          >
           <span class="category-card__media">
             <img
               src="./assets/portal/outros.webp"
@@ -146,7 +162,9 @@
             <span>Em breve</span>
             <span class="category-card__arrow" aria-hidden="true">→</span>
           </span>
-        </button>
+          </button>
+          <span class="stone-plinth" aria-hidden="true"><i></i><i></i></span>
+        </div>
         </section>
 
         <p class="scroll-note">
