@@ -27,6 +27,56 @@ body.is-dragging {
   cursor: grabbing;
 }
 
+.portal-home-link {
+  position: fixed;
+  z-index: 40;
+  top: 18px;
+  left: 18px;
+  display: inline-flex;
+  min-width: 48px;
+  height: 48px;
+  padding: 0 17px;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(180, 102, 255, 0.55);
+  border-radius: 999px;
+  color: #f6efff;
+  background: rgba(5, 5, 10, 0.8);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.36),
+    inset 0 0 16px rgba(160, 72, 255, 0.06);
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 0.12em;
+  font-size: 10px;
+  font-weight: 700;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.portal-home-link svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.portal-home-link:hover,
+.portal-home-link:focus-visible {
+  border-color: rgba(202, 139, 255, 0.95);
+  outline: 0;
+  background: rgba(112, 38, 176, 0.28);
+  transform: translateY(-2px);
+}
+
 img,
 canvas,
 svg {
@@ -39,6 +89,21 @@ textarea,
 [contenteditable="true"] {
   user-select: text;
   -webkit-user-select: text;
+}
+
+@media (max-width: 720px) {
+  .portal-home-link {
+    top: 12px;
+    left: 12px;
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    padding: 0;
+  }
+
+  .portal-home-link span {
+    display: none;
+  }
 }
 
 .loading-screen {
