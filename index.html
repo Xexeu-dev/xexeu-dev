@@ -5,173 +5,163 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Portal Xexeu Dev: serviços de desenvolvimento e modpacks para Minecraft Java e Bedrock."
+      content="Portal Xexeu Dev: serviços de desenvolvimento, modpacks Java e outras soluções."
     />
-    <meta name="theme-color" content="#05070b" />
+    <meta name="theme-color" content="#07070c" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; upgrade-insecure-requests"
+      content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; img-src 'self' data:; script-src 'self'; style-src 'self'; upgrade-insecure-requests"
     />
-    <title>XEXEU DEV'S | Portal</title>
-    <link rel="stylesheet" href="./home.css?v=1" />
+    <title>XEXEU DEV'S | Tudo em um só lugar</title>
+    <link rel="preload" href="./assets/portal/portal-background.webp" as="image" />
+    <link rel="stylesheet" href="./home.css?v=2" />
   </head>
-  <body>
-    <div class="ambient" aria-hidden="true">
-      <span class="ambient__orb ambient__orb--one"></span>
-      <span class="ambient__orb ambient__orb--two"></span>
-      <span class="ambient__orb ambient__orb--three"></span>
-      <span class="ambient__grid"></span>
-      <span class="ambient__noise"></span>
-    </div>
+  <body id="inicio">
+    <div class="page-backdrop" aria-hidden="true"></div>
 
-    <header class="topbar">
-      <a class="brand" href="./" aria-label="Xexeu Dev, página inicial">
-        <span class="brand__mark" aria-hidden="true">X</span>
-        <span class="brand__name">XEXEU<span>.DEV</span></span>
+    <header class="site-header">
+      <a class="brand" href="#inicio" aria-label="Xexeu Dev, voltar ao início">
+        <span class="brand__symbol" aria-hidden="true">
+          <span>X</span>
+        </span>
+        <span class="brand__text">XEXEU <strong>DEV'S</strong></span>
       </a>
 
-      <div class="system-status" aria-label="Portal online">
-        <span class="system-status__dot" aria-hidden="true"></span>
-        <span>PORTAL ONLINE</span>
-      </div>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a class="is-active" href="#inicio">Início</a>
+        <a href="./servicos.html">Serviços</a>
+        <a
+          href="https://wa.me/5514998170370?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20conversar."
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Contato
+        </a>
+      </nav>
+
+      <a
+        class="header-cta"
+        href="./servicos.html"
+        aria-label="Entrar na área de serviços"
+      >
+        Entrar
+        <span aria-hidden="true">→</span>
+      </a>
     </header>
 
-    <main class="portal">
-      <section class="portal__intro" aria-labelledby="portal-title">
-        <p class="portal__eyebrow"><span>01</span> SELECIONE SEU DESTINO</p>
-        <h1 id="portal-title">Escolha uma experiência.</h1>
-        <p class="portal__description">
-          Desenvolvimento sob medida e universos Minecraft preparados para você.
+    <main class="hero">
+      <section class="hero__intro" aria-labelledby="hero-title">
+        <p class="hero__eyebrow">Tudo que você precisa</p>
+        <h1 id="hero-title">Em um só lugar</h1>
+        <p class="hero__description">
+          Explore serviços, conteúdos e soluções pensadas para transformar suas ideias
+          em projetos de verdade.
         </p>
+        <span class="hero__rule" aria-hidden="true"></span>
       </section>
 
-      <section class="portal-grid" aria-label="Áreas do portal">
+      <section class="card-grid" aria-label="Áreas disponíveis">
         <a
-          class="option-card option-card--services"
+          class="category-card category-card--services"
           href="./servicos.html"
           data-navigate
-          style="--card-index: 0"
         >
-          <span class="option-card__glow" aria-hidden="true"></span>
-          <span class="option-card__line" aria-hidden="true"></span>
-
-          <span class="option-card__top">
-            <span class="option-card__number">01 / 03</span>
-            <span class="option-card__status option-card__status--active">
-              <span aria-hidden="true"></span>
-              DISPONÍVEL
-            </span>
+          <span class="category-card__media">
+            <img
+              src="./assets/portal/services.webp"
+              alt=""
+              width="720"
+              height="720"
+              decoding="async"
+            />
           </span>
 
-          <span class="option-card__visual" aria-hidden="true">
-            <svg viewBox="0 0 120 120" role="img">
-              <rect x="17" y="24" width="86" height="72" rx="9"></rect>
-              <path d="M17 43h86"></path>
-              <circle cx="30" cy="34" r="2"></circle>
-              <circle cx="38" cy="34" r="2"></circle>
-              <path d="m34 60 10 9-10 9M52 79h24"></path>
-            </svg>
-          </span>
-
-          <span class="option-card__content">
-            <span class="option-card__kicker">DESENVOLVIMENTO</span>
+          <span class="category-card__body">
+            <span class="category-card__tag">Desenvolvimento</span>
             <strong>[SERVIÇOS]</strong>
-            <span class="option-card__copy">
+            <span class="category-card__copy">
               Sites, sistemas, bots, servidores, aplicativos e projetos personalizados.
             </span>
           </span>
 
-          <span class="option-card__footer">
-            <span>ENTRAR NA EXPERIÊNCIA</span>
-            <span class="option-card__arrow" aria-hidden="true">↗</span>
+          <span class="category-card__action">
+            <span>Acessar serviços</span>
+            <span class="category-card__arrow" aria-hidden="true">→</span>
           </span>
         </a>
 
         <button
-          class="option-card option-card--java"
+          class="category-card category-card--java"
           type="button"
           data-coming-soon="O catálogo de Modpacks Java está sendo preparado."
-          style="--card-index: 1"
         >
-          <span class="option-card__glow" aria-hidden="true"></span>
-          <span class="option-card__line" aria-hidden="true"></span>
-
-          <span class="option-card__top">
-            <span class="option-card__number">02 / 03</span>
-            <span class="option-card__status">EM BREVE</span>
+          <span class="category-card__media">
+            <img
+              src="./assets/portal/modpacks-java.webp"
+              alt=""
+              width="720"
+              height="720"
+              loading="lazy"
+              decoding="async"
+            />
           </span>
 
-          <span class="option-card__visual" aria-hidden="true">
-            <svg viewBox="0 0 120 120" role="img">
-              <path d="M27 43 60 25l33 18v38L60 99 27 81Z"></path>
-              <path d="m27 43 33 19 33-19M60 62v37"></path>
-              <path d="m44 34 33 19v20L60 83 43 73V53l17-10"></path>
-            </svg>
-          </span>
-
-          <span class="option-card__content">
-            <span class="option-card__kicker">MINECRAFT / PC</span>
+          <span class="category-card__body">
+            <span class="category-card__tag">Minecraft para PC</span>
             <strong>[MODPACKS JAVA]</strong>
-            <span class="option-card__copy">
-              Coleções completas com mods, desempenho ajustado e novas aventuras.
+            <span class="category-card__copy">
+              Modpacks selecionados, desempenho ajustado e aventuras completas.
             </span>
           </span>
 
-          <span class="option-card__footer">
-            <span>CATÁLOGO EM PREPARAÇÃO</span>
-            <span class="option-card__arrow" aria-hidden="true">＋</span>
+          <span class="category-card__action">
+            <span>Em breve</span>
+            <span class="category-card__arrow" aria-hidden="true">→</span>
           </span>
         </button>
 
         <button
-          class="option-card option-card--bedrock"
+          class="category-card category-card--others"
           type="button"
-          data-coming-soon="O catálogo de Modpacks Bedrock está sendo preparado."
-          style="--card-index: 2"
+          data-coming-soon="A área Outros está sendo preparada."
         >
-          <span class="option-card__glow" aria-hidden="true"></span>
-          <span class="option-card__line" aria-hidden="true"></span>
-
-          <span class="option-card__top">
-            <span class="option-card__number">03 / 03</span>
-            <span class="option-card__status">EM BREVE</span>
+          <span class="category-card__media">
+            <img
+              src="./assets/portal/outros.webp"
+              alt=""
+              width="720"
+              height="720"
+              loading="lazy"
+              decoding="async"
+            />
           </span>
 
-          <span class="option-card__visual" aria-hidden="true">
-            <svg viewBox="0 0 120 120" role="img">
-              <path d="M18 52 48 35l30 17-30 17Z"></path>
-              <path d="M18 52v34l30 17 30-17V52M48 69v34"></path>
-              <path d="m59 34 18-10 25 14-24 14"></path>
-              <path d="M78 52v34l24-14V38"></path>
-            </svg>
-          </span>
-
-          <span class="option-card__content">
-            <span class="option-card__kicker">MINECRAFT / MULTIPLATAFORMA</span>
-            <strong>[MODPACKS BEDROCK]</strong>
-            <span class="option-card__copy">
-              Add-ons e experiências para celular, console e Windows.
+          <span class="category-card__body">
+            <span class="category-card__tag">Soluções variadas</span>
+            <strong>[OUTROS]</strong>
+            <span class="category-card__copy">
+              Ferramentas, ajustes e projetos que não cabem em uma única categoria.
             </span>
           </span>
 
-          <span class="option-card__footer">
-            <span>CATÁLOGO EM PREPARAÇÃO</span>
-            <span class="option-card__arrow" aria-hidden="true">＋</span>
+          <span class="category-card__action">
+            <span>Em breve</span>
+            <span class="category-card__arrow" aria-hidden="true">→</span>
           </span>
         </button>
       </section>
-    </main>
 
-    <footer class="footer">
-      <span>XEXEU DEV'S © 2026</span>
-      <span class="footer__coordinates">14°47' S · 39°02' W</span>
-    </footer>
+      <p class="scroll-note">
+        <span aria-hidden="true">↓</span>
+        Escolha uma categoria para continuar
+      </p>
+    </main>
 
     <div class="toast" data-toast role="status" aria-live="polite" aria-hidden="true">
       <span class="toast__icon" aria-hidden="true">i</span>
       <span data-toast-message></span>
     </div>
 
-    <script src="./home.js?v=1"></script>
+    <script src="./home.js?v=2"></script>
   </body>
 </html>
