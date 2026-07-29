@@ -175,12 +175,16 @@ button {
   cursor: pointer;
   pointer-events: auto;
   text-align: left;
-  transform: rotate(var(--card-angle)) translateX(450px);
+  transform:
+    rotate(var(--card-angle))
+    translateX(450px)
+    rotate(calc(var(--wheel-counter-rotation, 0deg) - var(--card-angle)));
   transform-origin: center;
   transition:
     width 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
     height 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
     margin 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 620ms cubic-bezier(0.22, 0.8, 0.18, 1),
     opacity 260ms ease,
     border-color 180ms ease,
     box-shadow 180ms ease;

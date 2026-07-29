@@ -1,5 +1,5 @@
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-const slotCount = 12;
+const slotCount = 16;
 const stepAngle = 360 / slotCount;
 
 const kimetsuPack = {
@@ -115,13 +115,17 @@ function createWheelCards() {
 function updateWheel() {
   const track = document.querySelector("[data-wheel-track]");
   track?.style.setProperty("--wheel-rotation", `${rotationSteps * -stepAngle}deg`);
+  track?.style.setProperty(
+    "--wheel-counter-rotation",
+    `${rotationSteps * stepAngle}deg`,
+  );
 
   document.querySelectorAll("[data-pack-index]").forEach((card) => {
     const index = Number(card.dataset.packIndex);
     const slot = circularDistance(index, selectedIndex);
     const active = slot === 0;
     card.dataset.slot = String(slot);
-    card.dataset.hidden = String(Math.abs(slot) > 2);
+    card.dataset.hidden = String(Math.abs(slot) > 3);
     card.classList.toggle("is-active", active);
     card.setAttribute("aria-selected", String(active));
     card.tabIndex = active ? 0 : -1;
