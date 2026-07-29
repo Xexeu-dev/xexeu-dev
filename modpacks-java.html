@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Catálogo de modpacks Minecraft Java selecionados por Xexeu Dev."
+      content="Catalogo de modpacks Minecraft Java selecionados por Xexeu Dev."
     />
-    <meta name="theme-color" content="#070b10" />
+    <meta name="theme-color" content="#060b11" />
     <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; img-src 'self' data:; script-src 'self'; style-src 'self'; connect-src 'self'; upgrade-insecure-requests"
@@ -19,202 +19,182 @@
       href="./assets/modpacks/kimetsu/kimetsu-cover.png"
       as="image"
     />
-    <link rel="stylesheet" href="./modpacks-java.css?v=1" />
+    <link rel="stylesheet" href="./modpacks-java.css?v=2" />
   </head>
   <body>
-    <div class="catalog-backdrop" aria-hidden="true"></div>
+    <main class="catalog">
+      <aside class="wheel-panel" aria-label="Seletor de modpacks">
+        <div class="wheel-rings" aria-hidden="true"></div>
 
-    <header class="catalog-header">
-      <a class="back-button" href="./" data-navigate aria-label="Voltar ao portal">
-        <span aria-hidden="true">←</span>
-        <span>Voltar</span>
-      </a>
+        <header class="wheel-heading">
+          <span class="wheel-heading__icon" aria-hidden="true">&#9671;</span>
+          <h1>Mods de Minecraft</h1>
+        </header>
 
-      <a class="catalog-brand" href="./" data-navigate>
-        <img
-          src="./assets/portal/brand-bird-v4-minimal.webp"
-          width="52"
-          height="52"
-          alt=""
-        />
-        <span>
-          <small>Xexeu Dev</small>
-          <strong>Mods de Minecraft</strong>
-        </span>
-      </a>
+        <div
+          class="mod-wheel"
+          data-mod-wheel
+          role="listbox"
+          aria-label="Modpacks disponiveis"
+        ></div>
 
-      <p class="catalog-count">
-        <strong data-pack-count>01</strong>
-        <span>modpack disponível</span>
-      </p>
-    </header>
-
-    <main class="catalog-layout">
-      <aside class="pack-selector" aria-label="Seleção de modpacks">
-        <div class="selector-heading">
-          <span class="cube-mark" aria-hidden="true">◇</span>
-          <div>
-            <p>Catálogo</p>
-            <h1>Modpacks Java</h1>
-          </div>
-        </div>
-
-        <div class="selector-list" data-selector-list role="listbox">
-          <button
-            class="selector-card is-active"
-            type="button"
-            role="option"
-            aria-selected="true"
-            data-pack-id="kimetsu"
-          >
-            <img
-              src="./assets/modpacks/kimetsu/kimetsu-card.webp"
-              alt=""
-              width="320"
-              height="180"
-            />
-            <span class="selector-card__shade"></span>
-            <span class="selector-card__copy">
-              <small>Forge 1.20.1</small>
-              <strong>Kimetsu no Yaiba</strong>
-              <span>Demon Slayer</span>
-            </span>
+        <div class="wheel-controls">
+          <button type="button" data-wheel-prev aria-label="Modpack anterior">
+            <span aria-hidden="true">&#9650;</span>
+          </button>
+          <button type="button" data-wheel-next aria-label="Proximo modpack">
+            <span aria-hidden="true">&#9660;</span>
           </button>
         </div>
 
-        <div class="selector-controls" aria-label="Controles do carrossel">
-          <button type="button" data-carousel-prev aria-label="Modpack anterior" disabled>
-            <span aria-hidden="true">↑</span>
-          </button>
-          <span><strong data-current-index>01</strong> / <span data-total-index>01</span></span>
-          <button type="button" data-carousel-next aria-label="Próximo modpack" disabled>
-            <span aria-hidden="true">↓</span>
-          </button>
-        </div>
+        <a class="back-button" href="./" data-navigate>
+          <span aria-hidden="true">&#8592;</span>
+          <span>Voltar</span>
+        </a>
       </aside>
 
-      <section class="pack-showcase" aria-live="polite">
-        <div class="showcase-gallery">
-          <figure class="gallery-main">
+      <section class="showcase" aria-live="polite">
+        <div class="gallery-grid" data-gallery-grid>
+          <button type="button" class="gallery-tile gallery-tile--wide" data-gallery-index="0">
             <img
-              data-main-image
               src="./assets/modpacks/kimetsu/kimetsu-cover.png"
-              alt="Menu do modpack Kimetsu no Yaiba"
-              width="1536"
-              height="1024"
+              alt="Batalha no Castelo Infinito"
+              data-gallery-image="0"
             />
-            <figcaption data-image-caption>Castelo Infinito</figcaption>
-          </figure>
-
-          <div class="gallery-thumbs" data-gallery-thumbs>
-            <button
-              class="is-active"
-              type="button"
-              data-gallery-image="./assets/modpacks/kimetsu/kimetsu-cover.png"
-              data-gallery-alt="Menu do modpack Kimetsu no Yaiba"
-              data-gallery-caption="Castelo Infinito"
-            >
-              <img src="./assets/modpacks/kimetsu/kimetsu-cover.png" alt="" />
-            </button>
-            <button
-              type="button"
-              data-gallery-image="./assets/modpacks/kimetsu/kimetsu-menu.png"
-              data-gallery-alt="Interface personalizada do modpack"
-              data-gallery-caption="Menu personalizado"
-            >
-              <img src="./assets/modpacks/kimetsu/kimetsu-menu.png" alt="" />
-            </button>
-          </div>
+          </button>
+          <button type="button" class="gallery-tile" data-gallery-index="1">
+            <img
+              src="./assets/modpacks/kimetsu/kimetsu-menu.png"
+              alt="Menu personalizado de Kimetsu"
+              data-gallery-image="1"
+            />
+          </button>
+          <button type="button" class="gallery-tile" data-gallery-index="2">
+            <img
+              src="./assets/modpacks/kimetsu/kimetsu-menu.png"
+              alt="Interface do modpack"
+              data-gallery-image="2"
+            />
+          </button>
+          <button type="button" class="gallery-tile gallery-tile--wide" data-gallery-index="3">
+            <img
+              src="./assets/modpacks/kimetsu/kimetsu-cover.png"
+              alt="Aventura Demon Slayer"
+              data-gallery-image="3"
+            />
+          </button>
         </div>
 
-        <div class="showcase-copy">
-          <p class="pack-kicker">Uma jornada Demon Slayer</p>
-          <h2>Kimetsu no Yaiba</h2>
-          <p class="pack-description">
-            Viva uma campanha completa inspirada em Demon Slayer, com missões,
-            progressão de caçador ou demônio, respirações, luas superiores,
-            Castelo Infinito e sistemas cooperativos.
+        <article class="pack-copy">
+          <p class="pack-status" data-pack-status>Modpack completo</p>
+          <h2 data-pack-title>Modpack Kimetsu no Yaiba</h2>
+          <p class="pack-lead" data-pack-lead>
+            Entre em uma jornada completa inspirada em Demon Slayer.
+          </p>
+          <p class="pack-description" data-pack-description>
+            Enfrente onis e luas superiores, aprenda respiracoes, evolua como
+            cacador ou demonio e conclua uma campanha feita para jogar sozinho
+            ou com amigos.
           </p>
 
-          <div class="feature-grid">
-            <article>
-              <span aria-hidden="true">✦</span>
-              <p><strong>38 missões</strong><small>História e progressão</small></p>
-            </article>
-            <article>
-              <span aria-hidden="true">刀</span>
-              <p><strong>Respirações</strong><small>Técnicas e treinamento</small></p>
-            </article>
-            <article>
-              <span aria-hidden="true">◈</span>
-              <p><strong>Castelo Infinito</strong><small>Batalha final completa</small></p>
-            </article>
-            <article>
-              <span aria-hidden="true">◎</span>
-              <p><strong>Cooperativo</strong><small>Missões compartilhadas</small></p>
-            </article>
+          <div class="feature-grid" data-feature-grid>
+            <div><span aria-hidden="true">&#10022;</span><strong>38 missoes e progressao</strong></div>
+            <div><span aria-hidden="true">&#9760;</span><strong>Onis, luas e chefes</strong></div>
+            <div><span aria-hidden="true">&#9876;</span><strong>Armas e respiracoes</strong></div>
+            <div><span aria-hidden="true">&#128214;</span><strong>Historia personalizada</strong></div>
+            <div><span aria-hidden="true">&#9711;</span><strong>Castelo Infinito</strong></div>
+            <div><span aria-hidden="true">&#9787;</span><strong>Compativel com multiplayer</strong></div>
           </div>
-        </div>
+        </article>
 
         <a
           class="download-button"
+          data-download-button
           href="https://github.com/Xexeu-dev/xexeu-dev/releases/download/kimetsu-java-v1.0.0/Kimetsu-no-Yaiba-Modpack-Xexeu-1.0.0.zip"
           rel="noopener"
         >
-          <span class="download-button__icon" aria-hidden="true">↓</span>
-          <span>
-            <strong>Baixar modpack</strong>
-            <small>Pacote completo para TLauncher</small>
-          </span>
-          <span class="download-button__arrow" aria-hidden="true">→</span>
+          <span aria-hidden="true">&#8595;</span>
+          <strong data-download-label>Baixar mod!</strong>
         </a>
       </section>
 
-      <aside class="pack-info" aria-label="Informações do modpack">
-        <div class="info-brand">
-          <span class="info-brand__mark" aria-hidden="true">K</span>
+      <aside class="info-panel" aria-label="Informacoes do modpack selecionado">
+        <header class="info-brand">
+          <img
+            src="./assets/portal/brand-bird-v4-minimal.webp"
+            width="64"
+            height="64"
+            alt=""
+          />
           <span>
-            <small>Minecraft Java</small>
-            <strong>Kimetsu</strong>
+            <small>Minecraft</small>
+            <strong>Mods</strong>
           </span>
-        </div>
+        </header>
 
         <section>
-          <h2>Informações</h2>
+          <h2>Informacoes</h2>
           <dl class="info-list">
-            <div><dt>Versão</dt><dd>1.0.0</dd></div>
-            <div><dt>Compatibilidade</dt><dd>Forge 1.20.1</dd></div>
-            <div><dt>Tipo</dt><dd>Modpack completo</dd></div>
-            <div><dt>Tamanho</dt><dd>276 MB</dd></div>
-            <div><dt>Atualizado</dt><dd>29/07/2026</dd></div>
+            <div>
+              <dt><span aria-hidden="true">&#10022;</span> Versao do modpack</dt>
+              <dd data-info-version>1.0.0</dd>
+            </div>
+            <div>
+              <dt><span aria-hidden="true">&#9638;</span> Compatibilidade</dt>
+              <dd data-info-compatibility>Forge 1.20.1</dd>
+            </div>
+            <div>
+              <dt><span aria-hidden="true">&#9776;</span> Tipo</dt>
+              <dd data-info-type>Modpack</dd>
+            </div>
+            <div>
+              <dt><span aria-hidden="true">&#9635;</span> Tamanho</dt>
+              <dd data-info-size>276 MB</dd>
+            </div>
+            <div>
+              <dt><span aria-hidden="true">&#8635;</span> Atualizado em</dt>
+              <dd data-info-updated>29/07/2026</dd>
+            </div>
           </dl>
         </section>
 
         <section>
           <h2>Categorias</h2>
-          <div class="tag-list">
+          <div class="tag-list" data-tag-list>
             <span>Aventura</span>
-            <span>RPG</span>
-            <span>Missões</span>
-            <span>Multiplayer</span>
             <span>Anime</span>
+            <span>RPG</span>
+            <span>Missoes</span>
+            <span>Multiplayer</span>
           </div>
         </section>
 
-        <section class="requirements">
-          <h2>Recomendado</h2>
-          <p>Java 17</p>
-          <p>6 GB de RAM</p>
-          <p>Windows 10 ou superior</p>
+        <section>
+          <h2>Avaliacao</h2>
+          <div class="rating">
+            <span aria-label="5 estrelas">&#9733; &#9733; &#9733; &#9733; &#9733;</span>
+            <small>5.0</small>
+          </div>
         </section>
+
+        <button class="details-button" type="button" data-details-button>
+          <span aria-hidden="true">&#9432;</span>
+          <span>Ver detalhes</span>
+        </button>
+
+        <div class="requirements">
+          <span>Java 17</span>
+          <span>6 GB de RAM</span>
+          <span>Forge 1.20.1</span>
+        </div>
       </aside>
     </main>
 
-    <div class="download-note">
-      <strong>Instalação simples</strong>
-      <span>Extraia a pasta dentro de <code>.minecraft\versions</code> e selecione a versão no TLauncher.</span>
-    </div>
+    <dialog class="image-dialog" data-image-dialog>
+      <button type="button" data-dialog-close aria-label="Fechar imagem">&#10005;</button>
+      <img data-dialog-image src="" alt="" />
+    </dialog>
 
-    <script src="./modpacks-java.js?v=1"></script>
+    <script src="./modpacks-java.js?v=2"></script>
   </body>
 </html>
