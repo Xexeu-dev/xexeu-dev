@@ -16,10 +16,10 @@ const kimetsuPack = {
   lead: "Entre em uma jornada completa inspirada em Demon Slayer.",
   description:
     "Enfrente onis e luas superiores, aprenda respiracoes, evolua como cacador ou demonio e conclua uma campanha feita para jogar sozinho ou com amigos.",
-  version: "1.0.0",
+  version: "1.0.1",
   compatibility: "Forge 1.20.1",
   type: "Modpack",
-  size: "276 MB",
+  size: "249 MB",
   updated: "29/07/2026",
   tags: ["Aventura", "Anime", "RPG", "Missoes", "Multiplayer"],
   features: [
@@ -31,7 +31,7 @@ const kimetsuPack = {
     "Compativel com multiplayer",
   ],
   download:
-    "https://github.com/Xexeu-dev/xexeu-dev/releases/download/kimetsu-java-v1.0.0/Kimetsu-no-Yaiba-Modpack-Xexeu-1.0.0.zip",
+    "https://github.com/Xexeu-dev/xexeu-dev/releases/download/kimetsu-java-v1.0.1/Kimetsu-no-Yaiba-Modpack-Xexeu-1.0.1.zip",
 };
 
 const slots = Array.from({ length: slotCount }, (_, index) =>

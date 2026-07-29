@@ -2,26 +2,30 @@
   "schemaVersion": 1,
   "modpackId": "kimetsu-no-yaiba-xexeu",
   "name": "Kimetsu no Yaiba - Modpack By Xexeu",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "minecraft": "1.20.1",
   "loader": "forge",
-  "publishedAt": "2026-07-29T21:00:00-03:00",
+  "publishedAt": "2026-07-29T20:04:19-03:00",
   "minimumUpdaterVersion": "1.0.0",
   "fullPackage": {
-    "url": "https://github.com/Xexeu-dev/xexeu-dev/releases/download/kimetsu-java-v1.0.0/Kimetsu-no-Yaiba-Modpack-Xexeu-1.0.0.zip",
-    "size": 289870019,
-    "sha256": "ef911d4a51cae8ad8cb7a6344655bd78da9acfe5041d33c4864466424ec2971f"
+    "url": "https://github.com/Xexeu-dev/xexeu-dev/releases/download/kimetsu-java-v1.0.1/Kimetsu-no-Yaiba-Modpack-Xexeu-1.0.1.zip",
+    "size": 260835270,
+    "sha256": "b819a7d104c59be545c81f38cb036d091ab31cef973853441ecb46ea6c7245db"
   },
   "incremental": {
-    "from": null,
-    "url": null,
-    "size": 0,
-    "sha256": null
+    "from": "1.0.0",
+    "url": "https://github.com/Xexeu-dev/xexeu-dev/releases/download/kimetsu-java-v1.0.1/Kimetsu-no-Yaiba-Modpack-Xexeu-patch-1.0.0-to-1.0.1.zip",
+    "size": 12044355,
+    "sha256": "082b7a89d3f15e8ebf323264472f9897579a1d5c814829a3c8af029b054fae82",
+    "delete": [
+      "mods/DistantHorizons-3.2.0-b-1.20.1-fabric-forge.jar",
+      "config/DistantHorizons.toml"
+    ]
   },
   "changelog": [
-    "Primeira versão pública do modpack.",
-    "Campanha com 38 missões.",
-    "Castelo Infinito e progressão cooperativa.",
-    "Distant Horizons configurado com preset leve."
+    "Distant Horizons removido por completo.",
+    "Castelo Infinito padrao mais leve em multiplayer.",
+    "Menos recalculos de perseguicao, sem reduzir o alcance dos onis.",
+    "Menu de modpacks finalizado com carrossel curvo dourado."
   ]
 }
