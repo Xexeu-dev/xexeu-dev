@@ -1,5 +1,5 @@
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-const slotCount = 16;
+const slotCount = 18;
 const stepAngle = 360 / slotCount;
 
 const kimetsuPack = {

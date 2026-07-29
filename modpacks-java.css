@@ -76,8 +76,8 @@ button {
   border-radius: 50%;
   transform: translateY(-50%);
   box-shadow:
-    0 0 0 16px rgba(5, 10, 16, 0.9),
-    0 0 0 18px rgba(217, 154, 60, 0.4);
+    0 0 0 7px rgba(5, 10, 16, 0.94),
+    0 0 0 8px rgba(217, 154, 60, 0.58);
   pointer-events: none;
 }
 
@@ -90,11 +90,11 @@ button {
 }
 
 .wheel-rings::before {
-  inset: 28px;
+  inset: 12px;
 }
 
 .wheel-rings::after {
-  inset: -32px;
+  inset: -12px;
 }
 
 .wheel-heading {
@@ -152,7 +152,10 @@ button {
   background:
     radial-gradient(circle at 70% 50%, rgba(15, 27, 38, 0.98), rgba(5, 11, 17, 0.99) 68%),
     #050b11;
-  box-shadow: 0 0 18px rgba(0, 0, 0, 0.68);
+  box-shadow:
+    0 0 0 6px rgba(5, 10, 16, 0.94),
+    0 0 0 7px rgba(217, 154, 60, 0.4),
+    0 0 18px rgba(0, 0, 0, 0.68);
   content: "";
   pointer-events: none;
 }
@@ -164,12 +167,12 @@ button {
   left: 50%;
   display: grid;
   width: 350px;
-  height: 118px;
-  margin: -59px 0 0 -175px;
+  height: 132px;
+  margin: -66px 0 0 -175px;
   padding: 0;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 3px;
+  border: 1px solid rgba(217, 154, 60, 0.52);
+  border-radius: 2px;
   background: #101820;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.52);
   cursor: pointer;
@@ -242,29 +245,29 @@ button {
 }
 
 .wheel-card.is-placeholder {
-  border-color: rgba(255, 255, 255, 0.35);
+  border-color: rgba(217, 154, 60, 0.42);
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(167, 173, 180, 0.62)),
-    #d5d8dc;
+    linear-gradient(110deg, rgba(28, 42, 54, 0.9), rgba(8, 15, 22, 0.98)),
+    #0b131c;
 }
 
 .wheel-card.is-placeholder::before {
   position: absolute;
   inset: 8px;
-  border: 1px solid rgba(15, 22, 30, 0.24);
+  border: 1px solid rgba(217, 154, 60, 0.12);
   content: "";
 }
 
 .wheel-card.is-placeholder::after {
   background:
-    linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.28), transparent 62%),
-    repeating-linear-gradient(135deg, rgba(16, 24, 32, 0.035) 0 2px, transparent 2px 8px);
+    linear-gradient(110deg, transparent 35%, rgba(217, 154, 60, 0.06), transparent 62%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.018) 0 2px, transparent 2px 8px);
 }
 
 .wheel-card.is-active {
   width: 350px;
-  height: 210px;
-  margin: -105px 0 0 -175px;
+  height: 200px;
+  margin: -100px 0 0 -175px;
   border: 2px solid var(--gold-bright);
   box-shadow:
     0 0 0 4px rgba(217, 154, 60, 0.17),
