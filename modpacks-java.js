@@ -39,6 +39,7 @@ const slots = Array.from({ length: slotCount }, (_, index) =>
 );
 
 const wheel = document.querySelector("[data-mod-wheel]");
+const wheelPanel = document.querySelector(".wheel-panel");
 const previousButton = document.querySelector("[data-wheel-prev]");
 const nextButton = document.querySelector("[data-wheel-next]");
 const title = document.querySelector("[data-pack-title]");
@@ -64,6 +65,7 @@ const dialogClose = document.querySelector("[data-dialog-close]");
 let selectedIndex = 0;
 let rotationSteps = 0;
 let wheelLocked = false;
+let touchStartX = null;
 
 function normalizeIndex(index) {
   return ((index % slotCount) + slotCount) % slotCount;
@@ -247,6 +249,31 @@ wheel?.addEventListener(
   },
   { passive: false },
 );
+
+wheelPanel?.addEventListener(
+  "touchstart",
+  (event) => {
+    touchStartX = event.changedTouches[0]?.clientX ?? null;
+  },
+  { passive: true },
+);
+
+wheelPanel?.addEventListener(
+  "touchend",
+  (event) => {
+    if (touchStartX === null) return;
+    const touchEndX = event.changedTouches[0]?.clientX ?? touchStartX;
+    const distance = touchEndX - touchStartX;
+    touchStartX = null;
+    if (Math.abs(distance) < 45) return;
+    moveWheel(distance < 0 ? 1 : -1);
+  },
+  { passive: true },
+);
+
+wheelPanel?.addEventListener("touchcancel", () => {
+  touchStartX = null;
+});
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowUp" || event.key === "ArrowLeft") moveWheel(-1);

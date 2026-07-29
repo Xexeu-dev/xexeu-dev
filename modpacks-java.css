@@ -766,6 +766,8 @@ button {
     min-height: 270px;
     border-right: 0;
     border-bottom: 1px solid rgba(217, 154, 60, 0.55);
+    touch-action: pan-y;
+    user-select: none;
   }
 
   .wheel-rings {
@@ -798,6 +800,26 @@ button {
 
   .wheel-card {
     display: none;
+    top: 28px;
+    width: 150px;
+    height: 120px;
+    margin: 0;
+    opacity: 0.48;
+  }
+
+  .wheel-card[data-slot="-1"],
+  .wheel-card[data-slot="1"] {
+    display: grid;
+  }
+
+  .wheel-card[data-slot="-1"] {
+    left: calc(50% - 155px);
+    transform: translateX(-50%) scale(0.78);
+  }
+
+  .wheel-card[data-slot="1"] {
+    left: calc(50% + 155px);
+    transform: translateX(-50%) scale(0.78);
   }
 
   .wheel-card.is-active {
@@ -808,7 +830,7 @@ button {
     height: 160px;
     margin: 0;
     opacity: 1;
-    transform: translateX(-50%);
+    transform: translateX(-50%) scale(1);
   }
 
   .wheel-card.is-active .wheel-card__copy strong {
