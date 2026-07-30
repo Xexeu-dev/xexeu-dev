@@ -19,7 +19,12 @@
       href="./assets/modpacks/kimetsu/kimetsu-cover.png"
       as="image"
     />
-    <link rel="stylesheet" href="./modpacks-java.css?v=8" />
+    <link
+      rel="preload"
+      href="./assets/modpacks/catalog/kimetsu-no-yaiba-card.webp"
+      as="image"
+    />
+    <link rel="stylesheet" href="./modpacks-java.css?v=10" />
   </head>
   <body>
     <main class="catalog">
@@ -53,69 +58,93 @@
         </a>
       </aside>
 
-      <section class="showcase" aria-live="polite">
-        <div class="gallery-grid" data-gallery-grid>
-          <button type="button" class="gallery-tile gallery-tile--wide" data-gallery-index="0">
-            <img
-              src="./assets/modpacks/kimetsu/kimetsu-cover.png"
-              alt="Batalha no Castelo Infinito"
-              data-gallery-image="0"
-            />
-          </button>
-          <button type="button" class="gallery-tile" data-gallery-index="1">
-            <img
-              src="./assets/modpacks/kimetsu/kimetsu-menu.png"
-              alt="Menu personalizado de Kimetsu"
-              data-gallery-image="1"
-            />
-          </button>
-          <button type="button" class="gallery-tile" data-gallery-index="2">
-            <img
-              src="./assets/modpacks/kimetsu/kimetsu-menu.png"
-              alt="Interface do modpack"
-              data-gallery-image="2"
-            />
-          </button>
-          <button type="button" class="gallery-tile gallery-tile--wide" data-gallery-index="3">
-            <img
-              src="./assets/modpacks/kimetsu/kimetsu-cover.png"
-              alt="Aventura Demon Slayer"
-              data-gallery-image="3"
-            />
-          </button>
+      <section class="showcase" data-showcase aria-live="polite">
+        <div class="pack-details" data-pack-details>
+          <div class="gallery-grid" data-gallery-grid>
+            <button type="button" class="gallery-tile" data-gallery-index="0">
+              <img
+                src="./assets/modpacks/kimetsu/kimetsu-cover.png"
+                alt="Batalha no Castelo Infinito"
+                data-gallery-image="0"
+              />
+            </button>
+            <button type="button" class="gallery-tile" data-gallery-index="1">
+              <img
+                src="./assets/modpacks/kimetsu/kimetsu-menu.png"
+                alt="Menu personalizado de Kimetsu"
+                data-gallery-image="1"
+              />
+            </button>
+            <button type="button" class="gallery-tile" data-gallery-index="2">
+              <img
+                src="./assets/modpacks/kimetsu/kimetsu-menu.png"
+                alt="Interface do modpack"
+                data-gallery-image="2"
+              />
+            </button>
+            <button type="button" class="gallery-tile" data-gallery-index="3">
+              <img
+                src="./assets/modpacks/kimetsu/kimetsu-cover.png"
+                alt="Aventura Demon Slayer"
+                data-gallery-image="3"
+              />
+            </button>
+          </div>
+
+          <article class="pack-copy">
+            <p class="pack-status" data-pack-status>Modpack completo</p>
+            <h2 data-pack-title>Modpack Kimetsu no Yaiba</h2>
+            <p class="pack-lead" data-pack-lead>
+              Entre em uma jornada completa inspirada em Demon Slayer.
+            </p>
+            <p class="pack-description" data-pack-description>
+              Enfrente onis e luas superiores, aprenda respiracoes, evolua como
+              cacador ou demonio e conclua uma campanha feita para jogar sozinho
+              ou com amigos.
+            </p>
+
+            <section class="pack-tips" aria-labelledby="tips-title">
+              <header>
+                <span aria-hidden="true">&#10022;</span>
+                <div>
+                  <small>Antes de comecar</small>
+                  <h3 id="tips-title">Dicas de jogo</h3>
+                </div>
+              </header>
+              <ul data-tip-list>
+                <li>Use o corvo para localizar o objetivo da proxima missao.</li>
+                <li>Adicione seus companheiros com <code>/amigo [nick]</code>.</li>
+                <li>Escolha o Castelo Otimizado em computadores mais fracos.</li>
+              </ul>
+            </section>
+
+            <button
+              class="tutorial-button"
+              type="button"
+              data-tutorial-button
+              disabled
+              title="Tutorial em preparacao"
+            >
+              <span aria-hidden="true">&#9654;</span>
+              <strong>Tutorial</strong>
+              <small>Em preparacao</small>
+            </button>
+          </article>
+
+          <a
+            class="download-button"
+            data-download-button
+            href="https://github.com/Xexeu-dev/xexeu-dev/releases/download/kimetsu-java-v1.0.1/Kimetsu-no-Yaiba-Modpack-Xexeu-1.0.1.zip"
+            rel="noopener"
+          >
+            <span aria-hidden="true">&#8595;</span>
+            <strong data-download-label>Baixar mod!</strong>
+          </a>
         </div>
 
-        <article class="pack-copy">
-          <p class="pack-status" data-pack-status>Modpack completo</p>
-          <h2 data-pack-title>Modpack Kimetsu no Yaiba</h2>
-          <p class="pack-lead" data-pack-lead>
-            Entre em uma jornada completa inspirada em Demon Slayer.
-          </p>
-          <p class="pack-description" data-pack-description>
-            Enfrente onis e luas superiores, aprenda respiracoes, evolua como
-            cacador ou demonio e conclua uma campanha feita para jogar sozinho
-            ou com amigos.
-          </p>
-
-          <div class="feature-grid" data-feature-grid>
-            <div><span aria-hidden="true">&#10022;</span><strong>38 missoes e progressao</strong></div>
-            <div><span aria-hidden="true">&#9760;</span><strong>Onis, luas e chefes</strong></div>
-            <div><span aria-hidden="true">&#9876;</span><strong>Armas e respiracoes</strong></div>
-            <div><span aria-hidden="true">&#128214;</span><strong>Historia personalizada</strong></div>
-            <div><span aria-hidden="true">&#9711;</span><strong>Castelo Infinito</strong></div>
-            <div><span aria-hidden="true">&#9787;</span><strong>Compativel com multiplayer</strong></div>
-          </div>
-        </article>
-
-        <a
-          class="download-button"
-          data-download-button
-          href="https://github.com/Xexeu-dev/xexeu-dev/releases/download/kimetsu-java-v1.0.1/Kimetsu-no-Yaiba-Modpack-Xexeu-1.0.1.zip"
-          rel="noopener"
-        >
-          <span aria-hidden="true">&#8595;</span>
-          <strong data-download-label>Baixar mod!</strong>
-        </a>
+        <div class="coming-soon" data-coming-soon hidden>
+          <strong>Em breve</strong>
+        </div>
       </section>
 
       <aside class="info-panel" aria-label="Informacoes do modpack selecionado">
@@ -169,19 +198,6 @@
           </div>
         </section>
 
-        <section>
-          <h2>Avaliacao</h2>
-          <div class="rating">
-            <span aria-label="5 estrelas">&#9733; &#9733; &#9733; &#9733; &#9733;</span>
-            <small>5.0</small>
-          </div>
-        </section>
-
-        <button class="details-button" type="button" data-details-button>
-          <span aria-hidden="true">&#9432;</span>
-          <span>Ver detalhes</span>
-        </button>
-
         <div class="requirements">
           <span>Java 17</span>
           <span>6 GB de RAM</span>
@@ -195,6 +211,6 @@
       <img data-dialog-image src="" alt="" />
     </dialog>
 
-    <script src="./modpacks-java.js?v=9"></script>
+    <script src="./modpacks-java.js?v=11"></script>
   </body>
 </html>
