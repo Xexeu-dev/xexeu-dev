@@ -559,8 +559,13 @@ button {
   border-radius: 6px;
   color: var(--gold-bright);
   background: rgba(13, 23, 33, 0.82);
+  cursor: pointer;
   font-family: Georgia, "Times New Roman", serif;
   text-transform: uppercase;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
 }
 
 .tutorial-button > span {
@@ -584,9 +589,390 @@ button {
   font-size: 0.58rem;
 }
 
-.tutorial-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.78;
+.tutorial-button:hover,
+.tutorial-button:focus-visible {
+  border-color: var(--gold-bright);
+  outline: 0;
+  background: rgba(217, 154, 60, 0.12);
+  transform: translateY(-1px);
+}
+
+.tutorial-button:active {
+  transform: translateY(0);
+}
+
+.tutorial-dialog {
+  width: min(1120px, calc(100% - 40px));
+  max-width: 1120px;
+  height: min(860px, calc(100vh - 32px));
+  height: min(860px, calc(100dvh - 32px));
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(217, 154, 60, 0.82);
+  border-radius: 8px;
+  color: var(--text);
+  background: #080f17;
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.8),
+    0 0 34px rgba(217, 154, 60, 0.16);
+}
+
+.tutorial-dialog[open] {
+  display: block;
+  animation: tutorial-enter 220ms ease-out;
+}
+
+.tutorial-dialog::backdrop {
+  background: rgba(1, 4, 7, 0.88);
+  backdrop-filter: blur(5px);
+}
+
+.tutorial-dialog__frame {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.tutorial-dialog__header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  min-height: 82px;
+  padding: 16px 20px 16px 26px;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(217, 154, 60, 0.48);
+  background: #0b151f;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
+}
+
+.tutorial-dialog__header small,
+.tutorial-dialog__header h2 {
+  display: block;
+  margin: 0;
+}
+
+.tutorial-dialog__header small {
+  color: var(--gold);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.tutorial-dialog__header h2 {
+  margin-top: 3px;
+  color: var(--gold-bright);
+  font: 500 1.85rem Georgia, "Times New Roman", serif;
+  text-transform: uppercase;
+}
+
+.tutorial-dialog__header button {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(217, 154, 60, 0.58);
+  border-radius: 4px;
+  color: var(--gold-bright);
+  background: #111d28;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.tutorial-dialog__header button:hover,
+.tutorial-dialog__header button:focus-visible {
+  border-color: var(--gold-bright);
+  outline: 0;
+  background: rgba(217, 154, 60, 0.14);
+}
+
+.tutorial-dialog__body {
+  min-height: 0;
+  padding: 26px;
+  overflow-y: auto;
+  scrollbar-color: var(--gold) #0a121b;
+  scrollbar-width: thin;
+}
+
+.tutorial-dialog__body::-webkit-scrollbar {
+  width: 9px;
+}
+
+.tutorial-dialog__body::-webkit-scrollbar-track {
+  background: #0a121b;
+}
+
+.tutorial-dialog__body::-webkit-scrollbar-thumb {
+  border: 2px solid #0a121b;
+  border-radius: 6px;
+  background: var(--gold);
+}
+
+@keyframes tutorial-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.tutorial-opening {
+  padding: 24px 26px;
+  border-left: 4px solid var(--gold-bright);
+  background:
+    linear-gradient(90deg, rgba(217, 154, 60, 0.13), transparent 72%),
+    #0c1721;
+}
+
+.tutorial-opening p,
+.tutorial-opening h3,
+.tutorial-opening span {
+  display: block;
+  margin: 0;
+}
+
+.tutorial-opening p,
+.tutorial-journey > section > span {
+  color: var(--gold);
+  font-size: 0.64rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.tutorial-opening h3 {
+  margin-top: 6px;
+  color: #fff2d8;
+  font: 500 1.55rem Georgia, "Times New Roman", serif;
+  text-transform: uppercase;
+}
+
+.tutorial-opening > span {
+  margin-top: 7px;
+  color: #c9c7c2;
+  font-size: 0.84rem;
+}
+
+.tutorial-dialog kbd {
+  display: inline-flex;
+  min-height: 26px;
+  padding: 3px 9px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 198, 104, 0.65);
+  border-bottom-width: 3px;
+  border-radius: 4px;
+  color: #fff2d8;
+  background: #111e29;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  font: 700 0.72rem "Segoe UI", Arial, sans-serif;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.tutorial-journey {
+  display: grid;
+  margin-top: 18px;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--line);
+}
+
+.tutorial-journey > section {
+  min-width: 0;
+  padding: 20px 22px;
+  background: rgba(10, 19, 28, 0.72);
+}
+
+.tutorial-journey > section + section {
+  border-left: 1px solid var(--line);
+}
+
+.tutorial-journey h3,
+.tutorial-journey p {
+  margin: 0;
+}
+
+.tutorial-journey h3 {
+  margin-top: 4px;
+  color: var(--gold-bright);
+  font: 500 1.2rem Georgia, "Times New Roman", serif;
+  text-transform: uppercase;
+}
+
+.tutorial-journey p {
+  margin-top: 8px;
+  color: #cfcdc8;
+  font-size: 0.8rem;
+  line-height: 1.58;
+}
+
+.tutorial-journey strong {
+  color: #fff1d1;
+  text-transform: uppercase;
+}
+
+.tutorial-section {
+  margin-top: 24px;
+  border-top: 1px solid rgba(217, 154, 60, 0.55);
+}
+
+.tutorial-section > header {
+  display: flex;
+  min-height: 72px;
+  gap: 14px;
+  align-items: center;
+}
+
+.tutorial-section > header > span {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(217, 154, 60, 0.62);
+  color: var(--gold-bright);
+  background: #0e1a25;
+  font: 500 0.88rem Georgia, serif;
+}
+
+.tutorial-section > header small,
+.tutorial-section > header h3 {
+  display: block;
+  margin: 0;
+}
+
+.tutorial-section > header small {
+  color: var(--muted);
+  font-size: 0.61rem;
+  text-transform: uppercase;
+}
+
+.tutorial-section > header h3 {
+  margin-top: 2px;
+  color: var(--gold-bright);
+  font: 500 1.28rem Georgia, "Times New Roman", serif;
+  text-transform: uppercase;
+}
+
+.tutorial-controls,
+.tutorial-interactions {
+  display: grid;
+  margin: 0;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+}
+
+.tutorial-controls > div,
+.tutorial-interactions > div {
+  display: grid;
+  min-width: 0;
+  min-height: 64px;
+  padding: 11px 14px;
+  gap: 12px;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  background: rgba(10, 18, 27, 0.68);
+}
+
+.tutorial-controls > div {
+  grid-template-columns: minmax(100px, 0.42fr) 1fr;
+}
+
+.tutorial-controls > div:nth-child(odd),
+.tutorial-interactions > div:nth-child(odd) {
+  border-right: 1px solid var(--line);
+}
+
+.tutorial-controls dt,
+.tutorial-controls dd,
+.tutorial-interactions dt,
+.tutorial-interactions dd {
+  margin: 0;
+}
+
+.tutorial-controls dd,
+.tutorial-interactions dd {
+  color: #c9c7c2;
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.tutorial-interactions > div {
+  grid-template-columns: minmax(135px, 0.38fr) 1fr;
+  align-items: start;
+}
+
+.tutorial-interactions dt {
+  color: #f1d39b;
+  font: 500 0.79rem Georgia, "Times New Roman", serif;
+  text-transform: uppercase;
+}
+
+.tutorial-extra-tips {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--line);
+  list-style: none;
+  counter-reset: tutorial-tip;
+}
+
+.tutorial-extra-tips li {
+  position: relative;
+  min-width: 0;
+  min-height: 72px;
+  padding: 15px 18px 15px 58px;
+  border-bottom: 1px solid var(--line);
+  color: #ceccc7;
+  background: rgba(10, 18, 27, 0.68);
+  counter-increment: tutorial-tip;
+  font-size: 0.76rem;
+  line-height: 1.48;
+}
+
+.tutorial-extra-tips li:nth-child(odd) {
+  border-right: 1px solid var(--line);
+}
+
+.tutorial-extra-tips li:nth-last-child(-n + 2) {
+  border-bottom: 0;
+}
+
+.tutorial-extra-tips li:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  border-right: 0;
+}
+
+.tutorial-extra-tips li::before {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: grid;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  border: 1px solid rgba(217, 154, 60, 0.52);
+  color: var(--gold-bright);
+  content: counter(tutorial-tip, decimal-leading-zero);
+  font: 700 0.61rem "Segoe UI", Arial, sans-serif;
+}
+
+.tutorial-extra-tips code {
+  color: var(--gold-bright);
+  font-size: inherit;
 }
 
 .coming-soon {
@@ -985,6 +1371,14 @@ button {
     min-height: 0;
     margin: 0 24px 24px;
   }
+
+  .tutorial-dialog {
+    width: calc(100% - 24px);
+    height: calc(100vh - 24px);
+    height: calc(100dvh - 24px);
+    max-height: calc(100vh - 24px);
+    max-height: calc(100dvh - 24px);
+  }
 }
 
 @media (max-width: 620px) {
@@ -1063,6 +1457,83 @@ button {
     min-height: 98px;
     padding: 16px;
     font-size: 2rem;
+  }
+
+  .tutorial-dialog {
+    width: calc(100% - 12px);
+    height: calc(100vh - 12px);
+    height: calc(100dvh - 12px);
+    max-height: calc(100vh - 12px);
+    max-height: calc(100dvh - 12px);
+    border-radius: 4px;
+  }
+
+  .tutorial-dialog__header {
+    min-height: 70px;
+    padding: 12px 12px 12px 16px;
+  }
+
+  .tutorial-dialog__header h2 {
+    font-size: 1.25rem;
+  }
+
+  .tutorial-dialog__header button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .tutorial-dialog__body {
+    padding: 14px;
+  }
+
+  .tutorial-opening {
+    padding: 18px;
+  }
+
+  .tutorial-opening h3 {
+    font-size: 1.16rem;
+    line-height: 1.25;
+  }
+
+  .tutorial-journey,
+  .tutorial-controls,
+  .tutorial-interactions,
+  .tutorial-extra-tips {
+    grid-template-columns: 1fr;
+  }
+
+  .tutorial-journey > section {
+    padding: 17px;
+  }
+
+  .tutorial-journey > section + section {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .tutorial-controls > div,
+  .tutorial-interactions > div {
+    border-right: 0;
+  }
+
+  .tutorial-controls > div {
+    grid-template-columns: minmax(118px, 0.48fr) 1fr;
+  }
+
+  .tutorial-interactions > div {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .tutorial-extra-tips li,
+  .tutorial-extra-tips li:nth-child(odd) {
+    grid-column: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .tutorial-extra-tips li:last-child {
+    border-bottom: 0;
   }
 }
 

@@ -24,7 +24,7 @@
       href="./assets/modpacks/catalog/kimetsu-no-yaiba-card.webp"
       as="image"
     />
-    <link rel="stylesheet" href="./modpacks-java.css?v=10" />
+    <link rel="stylesheet" href="./modpacks-java.css?v=11" />
   </head>
   <body>
     <main class="catalog">
@@ -122,12 +122,12 @@
               class="tutorial-button"
               type="button"
               data-tutorial-button
-              disabled
-              title="Tutorial em preparacao"
+              aria-haspopup="dialog"
+              aria-controls="tutorial-dialog"
             >
               <span aria-hidden="true">&#9654;</span>
               <strong>Tutorial</strong>
-              <small>Em preparacao</small>
+              <small>Abrir guia</small>
             </button>
           </article>
 
@@ -206,11 +206,159 @@
       </aside>
     </main>
 
+    <dialog
+      class="tutorial-dialog"
+      id="tutorial-dialog"
+      data-tutorial-dialog
+      aria-labelledby="tutorial-title"
+    >
+      <div class="tutorial-dialog__frame">
+        <header class="tutorial-dialog__header">
+          <div>
+            <small>Kimetsu no Yaiba</small>
+            <h2 id="tutorial-title">Tutorial da jornada</h2>
+          </div>
+          <button
+            type="button"
+            data-tutorial-close
+            aria-label="Fechar tutorial"
+          >
+            &#10005;
+          </button>
+        </header>
+
+        <div class="tutorial-dialog__body" data-tutorial-scroll>
+          <section class="tutorial-opening" aria-labelledby="tutorial-missions">
+            <p>Comece por aqui</p>
+            <h3 id="tutorial-missions">
+              Aperte <kbd>L</kbd> e v&aacute; at&eacute; a bola de neve
+            </h3>
+            <span>Suas miss&otilde;es estar&atilde;o nessa aba.</span>
+          </section>
+
+          <div class="tutorial-journey">
+            <section aria-labelledby="tutorial-start">
+              <span>Primeiros passos</span>
+              <h3 id="tutorial-start">Como iniciar a jornada?</h3>
+              <p>
+                Mate o primeiro dem&ocirc;nio para receber as espadas. Segure uma
+                espada na m&atilde;o e sua respira&ccedil;&atilde;o surgir&aacute;.
+              </p>
+            </section>
+            <section aria-labelledby="tutorial-trash">
+              <span>Miss&atilde;o importante</span>
+              <h3 id="tutorial-trash">Tirando o lixo</h3>
+              <p>
+                Ao matar o terceiro dem&ocirc;nio, surgir&aacute; um po&ccedil;o.
+                <strong>Entre nele!</strong> No fundo existe um barril com um
+                mineral raro que pode ser trocado por espadas de Hashiras com o
+                ferreiro Haganezuka.
+              </p>
+            </section>
+          </div>
+
+          <section class="tutorial-section" aria-labelledby="controls-title">
+            <header>
+              <span>01</span>
+              <div>
+                <small>Teclas e combate</small>
+                <h3 id="controls-title">Controles</h3>
+              </div>
+            </header>
+            <dl class="tutorial-controls">
+              <div><dt><kbd>R</kbd></dt><dd>Mudar a forma da respira&ccedil;&atilde;o</dd></div>
+              <div><dt><kbd>M</kbd></dt><dd>Ativar a Marca do Ca&ccedil;ador</dd></div>
+              <div><dt><kbd>L</kbd></dt><dd>Mostrar as miss&otilde;es</dd></div>
+              <div><dt><kbd>Bot&atilde;o direito</kbd></dt><dd>Usar a forma equipada</dd></div>
+              <div><dt><kbd>Bot&atilde;o esquerdo</kbd></dt><dd>Atacar com a espada</dd></div>
+              <div><dt><kbd>W A S D</kbd></dt><dd>Movimentar o personagem</dd></div>
+              <div><dt><kbd>F</kbd></dt><dd>Equipar a espada na m&atilde;o secund&aacute;ria</dd></div>
+              <div><dt><kbd>Z</kbd></dt><dd>Usar o especial, quando liberado</dd></div>
+              <div><dt><kbd>Shift + Bot&atilde;o direito</kbd></dt><dd>Interagir com Ca&ccedil;adores e Hashiras</dd></div>
+              <div><dt><kbd>Espa&ccedil;o + S</kbd></dt><dd>Executar um dash para tr&aacute;s</dd></div>
+            </dl>
+          </section>
+
+          <section class="tutorial-section" aria-labelledby="interactions-title">
+            <header>
+              <span>02</span>
+              <div>
+                <small>Ca&ccedil;adores e Hashiras</small>
+                <h3 id="interactions-title">Intera&ccedil;&otilde;es</h3>
+              </div>
+            </header>
+            <dl class="tutorial-interactions">
+              <div>
+                <dt>Conversar</dt>
+                <dd>O NPC compartilha dicas ou poesias.</dd>
+              </div>
+              <div>
+                <dt>Vamos batalhar</dt>
+                <dd>
+                  D&ecirc; um golpe para iniciar o PVP. O Ca&ccedil;ador n&atilde;o
+                  mata voc&ecirc;, mas a batalha termina se sua vida chegar a dois
+                  cora&ccedil;&otilde;es ou menos.
+                </dd>
+              </div>
+              <div>
+                <dt>Estou perdido</dt>
+                <dd>Receba a localiza&ccedil;&atilde;o da pr&oacute;xima miss&atilde;o.</dd>
+              </div>
+              <div>
+                <dt>Preciso de ajuda</dt>
+                <dd>
+                  O NPC passa a seguir voc&ecirc; e ataca tudo que voc&ecirc;
+                  atacar.
+                </dd>
+              </div>
+              <div>
+                <dt>Disc&iacute;pulo</dt>
+                <dd>Aprenda uma t&eacute;cnica especial com o NPC.</dd>
+              </div>
+              <div>
+                <dt>Vamos ficar juntos</dt>
+                <dd>Inicie um namoro com o NPC e desbloqueie o casamento depois.</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="tutorial-section" aria-labelledby="extra-tips-title">
+            <header>
+              <span>03</span>
+              <div>
+                <small>Conhecimento de Ca&ccedil;ador</small>
+                <h3 id="extra-tips-title">Dicas extras</h3>
+              </div>
+            </header>
+            <ol class="tutorial-extra-tips" data-tutorial-extra-tips>
+              <li>Use as respira&ccedil;&otilde;es para se movimentar e avan&ccedil;ar mais r&aacute;pido.</li>
+              <li>A Mans&atilde;o Ubuiashike oferece comida e o livro com todas as habilidades ensinadas pelos Hashiras.</li>
+              <li>Todo Hashira e Ca&ccedil;ador concede um b&ocirc;nus quando voc&ecirc; se sai bem no PVP.</li>
+              <li>Dem&ocirc;nios queimam sob a luz do sol.</li>
+              <li>Use <code>/amigo [nick]</code> para compartilhar o progresso das miss&otilde;es.</li>
+              <li>Matar dem&ocirc;nios ajuda a subir de rank. Veja seu rank apertando <kbd>L</kbd> e abrindo o livro encantado.</li>
+              <li>Como Oni, voc&ecirc; pode comer Ca&ccedil;adores e alde&otilde;es.</li>
+              <li>A Mans&atilde;o Borboleta sempre possui bastante comida.</li>
+              <li>Quanto mais r&aacute;pido voc&ecirc; clicar com o bot&atilde;o esquerdo em combate, menos dano receber&aacute; e mais dano causar&aacute;.</li>
+              <li>O Mundo Transparente permite enxergar mobs atrav&eacute;s das paredes.</li>
+              <li>Um dem&ocirc;nio n&atilde;o pode usar respira&ccedil;&otilde;es. Tentar fazer isso pode mat&aacute;-lo.</li>
+              <li>Produzir as roupas do Hashira da sua respira&ccedil;&atilde;o permite desbloquear t&eacute;cnicas.</li>
+              <li>Sempre leve uma cama antes de iniciar uma miss&atilde;o.</li>
+              <li>Use o Castelo Padr&atilde;o apenas em computadores muito bons, pois ele &eacute; infinito e pesado.</li>
+              <li>Guarde o Sangue do Muzan. Tamayo precisar&aacute; dele para ajudar voc&ecirc;.</li>
+              <li>Use o bot&atilde;o direito no corvo para ir at&eacute; a pr&oacute;xima miss&atilde;o.</li>
+              <li>Depois de certo n&iacute;vel, voc&ecirc; deixa de receber dano de queda.</li>
+            </ol>
+          </section>
+        </div>
+      </div>
+    </dialog>
+
     <dialog class="image-dialog" data-image-dialog>
       <button type="button" data-dialog-close aria-label="Fechar imagem">&#10005;</button>
       <img data-dialog-image src="" alt="" />
     </dialog>
 
-    <script src="./modpacks-java.js?v=12"></script>
+    <script src="./modpacks-java.js?v=13"></script>
   </body>
 </html>

@@ -139,6 +139,10 @@ const tagList = document.querySelector("[data-tag-list]");
 const tipList = document.querySelector("[data-tip-list]");
 const downloadButton = document.querySelector("[data-download-button]");
 const downloadLabel = document.querySelector("[data-download-label]");
+const tutorialButton = document.querySelector("[data-tutorial-button]");
+const tutorialDialog = document.querySelector("[data-tutorial-dialog]");
+const tutorialClose = document.querySelector("[data-tutorial-close]");
+const tutorialScroll = document.querySelector("[data-tutorial-scroll]");
 const galleryImages = [...document.querySelectorAll("[data-gallery-image]")];
 const galleryTiles = [...document.querySelectorAll("[data-gallery-index]")];
 const imageDialog = document.querySelector("[data-image-dialog]");
@@ -383,13 +387,24 @@ wheelPanel?.addEventListener("touchcancel", () => {
 });
 
 document.addEventListener("keydown", (event) => {
-  if (imageDialog?.open) return;
+  if (imageDialog?.open || tutorialDialog?.open) return;
   if (event.key === "ArrowUp" || event.key === "ArrowLeft") moveWheel(-1);
   if (event.key === "ArrowDown" || event.key === "ArrowRight") moveWheel(1);
 });
 
 downloadButton?.addEventListener("click", (event) => {
   if (downloadButton.classList.contains("is-disabled")) event.preventDefault();
+});
+
+tutorialButton?.addEventListener("click", () => {
+  if (!tutorialDialog || tutorialDialog.open) return;
+  if (tutorialScroll) tutorialScroll.scrollTop = 0;
+  tutorialDialog.showModal();
+});
+
+tutorialClose?.addEventListener("click", () => tutorialDialog?.close());
+tutorialDialog?.addEventListener("click", (event) => {
+  if (event.target === tutorialDialog) tutorialDialog.close();
 });
 
 galleryTiles.forEach((tile, index) => {
