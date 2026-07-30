@@ -10,10 +10,10 @@ const packs = [
     hero: `${assetRoot}/kimetsu-no-yaiba-hero.webp`,
     available: true,
     images: [
-      `${assetRoot}/kimetsu-no-yaiba-hero.webp`,
-      "./assets/modpacks/kimetsu/kimetsu-cover.png",
       "./assets/modpacks/kimetsu/kimetsu-menu.png",
-      "./assets/modpacks/kimetsu/kimetsu-cover.png",
+      "./assets/modpacks/kimetsu/kimetsu-gallery-hashiras.png",
+      "./assets/modpacks/kimetsu/kimetsu-gallery-castle.png",
+      "./assets/modpacks/kimetsu/kimetsu-gallery-interaction.png",
     ],
     lead: "Entre em uma jornada completa inspirada em Demon Slayer.",
     description:
