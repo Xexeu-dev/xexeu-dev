@@ -453,6 +453,246 @@ button {
   background: rgba(217, 154, 60, 0.12);
 }
 
+/* Curved selector: the cards stay horizontal while their centers follow the wheel. */
+@property --neon-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.wheel-panel::after {
+  position: absolute;
+  z-index: 4;
+  inset: 72px 0 0;
+  background: linear-gradient(
+    180deg,
+    #04090e 0,
+    rgba(4, 9, 14, 0.92) 2%,
+    transparent 13%,
+    transparent 81%,
+    rgba(4, 9, 14, 0.94) 94%,
+    #04090e 100%
+  );
+  content: "";
+  pointer-events: none;
+}
+
+.wheel-rings {
+  z-index: 2;
+  border-width: 3px;
+  box-shadow:
+    0 0 0 6px rgba(5, 10, 16, 0.96),
+    0 0 0 9px rgba(217, 154, 60, 0.5),
+    0 0 24px rgba(217, 154, 60, 0.16);
+}
+
+.wheel-rings::before {
+  inset: 14px;
+  border-width: 2px;
+}
+
+.wheel-rings::after {
+  inset: -15px;
+  border-width: 2px;
+}
+
+.wheel-heading {
+  z-index: 8;
+}
+
+.wheel-heading h1,
+.wheel-card__copy strong,
+.wheel-card__copy small,
+.back-button {
+  font-family: Constantia, Georgia, "Times New Roman", serif;
+  letter-spacing: 0;
+}
+
+.wheel-card {
+  width: 360px;
+  height: 132px;
+  margin: -66px 0 0 -180px;
+  overflow: hidden;
+  border-radius: 0;
+  clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 100%);
+  background: #08111a;
+  box-shadow: inset 0 0 0 2px rgba(3, 7, 11, 0.82);
+  filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.5));
+  transform:
+    rotate(var(--card-angle))
+    translateX(462px)
+    rotate(calc(var(--wheel-counter-rotation, 0deg) - var(--card-angle)));
+  transition:
+    width 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    height 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    margin 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 620ms cubic-bezier(0.22, 0.8, 0.18, 1),
+    opacity 220ms ease,
+    filter 220ms ease;
+}
+
+.wheel-card::before {
+  z-index: 5;
+  inset: 0;
+  padding: 3px;
+  border: 0;
+  border-radius: 0;
+  clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 100%);
+  background: linear-gradient(135deg, #ffe3a6, #b96e18 42%, #f7c66c 70%, #7a4714);
+  box-shadow: none;
+  opacity: 0.76;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.wheel-card::after {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(2, 6, 10, 0.94), rgba(2, 6, 10, 0.48) 44%, rgba(2, 6, 10, 0.08) 78%),
+    linear-gradient(180deg, rgba(255, 198, 104, 0.08), transparent 42%, rgba(0, 0, 0, 0.36));
+}
+
+.wheel-card img {
+  filter: saturate(0.7) brightness(0.62) contrast(1.08);
+  transform: scale(1.01);
+}
+
+.wheel-card__copy,
+.wheel-card.is-active .wheel-card__copy {
+  width: 230px;
+  margin-left: 55px;
+  padding: 19px 18px;
+  justify-content: center;
+}
+
+.wheel-card__copy::before {
+  display: none;
+}
+
+.wheel-card__copy strong {
+  max-width: 220px;
+  color: #f6f1e8;
+  font-size: 1.15rem;
+  line-height: 1.04;
+  text-shadow: 0 2px 7px #000, 0 0 12px rgba(0, 0, 0, 0.7);
+}
+
+.wheel-card.has-long-title .wheel-card__copy strong {
+  font-size: 0.96rem;
+}
+
+.wheel-card__copy small {
+  margin-top: 7px;
+  color: #ffc568;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.wheel-card__copy small:empty {
+  display: none;
+}
+
+.wheel-card.is-active {
+  z-index: 3;
+  width: 370px;
+  height: 202px;
+  margin: -101px 0 0 -185px;
+  box-shadow: inset 0 0 0 2px rgba(255, 220, 152, 0.32);
+  filter:
+    drop-shadow(0 0 5px rgba(255, 184, 70, 0.9))
+    drop-shadow(0 0 17px rgba(255, 145, 30, 0.58))
+    drop-shadow(0 20px 24px rgba(0, 0, 0, 0.66));
+}
+
+.wheel-card.is-active::before {
+  padding: 4px;
+  border: 0;
+  background: conic-gradient(
+    from var(--neon-angle),
+    #713806,
+    #ffd47d 9%,
+    #fff3c6 14%,
+    #d07812 23%,
+    #6f3404 48%,
+    #ffb53e 62%,
+    #fff2ba 69%,
+    #8c4809 78%,
+    #713806
+  );
+  box-shadow: none;
+  opacity: 1;
+  animation: selected-neon-flow 2.4s linear infinite;
+}
+
+.wheel-card.is-active img {
+  filter: saturate(1.08) brightness(0.9) contrast(1.05);
+  transform: scale(1.055);
+}
+
+.wheel-card.is-active .wheel-card__copy strong {
+  max-width: 205px;
+  color: #ffd079;
+  font-size: 1.42rem;
+  line-height: 1.02;
+  text-shadow: 0 3px 8px #000, 0 0 16px rgba(255, 166, 40, 0.18);
+}
+
+.wheel-card.is-active.has-long-title .wheel-card__copy strong {
+  font-size: 1.18rem;
+}
+
+.wheel-card:not(.is-active):hover,
+.wheel-card:not(.is-active):focus-visible {
+  filter:
+    drop-shadow(0 0 4px rgba(255, 198, 104, 0.46))
+    drop-shadow(0 15px 18px rgba(0, 0, 0, 0.55));
+}
+
+.wheel-card[data-hidden="true"] {
+  visibility: hidden;
+}
+
+.wheel-controls {
+  z-index: 7;
+  top: calc(42% - 78px);
+  right: 4px;
+  gap: 12px;
+}
+
+.wheel-controls button {
+  position: relative;
+  width: 50px;
+  height: 72px;
+  border: 2px solid rgba(222, 145, 48, 0.72);
+  border-radius: 8px;
+  color: #ffd17b;
+  background: linear-gradient(145deg, rgba(17, 27, 36, 0.98), rgba(4, 9, 14, 0.98));
+  box-shadow:
+    inset 0 0 0 3px #050a10,
+    inset 0 0 0 4px rgba(255, 198, 104, 0.13),
+    0 8px 18px rgba(0, 0, 0, 0.46);
+  font-size: 1.35rem;
+}
+
+.wheel-controls button:hover,
+.wheel-controls button:focus-visible {
+  background: linear-gradient(145deg, rgba(52, 38, 19, 0.98), rgba(8, 13, 18, 0.98));
+  box-shadow:
+    inset 0 0 0 3px #050a10,
+    inset 0 0 0 4px rgba(255, 198, 104, 0.28),
+    0 0 16px rgba(255, 176, 55, 0.34);
+  transform: translateY(-1px);
+}
+
+@keyframes selected-neon-flow {
+  to {
+    --neon-angle: 360deg;
+  }
+}
+
 .showcase {
   position: relative;
   display: flex;
@@ -1337,7 +1577,7 @@ button {
   display: flex;
   margin: 0 0 13px;
   padding-bottom: 9px;
-  border-bottom: 1px solid rgba(217, 154, 60, 0.32);
+  border-bottom: 2px solid rgba(217, 154, 60, 0.4);
   color: var(--gold-bright);
   font: 600 0.9rem Georgia, serif;
   text-transform: uppercase;
@@ -1353,11 +1593,12 @@ button {
 }
 
 .info-panel h2::after {
-  height: 1px;
+  height: 2px;
   margin-left: 10px;
   flex: 1;
   align-self: center;
-  background: linear-gradient(90deg, rgba(255, 198, 104, 0.46), transparent);
+  background: linear-gradient(90deg, rgba(255, 205, 112, 0.72), rgba(217, 154, 60, 0.28) 55%, transparent);
+  box-shadow: 0 0 7px rgba(255, 181, 64, 0.14);
   content: "";
 }
 
@@ -1372,8 +1613,9 @@ button {
   min-height: 51px;
   padding: 7px 0;
   gap: 3px;
-  border-bottom: 1px solid transparent;
-  border-image: linear-gradient(90deg, rgba(217, 154, 60, 0.18), rgba(255, 255, 255, 0.025), transparent) 1;
+  border-bottom: 0;
+  background: linear-gradient(90deg, rgba(255, 198, 104, 0.5), rgba(217, 154, 60, 0.16) 62%, transparent) left bottom / 100% 2px no-repeat;
+  box-shadow: 0 7px 11px -11px rgba(255, 180, 55, 0.52);
 }
 
 .info-list dt {
@@ -1794,6 +2036,185 @@ button {
 
   .tutorial-extra-tips li:last-child {
     border-bottom: 0;
+  }
+}
+
+/* On touch layouts the selector remains a vertical wheel instead of becoming a strip. */
+@media (max-width: 980px) {
+  .wheel-panel {
+    min-height: 620px;
+    border-right: 0;
+    border-bottom: 2px solid rgba(217, 154, 60, 0.5);
+    touch-action: pan-y;
+  }
+
+  .wheel-panel::after {
+    inset: 68px 0 0;
+    background: linear-gradient(
+      180deg,
+      #04090e 0,
+      rgba(4, 9, 14, 0.88) 4%,
+      transparent 15%,
+      transparent 78%,
+      rgba(4, 9, 14, 0.92) 91%,
+      #04090e 100%
+    );
+  }
+
+  .wheel-heading {
+    height: 68px;
+  }
+
+  .wheel-rings,
+  .mod-wheel {
+    top: 320px;
+    right: clamp(78px, 10vw, 108px);
+    left: auto;
+    display: block;
+    width: 720px;
+    height: 720px;
+  }
+
+  .wheel-rings {
+    transform: translateY(-50%);
+  }
+
+  .mod-wheel {
+    margin-top: -360px;
+    border-radius: 50%;
+    transform: none;
+  }
+
+  .wheel-track {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 50%;
+    transform: rotate(var(--wheel-rotation, 0deg)) !important;
+  }
+
+  .wheel-track::after {
+    inset: 200px;
+    display: block;
+  }
+
+  .wheel-card,
+  .wheel-card[data-slot="-2"],
+  .wheel-card[data-slot="-1"],
+  .wheel-card[data-slot="1"],
+  .wheel-card[data-slot="2"] {
+    top: 50%;
+    left: 50%;
+    display: grid !important;
+    width: 250px;
+    height: 92px;
+    margin: -46px 0 0 -125px;
+    opacity: 0.82;
+    transform:
+      rotate(var(--card-angle))
+      translateX(310px)
+      rotate(calc(var(--wheel-counter-rotation, 0deg) - var(--card-angle))) !important;
+  }
+
+  .wheel-card.is-active {
+    top: 50%;
+    left: 50%;
+    width: 274px;
+    height: 144px;
+    margin: -72px 0 0 -137px;
+    opacity: 1;
+    transform:
+      rotate(var(--card-angle))
+      translateX(310px)
+      rotate(calc(var(--wheel-counter-rotation, 0deg) - var(--card-angle))) !important;
+  }
+
+  .wheel-card[data-hidden="true"] {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .wheel-card__copy,
+  .wheel-card.is-active .wheel-card__copy {
+    width: 190px;
+    margin-left: 42px;
+    padding: 12px 10px;
+  }
+
+  .wheel-card__copy strong {
+    max-width: 112px;
+    font-size: 0.82rem;
+  }
+
+  .wheel-card.has-long-title .wheel-card__copy strong {
+    font-size: 0.72rem;
+  }
+
+  .wheel-card__copy small {
+    max-width: 112px;
+    margin-top: 4px;
+    font-size: 0.58rem;
+    line-height: 1.05;
+  }
+
+  .wheel-card.is-active .wheel-card__copy strong {
+    max-width: 112px;
+    font-size: 0.98rem;
+  }
+
+  .wheel-card.is-active.has-long-title .wheel-card__copy strong {
+    font-size: 0.76rem;
+  }
+
+  .wheel-controls {
+    top: 218px;
+    right: 7px;
+    left: auto;
+    display: grid;
+    gap: 10px;
+    pointer-events: auto;
+  }
+
+  .wheel-controls button {
+    width: 47px;
+    height: 68px;
+  }
+
+  .wheel-controls button:first-child span,
+  .wheel-controls button:last-child span {
+    transform: none;
+  }
+
+  .back-button {
+    top: 12px;
+    right: 14px;
+    bottom: auto;
+    left: auto;
+  }
+
+  .showcase {
+    scroll-margin-top: 10px;
+  }
+}
+
+@media (max-width: 620px) {
+  .wheel-panel {
+    min-height: 590px;
+  }
+
+  .wheel-rings,
+  .mod-wheel {
+    top: 305px;
+  }
+
+  .wheel-heading {
+    padding-left: 18px;
+  }
+
+  .wheel-heading h1 {
+    max-width: 220px;
+    font-size: 0.92rem;
   }
 }
 

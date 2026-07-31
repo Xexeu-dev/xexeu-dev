@@ -5,8 +5,8 @@ const packs = [
   {
     id: "kimetsu-no-yaiba",
     name: "Kimetsu no Yaiba",
-    subtitle: "Disponivel",
-    card: `${assetRoot}/kimetsu-no-yaiba-card.webp`,
+    subtitle: "",
+    card: `${assetRoot}/kimetsu-no-yaiba-card-v2.webp`,
     hero: `${assetRoot}/kimetsu-no-yaiba-hero.webp`,
     available: true,
     images: [
@@ -38,8 +38,8 @@ const packs = [
   {
     id: "orespawn-rework",
     name: "Orespawn Rework",
-    subtitle: "Em breve",
-    card: `${assetRoot}/orespawn-rework-card.webp`,
+    subtitle: "Em desenvolvimento",
+    card: `${assetRoot}/orespawn-rework-card-v2.webp`,
     hero: `${assetRoot}/orespawn-rework-hero.webp`,
     available: false,
     tags: ["Aventura", "Chefes", "Exploracao"],
@@ -48,7 +48,7 @@ const packs = [
     id: "the-sims-rework",
     name: "The Sims Rework",
     subtitle: "Em breve",
-    card: `${assetRoot}/the-sims-rework-card.webp`,
+    card: `${assetRoot}/the-sims-rework-card-v2.webp`,
     hero: `${assetRoot}/the-sims-rework-hero.webp`,
     available: false,
     tags: ["Simulacao", "Construcao", "Vida"],
@@ -57,7 +57,7 @@ const packs = [
     id: "god-of-war",
     name: "God of War",
     subtitle: "Em breve",
-    card: `${assetRoot}/god-of-war-card.webp`,
+    card: `${assetRoot}/god-of-war-card-v2.webp`,
     hero: `${assetRoot}/god-of-war-hero.webp`,
     available: false,
     tags: ["Aventura", "Combate", "Mitologia"],
@@ -66,7 +66,7 @@ const packs = [
     id: "black-phone",
     name: "Black Phone",
     subtitle: "Em breve",
-    card: `${assetRoot}/black-phone-card.webp`,
+    card: `${assetRoot}/black-phone-card-v2.webp`,
     hero: `${assetRoot}/black-phone-hero.webp`,
     available: false,
     tags: ["Terror", "Historia", "Sobrevivencia"],
@@ -75,7 +75,7 @@ const packs = [
     id: "distant-horizons-optimized",
     name: "Distant Horizons Otimizado",
     subtitle: "Em breve",
-    card: `${assetRoot}/distant-horizons-optimized-card.webp`,
+    card: `${assetRoot}/distant-horizons-optimized-card-v2.webp`,
     hero: `${assetRoot}/distant-horizons-optimized-hero.webp`,
     available: false,
     tags: ["Otimizacao", "Distancia", "Visual"],
@@ -84,7 +84,7 @@ const packs = [
     id: "terraria-modpack",
     name: "Terraria Modpack",
     subtitle: "Em breve",
-    card: `${assetRoot}/terraria-modpack-card.webp`,
+    card: `${assetRoot}/terraria-modpack-card-v2.webp`,
     hero: `${assetRoot}/terraria-modpack-hero.webp`,
     available: false,
     tags: ["Aventura", "Chefes", "Exploracao"],
@@ -93,7 +93,7 @@ const packs = [
     id: "tiktok-modpack",
     name: "TikTok Modpack",
     subtitle: "Em breve",
-    card: `${assetRoot}/tiktok-modpack-card.webp`,
+    card: `${assetRoot}/tiktok-modpack-card-v2.webp`,
     hero: `${assetRoot}/tiktok-modpack-hero.webp`,
     available: false,
     tags: ["Interativo", "Lives", "Multiplayer"],
@@ -102,7 +102,7 @@ const packs = [
     id: "medal-of-honor",
     name: "Medal of Honor",
     subtitle: "Em breve",
-    card: `${assetRoot}/medal-of-honor-card.webp`,
+    card: `${assetRoot}/medal-of-honor-card-v2.webp`,
     hero: `${assetRoot}/medal-of-honor-hero.webp`,
     available: false,
     tags: ["Acao", "Historia", "Combate"],
@@ -111,7 +111,7 @@ const packs = [
     id: "naruto-rework",
     name: "Naruto Rework",
     subtitle: "Em breve",
-    card: `${assetRoot}/naruto-rework-card.webp`,
+    card: `${assetRoot}/naruto-rework-card-v2.webp`,
     hero: `${assetRoot}/naruto-rework-hero.webp`,
     available: false,
     tags: ["Anime", "Ninjas", "RPG"],
@@ -239,7 +239,7 @@ function updateWheel() {
     const active = slot === 0;
 
     card.dataset.slot = String(slot);
-    card.dataset.hidden = String(Math.abs(slot) > 3);
+    card.dataset.hidden = String(Math.abs(slot) > 2);
     card.classList.toggle("is-active", active);
     card.setAttribute("aria-selected", String(active));
     card.tabIndex = active ? 0 : -1;
@@ -277,13 +277,14 @@ function renderPack(pack) {
     packDetails.hidden = true;
     comingSoon.hidden = false;
     comingSoon.style.setProperty("--coming-image", `url("${pack.hero}")`);
-    comingSoon.setAttribute("aria-label", `${pack.name}: em breve`);
+    comingSoon.setAttribute("aria-label", `${pack.name}: ${pack.subtitle}`);
+    comingSoon.querySelector("strong").textContent = pack.subtitle;
 
-    version.textContent = "EM BREVE";
-    compatibility.textContent = "EM BREVE";
+    version.textContent = pack.subtitle.toUpperCase();
+    compatibility.textContent = pack.subtitle.toUpperCase();
     type.textContent = "Modpack";
-    size.textContent = "EM BREVE";
-    updated.textContent = "EM BREVE";
+    size.textContent = pack.subtitle.toUpperCase();
+    updated.textContent = pack.subtitle.toUpperCase();
     renderTags(pack.tags);
     return;
   }
@@ -328,7 +329,15 @@ function selectWheelSlot(index) {
     normalizeIndex(index),
     selectedWheelIndex(),
   );
-  if (distance === 0) return;
+  if (distance === 0) {
+    if (window.matchMedia("(max-width: 980px)").matches) {
+      document.querySelector("[data-showcase]")?.scrollIntoView({
+        behavior: reducedMotion.matches ? "auto" : "smooth",
+        block: "start",
+      });
+    }
+    return;
+  }
 
   wheelLocked = true;
   rotationSteps += distance;
