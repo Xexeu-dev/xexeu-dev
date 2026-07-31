@@ -5,25 +5,25 @@
   "version": "1.0.1",
   "minecraft": "1.20.1",
   "loader": "forge",
-  "publishedAt": "2026-07-30T20:33:02-03:00",
+  "publishedAt": "2026-07-30T23:02:31-03:00",
   "minimumUpdaterVersion": "1.0.0",
   "fullPackage": {
     "url": "https://github.com/Xexeu-dev/xexeu-dev/releases/download/kimetsu-java-v1.0.1/Kimetsu-no-Yaiba-Modpack-Xexeu-1.0.1.zip",
-    "size": 260846539,
-    "sha256": "42c63395fb2249589eeb976f1d2b5f133acb4abec405496127ebf1de096a4e83"
+    "size": 260849175,
+    "sha256": "dba828cda163bfd1dca3b7d8206a55a6fd1950fb0fad603ebe8a6554405a2f9e"
   },
   "incremental": {
     "from": "1.0.0",
     "url": "https://github.com/Xexeu-dev/xexeu-dev/releases/download/kimetsu-java-v1.0.1/Kimetsu-no-Yaiba-Modpack-Xexeu-patch-1.0.0-to-1.0.1.zip",
-    "size": 12055538,
-    "sha256": "7c7eb61fd79077d0925a633fcbfcf095dec70b615e1101fa56a8150f60dc8425",
+    "size": 12058174,
+    "sha256": "db02fc320e7a37ed00bb0a47b7582905411cb66ba7e68489418a0e497fce3da9",
     "delete": [
       "mods/DistantHorizons-3.2.0-b-1.20.1-fabric-forge.jar",
       "config/DistantHorizons.toml"
     ]
   },
   "changelog": [
-    "Aviso automatico de novas atualizacoes na tela inicial.",
+    "Aviso automatico com interface moderna na tela inicial.",
     "Distant Horizons removido por completo.",
     "Castelo Infinito padrao mais leve em multiplayer.",
     "Menos recalculos de perseguicao, sem reduzir o alcance dos onis.",
