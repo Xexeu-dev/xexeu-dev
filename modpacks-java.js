@@ -25,9 +25,12 @@ const packs = [
     updated: "29/07/2026",
     tags: ["Aventura", "Anime", "RPG", "Missoes", "Multiplayer"],
     tips: [
-      "Use o corvo para localizar o objetivo da proxima missao.",
-      "Adicione seus companheiros com /amigo [nick].",
-      "Escolha o Castelo Otimizado em computadores mais fracos.",
+      "Missoes e progressao guiadas pelo corvo.",
+      "Respiracoes, marcas e tecnicas personalizadas.",
+      "Chefes, Luas Superiores e Castelo Infinito.",
+      "Cooperativo com progresso compartilhado por /amigo.",
+      "Castelo Padrao ou Otimizado para seu computador.",
+      "Interacoes, treinamento e aliancas com NPCs.",
     ],
     download:
       "https://github.com/Xexeu-dev/xexeu-dev/releases/download/kimetsu-java-v1.0.1/Kimetsu-no-Yaiba-Modpack-Xexeu-1.0.1.zip",
