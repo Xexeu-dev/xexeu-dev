@@ -5,6 +5,8 @@
   --panel-light: #101a25;
   --gold: #d99a3c;
   --gold-bright: #ffc668;
+  --gold-soft: rgba(217, 154, 60, 0.34);
+  --gold-line: rgba(255, 198, 104, 0.62);
   --text: #f1eee8;
   --muted: #aaa9a7;
   --line: rgba(255, 255, 255, 0.13);
@@ -105,8 +107,11 @@ button {
   padding: 0 26px;
   gap: 12px;
   align-items: center;
-  border-bottom: 1px solid rgba(217, 154, 60, 0.35);
+  border-bottom: 1px solid transparent;
   background: #04090e;
+  box-shadow:
+    inset 0 -1px rgba(255, 198, 104, 0.52),
+    0 7px 20px rgba(0, 0, 0, 0.42);
 }
 
 .wheel-heading__icon {
@@ -466,21 +471,49 @@ button {
 .pack-card {
   position: relative;
   padding: 18px 18px 15px;
-  border: 1px solid rgba(178, 190, 199, 0.32);
+  border: 1px solid transparent;
   border-radius: 8px;
-  background: linear-gradient(145deg, rgba(16, 28, 40, 0.96), rgba(7, 14, 22, 0.98));
+  background:
+    linear-gradient(145deg, rgba(16, 28, 40, 0.98), rgba(7, 14, 22, 0.99)) padding-box,
+    linear-gradient(135deg, rgba(255, 220, 150, 0.74), rgba(99, 115, 127, 0.28) 24%, rgba(99, 115, 127, 0.2) 72%, rgba(217, 154, 60, 0.66)) border-box;
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.025),
-    0 24px 58px rgba(0, 0, 0, 0.34);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.035),
+    inset 0 0 34px rgba(7, 13, 20, 0.45),
+    0 24px 58px rgba(0, 0, 0, 0.4),
+    0 0 22px rgba(217, 154, 60, 0.06);
 }
 
 .pack-card::before {
   position: absolute;
   inset: 7px;
-  border: 1px solid rgba(217, 154, 60, 0.08);
+  border: 1px solid rgba(217, 154, 60, 0.12);
   border-radius: 5px;
+  background:
+    linear-gradient(var(--gold-line), var(--gold-line)) left top / 34px 1px no-repeat,
+    linear-gradient(var(--gold-line), var(--gold-line)) right top / 34px 1px no-repeat,
+    linear-gradient(var(--gold-line), var(--gold-line)) left bottom / 34px 1px no-repeat,
+    linear-gradient(var(--gold-line), var(--gold-line)) right bottom / 34px 1px no-repeat,
+    linear-gradient(var(--gold-line), var(--gold-line)) left top / 1px 28px no-repeat,
+    linear-gradient(var(--gold-line), var(--gold-line)) right top / 1px 28px no-repeat,
+    linear-gradient(var(--gold-line), var(--gold-line)) left bottom / 1px 28px no-repeat,
+    linear-gradient(var(--gold-line), var(--gold-line)) right bottom / 1px 28px no-repeat;
   content: "";
   pointer-events: none;
+}
+
+.pack-card::after {
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  width: 86px;
+  height: 7px;
+  background:
+    radial-gradient(circle, var(--gold-bright) 0 2px, transparent 3px),
+    linear-gradient(90deg, transparent, var(--gold-line) 22%, var(--gold-line) 78%, transparent) center / 100% 1px no-repeat;
+  content: "";
+  filter: drop-shadow(0 0 5px rgba(255, 198, 104, 0.42));
+  pointer-events: none;
+  transform: translateX(-50%);
 }
 
 .pack-details[hidden],
@@ -496,10 +529,13 @@ button {
   grid-template-rows: 1fr 1fr;
   gap: 3px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 198, 104, 0.42);
   border-radius: 8px;
   background: #03070a;
-  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 0 0 3px rgba(4, 9, 14, 0.78),
+    0 0 0 4px rgba(217, 154, 60, 0.1),
+    0 22px 45px rgba(0, 0, 0, 0.38);
 }
 
 .gallery-tile {
@@ -509,6 +545,7 @@ button {
   padding: 0;
   overflow: hidden;
   background: #0b1118;
+  box-shadow: inset 0 0 0 1px rgba(255, 198, 104, 0.08);
   cursor: zoom-in;
 }
 
@@ -580,11 +617,17 @@ button {
 }
 
 .pack-tips {
+  position: relative;
   display: grid;
   margin-top: 15px;
   grid-template-columns: minmax(155px, 0.3fr) 1fr;
-  border: 1px solid var(--line);
-  background: rgba(10, 18, 27, 0.72);
+  border: 1px solid rgba(217, 154, 60, 0.28);
+  background:
+    linear-gradient(110deg, rgba(217, 154, 60, 0.045), transparent 30%),
+    rgba(7, 15, 23, 0.78);
+  box-shadow:
+    inset 0 0 0 3px rgba(2, 7, 11, 0.5),
+    0 8px 20px rgba(0, 0, 0, 0.16);
 }
 
 .pack-tips header {
@@ -593,7 +636,8 @@ button {
   padding: 14px 16px;
   gap: 12px;
   align-items: center;
-  border-right: 1px solid var(--line);
+  border-right: 1px solid rgba(217, 154, 60, 0.24);
+  background: linear-gradient(90deg, rgba(217, 154, 60, 0.06), transparent);
 }
 
 .pack-tips header > span {
@@ -635,8 +679,8 @@ button {
   padding: 8px 12px;
   gap: 9px;
   align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(217, 154, 60, 0.12);
+  border-left: 1px solid rgba(217, 154, 60, 0.12);
   color: #d3d0ca;
   font-size: 0.68rem;
   line-height: 1.42;
@@ -663,6 +707,7 @@ button {
 }
 
 .tutorial-button {
+  position: relative;
   display: flex;
   width: min(100%, 390px);
   min-height: 54px;
@@ -670,10 +715,15 @@ button {
   padding: 0 17px;
   gap: 12px;
   align-items: center;
-  border: 1px solid rgba(217, 154, 60, 0.66);
+  border: 1px solid rgba(255, 198, 104, 0.62);
   border-radius: 6px;
   color: var(--gold-bright);
-  background: rgba(13, 23, 33, 0.82);
+  background:
+    linear-gradient(90deg, rgba(217, 154, 60, 0.08), transparent 45%),
+    rgba(10, 19, 28, 0.9);
+  box-shadow:
+    inset 0 0 0 3px rgba(3, 8, 13, 0.62),
+    inset 0 0 18px rgba(217, 154, 60, 0.04);
   cursor: pointer;
   font-family: Georgia, "Times New Roman", serif;
   text-transform: uppercase;
@@ -1135,22 +1185,47 @@ button {
 }
 
 .download-button {
+  position: relative;
   display: flex;
   min-height: 84px;
   margin-top: 18px;
   gap: 22px;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(217, 154, 60, 0.82);
+  overflow: hidden;
+  border: 1px solid rgba(255, 198, 104, 0.88);
   border-radius: 8px;
   color: var(--gold-bright);
   background:
     linear-gradient(180deg, rgba(16, 31, 45, 0.96), rgba(6, 14, 22, 0.98));
-  box-shadow: inset 0 0 0 3px rgba(217, 154, 60, 0.06);
+  box-shadow:
+    inset 0 0 0 4px rgba(3, 8, 13, 0.72),
+    inset 0 0 0 5px rgba(217, 154, 60, 0.12),
+    0 10px 30px rgba(0, 0, 0, 0.26);
   font-family: Georgia, "Times New Roman", serif;
   text-decoration: none;
   text-transform: uppercase;
   transition: background 170ms ease, box-shadow 170ms ease, transform 170ms ease;
+}
+
+.download-button::before,
+.download-button::after {
+  position: absolute;
+  top: 50%;
+  width: clamp(52px, 8vw, 116px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-bright));
+  content: "";
+  opacity: 0.7;
+}
+
+.download-button::before {
+  left: 24px;
+}
+
+.download-button::after {
+  right: 24px;
+  transform: rotate(180deg);
 }
 
 .download-button > span {
@@ -1181,10 +1256,11 @@ button {
   min-height: 900px;
   margin: 26px 20px 26px 0;
   padding: 22px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 1px solid transparent;
   border-radius: 8px;
   background:
-    linear-gradient(180deg, rgba(12, 22, 32, 0.98), rgba(7, 14, 21, 0.98));
+    linear-gradient(180deg, rgba(12, 22, 32, 0.99), rgba(7, 14, 21, 0.99)) padding-box,
+    linear-gradient(155deg, rgba(255, 198, 104, 0.48), rgba(80, 96, 109, 0.14) 28%, rgba(80, 96, 109, 0.12) 74%, rgba(217, 154, 60, 0.38)) border-box;
   box-shadow:
     inset 3px 0 0 rgba(217, 154, 60, 0.12),
     0 20px 50px rgba(0, 0, 0, 0.35);
@@ -1196,8 +1272,26 @@ button {
   bottom: 20px;
   left: 7px;
   width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(217, 154, 60, 0.52), transparent);
+  background: linear-gradient(180deg, transparent, rgba(255, 198, 104, 0.68), rgba(217, 154, 60, 0.18), transparent);
   content: "";
+  pointer-events: none;
+}
+
+.info-panel::after {
+  position: absolute;
+  inset: 8px;
+  border-radius: 5px;
+  background:
+    linear-gradient(var(--gold-line), var(--gold-line)) left top / 26px 1px no-repeat,
+    linear-gradient(var(--gold-line), var(--gold-line)) right top / 26px 1px no-repeat,
+    linear-gradient(var(--gold-line), var(--gold-line)) left bottom / 26px 1px no-repeat,
+    linear-gradient(var(--gold-line), var(--gold-line)) right bottom / 26px 1px no-repeat,
+    linear-gradient(var(--gold-line), var(--gold-line)) left top / 1px 24px no-repeat,
+    linear-gradient(var(--gold-line), var(--gold-line)) right top / 1px 24px no-repeat,
+    linear-gradient(var(--gold-line), var(--gold-line)) left bottom / 1px 24px no-repeat,
+    linear-gradient(var(--gold-line), var(--gold-line)) right bottom / 1px 24px no-repeat;
+  content: "";
+  opacity: 0.7;
   pointer-events: none;
 }
 
@@ -1206,7 +1300,8 @@ button {
   min-height: 98px;
   gap: 14px;
   align-items: center;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg, var(--gold-line), rgba(217, 154, 60, 0.08), transparent) 1;
 }
 
 .info-brand img {
@@ -1239,12 +1334,31 @@ button {
 }
 
 .info-panel h2 {
+  display: flex;
   margin: 0 0 13px;
   padding-bottom: 9px;
   border-bottom: 1px solid rgba(217, 154, 60, 0.32);
   color: var(--gold-bright);
   font: 600 0.9rem Georgia, serif;
   text-transform: uppercase;
+}
+
+.info-panel h2::before {
+  width: 7px;
+  height: 7px;
+  margin-right: 8px;
+  border: 1px solid var(--gold-bright);
+  content: "";
+  transform: rotate(45deg);
+}
+
+.info-panel h2::after {
+  height: 1px;
+  margin-left: 10px;
+  flex: 1;
+  align-self: center;
+  background: linear-gradient(90deg, rgba(255, 198, 104, 0.46), transparent);
+  content: "";
 }
 
 .info-list {
@@ -1258,7 +1372,8 @@ button {
   min-height: 51px;
   padding: 7px 0;
   gap: 3px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.045);
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg, rgba(217, 154, 60, 0.18), rgba(255, 255, 255, 0.025), transparent) 1;
 }
 
 .info-list dt {
@@ -1291,7 +1406,8 @@ button {
   border: 1px solid rgba(217, 154, 60, 0.52);
   border-radius: 5px;
   color: var(--gold-bright);
-  background: rgba(217, 154, 60, 0.035);
+  background: linear-gradient(180deg, rgba(217, 154, 60, 0.08), rgba(217, 154, 60, 0.02));
+  box-shadow: inset 0 0 0 2px rgba(3, 8, 13, 0.58);
   font-size: 0.62rem;
   text-transform: uppercase;
 }
@@ -1302,7 +1418,8 @@ button {
   padding: 15px 0;
   gap: 7px;
   flex-wrap: wrap;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(90deg, transparent, rgba(217, 154, 60, 0.44), transparent) 1;
 }
 
 .requirements span {
