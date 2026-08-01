@@ -24,11 +24,14 @@
       href="./assets/modpacks/catalog/kimetsu-no-yaiba-card-v2.webp"
       as="image"
     />
-    <link rel="stylesheet" href="./modpacks-java.css?v=18" />
+    <link rel="stylesheet" href="./modpacks-java.css?v=19" />
   </head>
   <body>
     <svg class="wheel-clip-definitions" aria-hidden="true">
       <defs>
+        <clipPath id="wheel-card-upper-edge" clipPathUnits="objectBoundingBox">
+          <path d="M .03 0 L .73 0 C .82 .26 .93 .7 .99 1 L .2 1 C .14 .7 .07 .26 .03 0 Z" />
+        </clipPath>
         <clipPath id="wheel-card-upper-far" clipPathUnits="objectBoundingBox">
           <path d="M .02 0 L .84 0 C .9 .28 .96 .7 .99 1 L .12 1 C .08 .7 .04 .28 .02 0 Z" />
         </clipPath>
@@ -43,6 +46,9 @@
         </clipPath>
         <clipPath id="wheel-card-lower-far" clipPathUnits="objectBoundingBox">
           <path d="M .12 0 L .99 0 C .96 .3 .9 .72 .84 1 L .02 1 C .04 .72 .08 .3 .12 0 Z" />
+        </clipPath>
+        <clipPath id="wheel-card-lower-edge" clipPathUnits="objectBoundingBox">
+          <path d="M .2 0 L .99 0 C .93 .3 .82 .74 .73 1 L .03 1 C .07 .74 .14 .3 .2 0 Z" />
         </clipPath>
       </defs>
     </svg>
@@ -380,6 +386,6 @@
       <img data-dialog-image src="" alt="" />
     </dialog>
 
-    <script src="./modpacks-java.js?v=15"></script>
+    <script src="./modpacks-java.js?v=16"></script>
   </body>
 </html>

@@ -239,7 +239,7 @@ function updateWheel() {
     const active = slot === 0;
 
     card.dataset.slot = String(slot);
-    card.dataset.hidden = String(Math.abs(slot) > 2);
+    card.dataset.hidden = String(Math.abs(slot) > 3);
     card.classList.toggle("is-active", active);
     card.setAttribute("aria-selected", String(active));
     card.tabIndex = active ? 0 : -1;
