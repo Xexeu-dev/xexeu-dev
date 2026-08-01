@@ -38,6 +38,14 @@ body.is-leaving {
   opacity: 0;
 }
 
+.wheel-clip-definitions {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 button,
 a {
   color: inherit;
@@ -508,12 +516,12 @@ button {
 }
 
 .wheel-card {
-  width: 218px;
+  width: 240px;
   height: 112px;
-  margin: -56px 0 0 -109px;
+  margin: -56px 0 0 -120px;
   overflow: hidden;
   border-radius: 0;
-  clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 100%);
+  clip-path: url("#wheel-card-center");
   background: #08111a;
   box-shadow: inset 0 0 0 2px rgba(3, 7, 11, 0.82);
   filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.5));
@@ -537,7 +545,7 @@ button {
   padding: 3px;
   border: 0;
   border-radius: 0;
-  clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 100%);
+  clip-path: url("#wheel-card-center");
   background: linear-gradient(135deg, #ffe3a6, #b96e18 42%, #f7c66c 70%, #7a4714);
   box-shadow: none;
   opacity: 0.76;
@@ -597,9 +605,9 @@ button {
 
 .wheel-card.is-active {
   z-index: 3;
-  width: 230px;
+  width: 250px;
   height: 160px;
-  margin: -80px 0 0 -115px;
+  margin: -80px 0 0 -125px;
   box-shadow: inset 0 0 0 2px rgba(255, 220, 152, 0.32);
   filter:
     drop-shadow(0 0 5px rgba(255, 184, 70, 0.9))
@@ -660,9 +668,29 @@ button {
   top: calc(50% - 7px);
 }
 
+.wheel-card[data-slot="-2"],
+.wheel-card[data-slot="-2"]::before {
+  clip-path: url("#wheel-card-upper-far");
+}
+
+.wheel-card[data-slot="-1"],
+.wheel-card[data-slot="-1"]::before {
+  clip-path: url("#wheel-card-upper");
+}
+
 .wheel-card[data-slot="1"],
 .wheel-card[data-slot="2"] {
   top: calc(50% + 7px);
+}
+
+.wheel-card[data-slot="1"],
+.wheel-card[data-slot="1"]::before {
+  clip-path: url("#wheel-card-lower");
+}
+
+.wheel-card[data-slot="2"],
+.wheel-card[data-slot="2"]::before {
+  clip-path: url("#wheel-card-lower-far");
 }
 
 .wheel-controls {
@@ -2118,9 +2146,9 @@ button {
     top: 50%;
     left: 50%;
     display: grid !important;
-    width: 170px;
+    width: 185px;
     height: 72px;
-    margin: -36px 0 0 -85px;
+    margin: -36px 0 0 -92.5px;
     opacity: 0.82;
     transform:
       rotate(var(--card-angle))
@@ -2142,9 +2170,9 @@ button {
   .wheel-card.is-active {
     top: 50%;
     left: 50%;
-    width: 185px;
+    width: 200px;
     height: 94px;
-    margin: -47px 0 0 -92.5px;
+    margin: -47px 0 0 -100px;
     opacity: 1;
     transform:
       rotate(var(--card-angle))
