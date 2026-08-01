@@ -118,6 +118,275 @@ const packs = [
   },
 ];
 
+const missions = [
+  {
+    number: 1,
+    arc: "Treinamento inicial",
+    title: "MINHA HISTORIA",
+    objective: "Entrar no Monte Sagiri.",
+    start: "Derrote seu primeiro Demon e use o corvo para localizar o Monte Sagiri. A missao termina ao entrar no bioma.",
+  },
+  {
+    number: 2,
+    arc: "Treinamento inicial",
+    title: "OBRIGADO MESTRE!",
+    objective: "Chamar Sabito para um treino PvP e vencer.",
+    start: "No Monte Sagiri, use Shift + botao direito em Sabito, escolha Vamos Batalhar e venca o treino antes de ficar com dois coracoes.",
+  },
+  {
+    number: 3,
+    arc: "Treinamento inicial",
+    title: "HORA DA VINGANCA",
+    objective: "Derrotar ou ajudar a derrotar o Hand Demon.",
+    start: "Procure o Hand Demon na regiao de treinamento e cause pelo menos um dano nele antes da morte. Assistencia tambem conta.",
+  },
+  {
+    number: 4,
+    arc: "Treinamento inicial",
+    title: "ESTOU PRONTO",
+    objective: "Desafiar Urokodaki para um treino PvP.",
+    start: "Use Shift + botao direito em Urokodaki e escolha Vamos Batalhar. Iniciar o desafio ja conclui esta etapa.",
+  },
+  {
+    number: 5,
+    arc: "Vila e Tamayo",
+    title: "PRIMEIRA MISSAO?",
+    objective: "Encontrar uma vila e se aproximar de um aldeao.",
+    start: "Peca a proxima localizacao ao corvo. Ele localiza uma vila real; aproxime-se de qualquer Villager para concluir.",
+  },
+  {
+    number: 6,
+    arc: "Vila e Tamayo",
+    title: "TIRANDO O LIXO",
+    objective: "Derrotar ou ajudar a derrotar tres Horned Demon.",
+    start: "Permaneca na vila e participe da derrota dos tres Horned Demon. O terceiro abre o poco com o barril e Scarlet Ore Rare.",
+  },
+  {
+    number: 7,
+    arc: "Vila e Tamayo",
+    title: "UM DEMONIO DO BEM?",
+    objective: "Encontrar Tamayo e falar com ela.",
+    start: "Escolha Mansao Tamayo no menu do corvo, siga o locate de house_tamayo e interaja com Tamayo usando Shift + botao direito.",
+  },
+  {
+    number: 8,
+    arc: "Vila e Tamayo",
+    title: "PORQUE MUZAN OS MANDOU?",
+    objective: "Derrotar ou ajudar a derrotar Susamaru e Yahaba.",
+    start: "Depois da conversa com Tamayo, o tempo fica noturno e os dois aparecem perto do jogador. Cause dano nos dois antes que morram.",
+  },
+  {
+    number: 9,
+    arc: "Monte Natagumo",
+    title: "PRIMEIRA MISSAO OFICIAL",
+    objective: "Entrar no Monte Natagumo.",
+    start: "Use Proxima Localizacao no corvo e siga as coordenadas do Monte Natagumo. A altura Y nao e exigida.",
+  },
+  {
+    number: 10,
+    arc: "Monte Natagumo",
+    title: "VENHAM TODOS VOCES",
+    objective: "Derrotar a mae, a irma, o pai e o irmao de Rui.",
+    start: "Explore o Monte Natagumo e participe da derrota dos quatro membros da familia de Rui. Eles precisam cair na mesma progressao.",
+  },
+  {
+    number: 11,
+    arc: "Monte Natagumo",
+    title: "LUA INFERIOR, QUANTO PODER!",
+    objective: "Derrotar ou ajudar a derrotar Rui, Lua Inferior 5.",
+    start: "Apos a familia ser derrotada, encontre Rui e cause pelo menos um dano antes da morte dele.",
+  },
+  {
+    number: 12,
+    arc: "Trem e Distrito",
+    title: "PILAR DAS CHAMAS, ME AJUDE!",
+    objective: "Pedir ajuda a Rengoku pela interacao do NPC.",
+    start: "Use Shift + botao direito em Rengoku e escolha Preciso de Ajuda. Ele passa a acompanhar sua batalha.",
+  },
+  {
+    number: 13,
+    arc: "Trem e Distrito",
+    title: "O BEM VENCE",
+    objective: "Derrotar ou ajudar a derrotar Enmu.",
+    start: "Peca ao corvo a estrutura do Trem Infinito, encontre Enmu dentro dela e participe da derrota.",
+  },
+  {
+    number: 14,
+    arc: "Trem e Distrito",
+    title: "ENCENDEIE SEU CORACAO!",
+    objective: "Atingir Akaza depois que Rengoku iniciar o confronto.",
+    start: "Apos Enmu morrer, espere Rengoku atacar Akaza e acerte Akaza pelo menos uma vez durante o confronto.",
+  },
+  {
+    number: 15,
+    arc: "Trem e Distrito",
+    title: "BOATOS DE UMA LUA SUPERIOR",
+    objective: "Pedir ajuda a Uzui e Tanjiro.",
+    start: "Interaja separadamente com Uzui e Tanjiro usando Shift + botao direito e escolha Preciso de Ajuda nos dois.",
+  },
+  {
+    number: 16,
+    arc: "Trem e Distrito",
+    title: "CORTEM AS CABECAS!",
+    objective: "Derrotar ou ajudar a derrotar Daki e Gyutaro.",
+    start: "Enfrente Daki ate Gyutaro surgir naturalmente. Cause dano nos dois antes das mortes para registrar participacao.",
+  },
+  {
+    number: 17,
+    arc: "Treinamento Hashira",
+    title: "ME AJUDE A MELHORAR",
+    objective: "Desafiar Kanawo para um treino PvP e vencer.",
+    start: "Use Shift + botao direito em Kanawo, escolha Vamos Batalhar e venca o treino.",
+  },
+  {
+    number: 18,
+    arc: "Treinamento Hashira",
+    title: "TREINAMENTO HASHIRA!",
+    objective: "Desafiar Uzui e retirar pelo menos metade da vida dele.",
+    start: "Inicie o PvP pela interacao de Uzui e reduza a vida dele a 50% ou menos.",
+  },
+  {
+    number: 19,
+    arc: "Treinamento Hashira",
+    title: "PILAR DA NEVOA",
+    objective: "Pedir ajuda a Tokito.",
+    start: "Use Shift + botao direito em Tokito e escolha Preciso de Ajuda.",
+  },
+  {
+    number: 20,
+    arc: "Treinamento Hashira",
+    title: "NAO POSSO ERRAR!",
+    objective: "Derrotar ou ajudar a derrotar Gyokko.",
+    start: "Encontre Gyokko durante a progressao e cause pelo menos um dano antes que ele seja derrotado.",
+  },
+  {
+    number: 21,
+    arc: "Treinamento Hashira",
+    title: "PILAR DO AMOR",
+    objective: "Pedir ajuda a Mitsuri.",
+    start: "Use Shift + botao direito em Mitsuri e escolha Preciso de Ajuda.",
+  },
+  {
+    number: 22,
+    arc: "Treinamento Hashira",
+    title: "O AMOR VENCE O ODIO!",
+    objective: "Derrotar ou ajudar a derrotar Hantengu.",
+    start: "Participe do confronto contra Hantengu e suas formas ate a derrota final ser registrada.",
+  },
+  {
+    number: 23,
+    arc: "Treinamento Hashira",
+    title: "TREINAMENTO DA AGUA",
+    objective: "Desafiar Giyu Tomioka para um treino PvP.",
+    start: "Use Shift + botao direito em Giyu Tomioka e escolha Vamos Batalhar. Nao e necessario vencer.",
+  },
+  {
+    number: 24,
+    arc: "Treinamento Hashira",
+    title: "TREINAMENTO DO INSETO",
+    objective: "Desafiar Shinobu Kocho para um treino PvP.",
+    start: "Use Shift + botao direito em Shinobu Kocho e escolha Vamos Batalhar. Nao e necessario vencer.",
+  },
+  {
+    number: 25,
+    arc: "Treinamento Hashira",
+    title: "TREINAMENTO DO AMOR",
+    objective: "Desafiar Mitsuri para um treino PvP.",
+    start: "Use Shift + botao direito em Mitsuri e escolha Vamos Batalhar. Nao e necessario vencer.",
+  },
+  {
+    number: 26,
+    arc: "Treinamento Hashira",
+    title: "TREINAMENTO DA ROCHA",
+    objective: "Desafiar Gyomei para um treino PvP.",
+    start: "Use Shift + botao direito em Gyomei e escolha Vamos Batalhar. Nao e necessario vencer.",
+  },
+  {
+    number: 27,
+    arc: "Treinamento Hashira",
+    title: "TREINAMENTO DA SERPENTE",
+    objective: "Desafiar Obanai para um treino PvP.",
+    start: "Use Shift + botao direito em Obanai e escolha Vamos Batalhar. Nao e necessario vencer.",
+  },
+  {
+    number: 28,
+    arc: "Treinamento Hashira",
+    title: "TREINAMENTO DO SOM",
+    objective: "Desafiar Uzui para um treino PvP.",
+    start: "Use Shift + botao direito em Uzui e escolha Vamos Batalhar. Nao e necessario vencer.",
+  },
+  {
+    number: 29,
+    arc: "Treinamento Hashira",
+    title: "TREINAMENTO DA NEVOA",
+    objective: "Desafiar Tokito para um treino PvP.",
+    start: "Use Shift + botao direito em Tokito e escolha Vamos Batalhar. Nao e necessario vencer.",
+  },
+  {
+    number: 30,
+    arc: "Castelo Infinito",
+    title: "A UM PASSO DO PONTO FINAL",
+    objective: "Entregar 20 unidades de Blood Muzan para Tamayo.",
+    start: "Leve 20 Blood Muzan no inventario e clique em Tamayo. Ela recolhe o sangue e entrega Human Return e Cell Destruction.",
+  },
+  {
+    number: 31,
+    arc: "Castelo Infinito",
+    title: "HOJE TODA DESGRACA ACABA! OU NAO?",
+    objective: "Atacar Muzan ate ele ficar com 80% da vida.",
+    start: "Depois de ajudar Tamayo, encontre Muzan no Overworld e reduza a vida dele a 80%. Nakime inicia o transporte.",
+  },
+  {
+    number: 32,
+    arc: "Castelo Infinito",
+    title: "QUE LUGAR E ESSE?",
+    objective: "Entrar no Castelo Infinito.",
+    start: "Esta etapa conclui automaticamente quando Nakime terminar de puxar o grupo para a dimensao do castelo.",
+  },
+  {
+    number: 33,
+    arc: "Castelo Infinito",
+    title: "APENAS UM TAPA BURACO",
+    objective: "Derrotar ou ajudar a derrotar Kaigaku.",
+    start: "Aguarde a primeira onda do castelo e cause dano em Kaigaku antes da derrota.",
+  },
+  {
+    number: 34,
+    arc: "Castelo Infinito",
+    title: "EU VINGAREI O FOGO!",
+    objective: "Derrotar ou ajudar a derrotar Akaza.",
+    start: "Depois de Kaigaku, aguarde a proxima onda e participe da derrota de Akaza.",
+  },
+  {
+    number: 35,
+    arc: "Castelo Infinito",
+    title: "MENOS UMA LUA!",
+    objective: "Derrotar ou ajudar a derrotar Doma.",
+    start: "Apos Akaza, siga o transporte para o templo de Doma e cause dano nele antes da morte.",
+  },
+  {
+    number: 36,
+    arc: "Castelo Infinito",
+    title: "EU NAO POSSO PARAR AQUI!",
+    objective: "Derrotar ou ajudar a derrotar Kokushibo.",
+    start: "Sobreviva a onda seguinte e participe da derrota de Kokushibo para liberar o confronto final.",
+  },
+  {
+    number: 37,
+    arc: "Castelo Infinito",
+    title: "MONSTRO SEM CORACAO!",
+    objective: "Derrotar ou ajudar a derrotar Muzan.",
+    start: "Vinte segundos apos Kokushibo, enfrente Muzan. Aos 50% de vida a luta volta ao Overworld; termine o confronto la.",
+  },
+  {
+    number: 38,
+    arc: "Castelo Infinito",
+    title: "TUDO ESTA ACABADO",
+    objective: "Derrotar ou ajudar a derrotar Tanjiro Demon King.",
+    start: "Tanjiro Demon King surge apos a morte de Muzan. Cause dano e sobreviva ate a derrota final para pacificar o mundo.",
+  },
+];
+
 // Two laps keep the visible cards close together while preserving a full wheel.
 const wheelSlots = [...packs, ...packs];
 const slotCount = wheelSlots.length;
@@ -146,6 +415,11 @@ const tutorialButton = document.querySelector("[data-tutorial-button]");
 const tutorialDialog = document.querySelector("[data-tutorial-dialog]");
 const tutorialClose = document.querySelector("[data-tutorial-close]");
 const tutorialScroll = document.querySelector("[data-tutorial-scroll]");
+const missionsButton = document.querySelector("[data-missions-button]");
+const missionsDialog = document.querySelector("[data-missions-dialog]");
+const missionsClose = document.querySelector("[data-missions-close]");
+const missionsScroll = document.querySelector("[data-missions-scroll]");
+const missionsList = document.querySelector("[data-missions-list]");
 const galleryImages = [...document.querySelectorAll("[data-gallery-image]")];
 const galleryTiles = [...document.querySelectorAll("[data-gallery-index]")];
 const imageDialog = document.querySelector("[data-image-dialog]");
@@ -270,6 +544,49 @@ function renderTips(tips) {
   );
 }
 
+function renderMissions() {
+  if (!missionsList) return;
+
+  let previousArc = "";
+  const items = missions.map((mission) => {
+    const item = document.createElement("li");
+    const number = document.createElement("span");
+    const content = document.createElement("article");
+    const header = document.createElement("header");
+    const arc = document.createElement("small");
+    const title = document.createElement("h3");
+    const objective = document.createElement("p");
+    const start = document.createElement("p");
+    const objectiveLabel = document.createElement("strong");
+    const startLabel = document.createElement("strong");
+
+    item.className = "mission-entry";
+    if (mission.arc !== previousArc) item.classList.add("starts-arc");
+    previousArc = mission.arc;
+
+    number.className = "mission-entry__number";
+    number.textContent = String(mission.number).padStart(2, "0");
+
+    arc.textContent = mission.arc;
+    title.textContent = mission.title;
+    header.append(arc, title);
+
+    objective.className = "mission-entry__objective";
+    objectiveLabel.textContent = "Objetivo: ";
+    objective.append(objectiveLabel, mission.objective);
+
+    start.className = "mission-entry__start";
+    startLabel.textContent = "Como iniciar: ";
+    start.append(startLabel, mission.start);
+
+    content.append(header, objective, start);
+    item.append(number, content);
+    return item;
+  });
+
+  missionsList.replaceChildren(...items);
+}
+
 function renderPack(pack) {
   title.textContent = pack.available ? `Modpack ${pack.name}` : pack.name;
 
@@ -357,6 +674,7 @@ function moveWheel(direction) {
 }
 
 createWheelCards();
+renderMissions();
 updateWheel();
 renderPack(selectedPack());
 
@@ -399,7 +717,7 @@ wheelPanel?.addEventListener("touchcancel", () => {
 });
 
 document.addEventListener("keydown", (event) => {
-  if (imageDialog?.open || tutorialDialog?.open) return;
+  if (imageDialog?.open || tutorialDialog?.open || missionsDialog?.open) return;
   if (event.key === "ArrowUp" || event.key === "ArrowLeft") moveWheel(-1);
   if (event.key === "ArrowDown" || event.key === "ArrowRight") moveWheel(1);
 });
@@ -417,6 +735,17 @@ tutorialButton?.addEventListener("click", () => {
 tutorialClose?.addEventListener("click", () => tutorialDialog?.close());
 tutorialDialog?.addEventListener("click", (event) => {
   if (event.target === tutorialDialog) tutorialDialog.close();
+});
+
+missionsButton?.addEventListener("click", () => {
+  if (!missionsDialog || missionsDialog.open) return;
+  if (missionsScroll) missionsScroll.scrollTop = 0;
+  missionsDialog.showModal();
+});
+
+missionsClose?.addEventListener("click", () => missionsDialog?.close());
+missionsDialog?.addEventListener("click", (event) => {
+  if (event.target === missionsDialog) missionsDialog.close();
 });
 
 galleryTiles.forEach((tile, index) => {

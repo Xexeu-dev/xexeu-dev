@@ -24,7 +24,7 @@
       href="./assets/modpacks/catalog/kimetsu-no-yaiba-card-v2.webp"
       as="image"
     />
-    <link rel="stylesheet" href="./modpacks-java.css?v=23" />
+    <link rel="stylesheet" href="./modpacks-java.css?v=24" />
   </head>
   <body>
     <svg class="wheel-clip-definitions" aria-hidden="true">
@@ -144,17 +144,33 @@
               </ul>
             </section>
 
-            <button
-              class="tutorial-button"
-              type="button"
-              data-tutorial-button
-              aria-haspopup="dialog"
-              aria-controls="tutorial-dialog"
-            >
-              <span aria-hidden="true">&#9654;</span>
-              <strong>Tutorial</strong>
-              <small>Abrir guia</small>
-            </button>
+            <div class="pack-actions">
+              <button
+                class="pack-action tutorial-button"
+                type="button"
+                data-tutorial-button
+                aria-haspopup="dialog"
+                aria-controls="tutorial-dialog"
+              >
+                <span class="pack-action__icon" aria-hidden="true">&#9654;</span>
+                <strong>Tutorial</strong>
+                <small>Abrir guia</small>
+              </button>
+
+              <button
+                class="pack-action missions-button"
+                type="button"
+                data-missions-button
+                aria-haspopup="dialog"
+                aria-controls="missions-dialog"
+              >
+                <span class="pack-action__icon" aria-hidden="true">
+                  <img src="./assets/modpacks/kimetsu/enchanted-book.png" alt="" />
+                </span>
+                <strong>Miss&otilde;es</strong>
+                <small>Ver jornada</small>
+              </button>
+            </div>
           </article>
           </div>
 
@@ -192,23 +208,23 @@
           <h2>Informacoes</h2>
           <dl class="info-list">
             <div>
-              <dt><span aria-hidden="true">&#10022;</span> Versao do modpack</dt>
+              <dt><span class="info-icon" aria-hidden="true">&#9670;</span> Versao do modpack</dt>
               <dd data-info-version>1.0.1</dd>
             </div>
             <div>
-              <dt><span aria-hidden="true">&#9638;</span> Compatibilidade</dt>
+              <dt><span class="info-icon" aria-hidden="true">&#9641;</span> Compatibilidade</dt>
               <dd data-info-compatibility>Forge 1.20.1</dd>
             </div>
             <div>
-              <dt><span aria-hidden="true">&#9776;</span> Tipo</dt>
+              <dt><span class="info-icon" aria-hidden="true">&#9638;</span> Tipo</dt>
               <dd data-info-type>Modpack</dd>
             </div>
             <div>
-              <dt><span aria-hidden="true">&#9635;</span> Tamanho</dt>
+              <dt><span class="info-icon" aria-hidden="true">&#9632;</span> Tamanho</dt>
               <dd data-info-size>249 MB</dd>
             </div>
             <div>
-              <dt><span aria-hidden="true">&#8635;</span> Atualizado em</dt>
+              <dt><span class="info-icon" aria-hidden="true">&#9684;</span> Atualizado em</dt>
               <dd data-info-updated>29/07/2026</dd>
             </div>
           </dl>
@@ -381,11 +397,59 @@
       </div>
     </dialog>
 
+    <dialog
+      class="tutorial-dialog missions-dialog"
+      id="missions-dialog"
+      data-missions-dialog
+      aria-labelledby="missions-title"
+    >
+      <div class="tutorial-dialog__frame">
+        <header class="tutorial-dialog__header missions-dialog__header">
+          <img
+            class="missions-dialog__book"
+            src="./assets/modpacks/kimetsu/enchanted-book.png"
+            width="64"
+            height="64"
+            alt=""
+          />
+          <div>
+            <small>Proezas de Kimetsu</small>
+            <h2 id="missions-title">Livro de miss&otilde;es</h2>
+            <p>Objetivos e caminhos para concluir toda a jornada.</p>
+          </div>
+          <button
+            type="button"
+            data-missions-close
+            aria-label="Fechar livro de missoes"
+          >
+            &#10005;
+          </button>
+        </header>
+
+        <div class="missions-dialog__body" data-missions-scroll>
+          <aside class="missions-summary">
+            <span class="missions-summary__slot" aria-hidden="true">
+              <img src="./assets/modpacks/kimetsu/enchanted-book.png" alt="" />
+            </span>
+            <small>Campanha completa</small>
+            <strong>38 miss&otilde;es</strong>
+            <p>
+              Complete os objetivos em ordem. Use o corvo ou a op&ccedil;&atilde;o
+              <b>Estou perdido</b> para localizar o pr&oacute;ximo destino.
+            </p>
+            <span class="missions-summary__hint">L &gt; Livro encantado</span>
+          </aside>
+
+          <ol class="missions-list" data-missions-list aria-label="Lista de missoes"></ol>
+        </div>
+      </div>
+    </dialog>
+
     <dialog class="image-dialog" data-image-dialog>
       <button type="button" data-dialog-close aria-label="Fechar imagem">&#10005;</button>
       <img data-dialog-image src="" alt="" />
     </dialog>
 
-    <script src="./modpacks-java.js?v=16"></script>
+    <script src="./modpacks-java.js?v=17"></script>
   </body>
 </html>

@@ -2400,6 +2400,590 @@ button {
   }
 }
 
+/* Final polish: quieter information surfaces and Minecraft-style controls. */
+.wheel-card:not(.is-active)::before {
+  padding: 3px;
+  background: linear-gradient(
+    145deg,
+    #f2d7a5 0%,
+    #977246 18%,
+    #30271d 48%,
+    #bb8b4f 76%,
+    #5c4026 100%
+  );
+  opacity: 0.92;
+  filter: drop-shadow(0 1px 0 rgba(255, 235, 194, 0.2));
+}
+
+.pack-card::before,
+.pack-card::after,
+.info-panel::before,
+.info-panel::after,
+.download-button::before,
+.download-button::after {
+  display: none;
+}
+
+.pack-card {
+  border-color: rgba(191, 146, 78, 0.36);
+  background: linear-gradient(150deg, rgba(13, 25, 36, 0.98), rgba(6, 13, 20, 0.99));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    0 22px 52px rgba(0, 0, 0, 0.38);
+}
+
+.gallery-grid {
+  border-color: rgba(177, 136, 76, 0.3);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.34);
+}
+
+.pack-tips {
+  padding: 8px;
+  gap: 10px;
+  border: 0;
+  border-radius: 6px;
+  background: rgba(7, 15, 23, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+.pack-tips header {
+  min-height: 72px;
+  padding: 11px 13px;
+  border-right: 0;
+  background: linear-gradient(90deg, rgba(182, 128, 55, 0.08), transparent);
+}
+
+.pack-tips ul {
+  gap: 2px 16px;
+}
+
+.pack-tips li {
+  min-height: 36px;
+  padding: 6px 4px;
+  border: 0;
+  background: transparent;
+}
+
+.pack-tips li::before {
+  width: 25px;
+  height: 25px;
+  flex-basis: 25px;
+  border: 2px solid #6f522f;
+  border-radius: 2px;
+  background:
+    linear-gradient(135deg, rgba(255, 224, 157, 0.16), transparent 48%),
+    #101b24;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.09),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.5);
+}
+
+.pack-actions {
+  display: grid;
+  margin-top: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.pack-action {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 58px;
+  margin: 0;
+  padding: 0 14px;
+  gap: 10px;
+  align-items: center;
+  overflow: hidden;
+  border: 2px solid #846239;
+  border-radius: 3px;
+  clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px);
+  color: #ffe0a1;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.018) 0 2px, transparent 2px 6px),
+    linear-gradient(180deg, #213446, #101c27 54%, #09121a 55%);
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.13),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.48),
+    0 4px 0 #05090d,
+    0 8px 16px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+  font-family: Constantia, Georgia, serif;
+  text-align: left;
+  text-transform: uppercase;
+  transition: filter 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+}
+
+.pack-action::after {
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(255, 218, 149, 0.13);
+  content: "";
+  pointer-events: none;
+}
+
+.pack-action > .pack-action__icon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  place-items: center;
+  border: 2px solid #6f522f;
+  border-radius: 2px;
+  color: #ffd47c;
+  background: #0b141d;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.54);
+  font-size: 0.72rem;
+}
+
+.pack-action__icon img {
+  width: 24px;
+  height: 24px;
+  image-rendering: pixelated;
+}
+
+.pack-action strong {
+  min-width: 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.pack-action small {
+  margin-left: auto;
+  color: #a9a69f;
+  font: 600 0.54rem Arial, sans-serif;
+  white-space: nowrap;
+}
+
+.pack-action:hover,
+.pack-action:focus-visible {
+  border-color: #d8a757;
+  outline: 0;
+  filter: brightness(1.13);
+  transform: translateY(-2px);
+}
+
+.pack-action:active {
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.5),
+    0 1px 0 #05090d;
+  transform: translateY(2px);
+}
+
+.download-button {
+  min-height: 82px;
+  border: 2px solid #9d7439;
+  border-radius: 4px;
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.016) 0 3px, transparent 3px 8px),
+    linear-gradient(180deg, #253e52, #132534 52%, #0a1721 53%);
+  box-shadow:
+    inset 0 4px 0 rgba(255, 255, 255, 0.13),
+    inset 0 -5px 0 rgba(0, 0, 0, 0.46),
+    0 6px 0 #04090d,
+    0 13px 25px rgba(0, 0, 0, 0.3);
+}
+
+.download-button:hover,
+.download-button:focus-visible {
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.024) 0 3px, transparent 3px 8px),
+    linear-gradient(180deg, #31516a, #183146 52%, #0c1c29 53%);
+  box-shadow:
+    inset 0 4px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -5px 0 rgba(0, 0, 0, 0.42),
+    0 4px 0 #04090d,
+    0 0 24px rgba(218, 160, 73, 0.16);
+}
+
+.wheel-controls button,
+.back-button {
+  border-width: 2px;
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, rgba(42, 60, 73, 0.98), rgba(11, 20, 28, 0.99) 54%, rgba(5, 11, 16, 0.99) 55%);
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.11),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.48),
+    0 4px 0 rgba(2, 5, 8, 0.9);
+}
+
+.info-brand {
+  border-bottom: 0;
+}
+
+.info-panel section {
+  padding-top: 19px;
+}
+
+.info-panel h2 {
+  margin-bottom: 16px;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.info-panel h2::after {
+  display: none;
+}
+
+.info-list {
+  gap: 8px;
+}
+
+.info-list div {
+  min-height: 56px;
+  padding: 5px 0;
+  background: none;
+  box-shadow: none;
+}
+
+.info-list dt {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.info-list dt .info-icon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  place-items: center;
+  border: 2px solid #604a2f;
+  border-radius: 3px;
+  color: #ffe0a1;
+  background:
+    linear-gradient(135deg, rgba(255, 226, 164, 0.12), transparent 52%),
+    #101b24;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.54);
+  font-size: 0.9rem;
+}
+
+.info-list dd {
+  margin: -8px 0 0 44px;
+  color: #f4e5c8;
+  font-weight: 600;
+}
+
+.missions-dialog {
+  width: min(1180px, calc(100% - 40px));
+  max-width: 1180px;
+}
+
+.missions-dialog__header p {
+  margin: 4px 0 0;
+  color: #a9a69f;
+  font-size: 0.72rem;
+}
+
+.missions-dialog__book {
+  width: 58px;
+  height: 58px;
+  padding: 8px;
+  border: 2px solid #73552e;
+  border-radius: 4px;
+  background: #101a23;
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.11),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.48);
+  image-rendering: pixelated;
+}
+
+.missions-dialog__body {
+  display: grid;
+  min-height: 0;
+  padding: 18px;
+  grid-template-columns: 245px minmax(0, 1fr);
+  gap: 18px;
+  flex: 1;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.012) 0 2px, transparent 2px 9px),
+    #071019;
+}
+
+.missions-summary {
+  display: flex;
+  min-height: 0;
+  padding: 20px 18px;
+  align-items: center;
+  flex-direction: column;
+  border: 2px solid #62492d;
+  border-radius: 6px;
+  background:
+    linear-gradient(150deg, rgba(118, 82, 40, 0.14), transparent 35%),
+    #0c1822;
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -5px 0 rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.missions-summary__slot {
+  display: grid;
+  width: 92px;
+  height: 92px;
+  margin: 8px 0 20px;
+  place-items: center;
+  border: 3px solid #8d672e;
+  border-radius: 4px;
+  background: #111e28;
+  box-shadow:
+    inset 0 5px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -6px 0 rgba(0, 0, 0, 0.52),
+    0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+.missions-summary__slot img {
+  width: 60px;
+  height: 60px;
+  image-rendering: pixelated;
+}
+
+.missions-summary small {
+  color: #aaa59b;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+}
+
+.missions-summary > strong {
+  margin-top: 4px;
+  color: #ffd47c;
+  font: 600 1.8rem Constantia, Georgia, serif;
+  text-transform: uppercase;
+}
+
+.missions-summary p {
+  margin: 18px 0;
+  color: #c2beb6;
+  font-size: 0.76rem;
+  line-height: 1.55;
+}
+
+.missions-summary__hint {
+  margin-top: auto;
+  padding: 9px 11px;
+  border: 1px solid rgba(169, 125, 56, 0.42);
+  border-radius: 3px;
+  color: #e1c38c;
+  background: rgba(0, 0, 0, 0.18);
+  font: 600 0.64rem Arial, sans-serif;
+  text-transform: uppercase;
+}
+
+.missions-list {
+  display: grid;
+  min-height: 0;
+  margin: 0;
+  padding: 2px 9px 18px 2px;
+  gap: 10px;
+  overflow-y: auto;
+  list-style: none;
+  scrollbar-color: #a87838 #071019;
+  scrollbar-width: thin;
+}
+
+.missions-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.missions-list::-webkit-scrollbar-thumb {
+  border: 2px solid #071019;
+  background: #a87838;
+}
+
+.mission-entry {
+  display: grid;
+  min-height: 112px;
+  padding: 13px 15px 13px 11px;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 13px;
+  border: 1px solid rgba(137, 101, 52, 0.55);
+  border-radius: 6px;
+  background:
+    linear-gradient(120deg, rgba(195, 139, 63, 0.08), transparent 34%),
+    #0c1822;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.04),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.28);
+}
+
+.mission-entry.starts-arc:not(:first-child) {
+  margin-top: 18px;
+}
+
+.mission-entry__number {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 2px solid #74552e;
+  border-radius: 3px;
+  color: #ffdc92;
+  background:
+    linear-gradient(145deg, rgba(255, 222, 151, 0.14), transparent 48%),
+    #111f2b;
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.5);
+  font: 700 1rem Arial, sans-serif;
+}
+
+.mission-entry header {
+  display: flex;
+  gap: 6px 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.mission-entry header small {
+  color: #b18347;
+  font-size: 0.56rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.mission-entry h3 {
+  margin: 0;
+  color: #ffe1a3;
+  font: 600 0.92rem Constantia, Georgia, serif;
+}
+
+.mission-entry p {
+  margin: 7px 0 0;
+  color: #bdbab3;
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
+.mission-entry p strong {
+  color: #e9cf9c;
+}
+
+.mission-entry__start {
+  color: #9fa8ad !important;
+}
+
+@media (max-width: 980px) {
+  .pack-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .missions-dialog__body {
+    grid-template-columns: 205px minmax(0, 1fr);
+  }
+
+  .missions-summary {
+    padding-right: 13px;
+    padding-left: 13px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pack-tips {
+    display: block;
+  }
+
+  .pack-tips header {
+    min-height: 64px;
+  }
+
+  .pack-tips ul,
+  .pack-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .pack-action small {
+    display: block;
+  }
+
+  .missions-dialog {
+    width: calc(100% - 12px);
+    height: calc(100dvh - 12px);
+    max-height: calc(100dvh - 12px);
+  }
+
+  .missions-dialog__header {
+    min-height: 78px;
+    padding-left: 12px;
+    gap: 10px;
+  }
+
+  .missions-dialog__book {
+    width: 46px;
+    height: 46px;
+    padding: 6px;
+  }
+
+  .missions-dialog__header p {
+    display: none;
+  }
+
+  .missions-dialog__body {
+    display: block;
+    padding: 10px;
+    overflow-y: auto;
+  }
+
+  .missions-summary {
+    min-height: 0;
+    margin-bottom: 12px;
+    padding: 12px;
+  }
+
+  .missions-summary__slot {
+    width: 64px;
+    height: 64px;
+    margin: 0 0 10px;
+  }
+
+  .missions-summary__slot img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .missions-summary > strong {
+    font-size: 1.3rem;
+  }
+
+  .missions-summary p {
+    margin: 9px 0;
+  }
+
+  .missions-summary__hint {
+    margin-top: 3px;
+  }
+
+  .missions-list {
+    padding: 0 0 12px;
+    overflow: visible;
+  }
+
+  .mission-entry {
+    min-height: 0;
+    padding: 11px 10px;
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 9px;
+  }
+
+  .mission-entry__number {
+    width: 38px;
+    height: 38px;
+    font-size: 0.8rem;
+  }
+
+  .mission-entry h3 {
+    font-size: 0.8rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
