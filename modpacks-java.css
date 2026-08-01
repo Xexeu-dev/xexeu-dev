@@ -533,7 +533,7 @@ button {
   height: 120px;
   margin: -60px 0 0 -150px;
   overflow: hidden;
-  border-radius: 0;
+  border-radius: 8px;
   clip-path: url("#wheel-card-center");
   background: #08111a;
   box-shadow:
@@ -557,17 +557,18 @@ button {
 .wheel-card::before {
   z-index: 5;
   inset: 0;
-  padding: 0;
+  padding: 2px;
   border: 0;
-  border-radius: 0;
+  border-radius: 8px;
   clip-path: url("#wheel-card-center");
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 12%, transparent 76%, rgba(0, 0, 0, 0.56)),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04), transparent 24%, transparent 78%, rgba(0, 0, 0, 0.2));
+  background: linear-gradient(145deg, rgba(255, 241, 210, 0.48), rgba(126, 91, 50, 0.2) 44%, rgba(0, 0, 0, 0.82));
   box-shadow: none;
-  opacity: 1;
-  -webkit-mask: none;
-  mask: none;
+  opacity: 0.78;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
 }
 
 .wheel-card::after {
