@@ -487,20 +487,33 @@ button {
 }
 
 .wheel-rings {
-  z-index: 2;
+  z-index: 4;
   border-width: 2px;
   box-shadow: 0 0 9px rgba(217, 154, 60, 0.13);
 }
 
-.wheel-rings::before,
+.wheel-rings::before {
+  top: 50%;
+  right: 245px;
+  bottom: auto;
+  left: auto;
+  display: block;
+  width: 760px;
+  height: 760px;
+  border: 4px solid rgba(217, 154, 60, 0.76);
+  background:
+    radial-gradient(circle at 70% 50%, rgba(15, 27, 38, 0.98), rgba(5, 11, 17, 0.99) 68%),
+    #050b11;
+  box-shadow: none;
+  transform: translateY(-50%);
+}
+
 .wheel-rings::after {
   display: none;
 }
 
 .wheel-track::after {
-  inset: 245px;
-  border: 4px solid rgba(217, 154, 60, 0.76);
-  box-shadow: none;
+  display: none;
 }
 
 .wheel-heading {
@@ -2183,10 +2196,15 @@ button {
   }
 
   .wheel-track::after {
-    inset: 200px;
-    display: block;
-    border-width: 4px;
-    box-shadow: none;
+    display: none;
+  }
+
+  .wheel-rings::before {
+    top: 50%;
+    right: 200px;
+    width: 400px;
+    height: 400px;
+    transform: translateY(-50%);
   }
 
   .wheel-card,
