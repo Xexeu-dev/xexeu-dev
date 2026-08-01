@@ -529,9 +529,9 @@ button {
 }
 
 .wheel-card {
-  width: 258px;
+  width: 300px;
   height: 120px;
-  margin: -60px 0 0 -129px;
+  margin: -60px 0 0 -150px;
   overflow: hidden;
   border-radius: 0;
   clip-path: url("#wheel-card-center");
@@ -619,9 +619,9 @@ button {
 
 .wheel-card.is-active {
   z-index: 3;
-  width: 268px;
+  width: 282px;
   height: 172px;
-  margin: -86px 0 0 -134px;
+  margin: -86px 0 0 -141px;
   box-shadow: inset 0 0 0 2px rgba(255, 220, 152, 0.32);
   filter:
     drop-shadow(0 0 5px rgba(255, 184, 70, 0.9))
@@ -693,16 +693,28 @@ button {
 
 .wheel-card[data-slot="-3"],
 .wheel-card[data-slot="3"] {
-  width: 230px;
+  width: 384px;
   height: 64px;
-  margin: -32px 0 0 -115px;
+  margin: -32px 0 0 -192px;
 }
 
 .wheel-card[data-slot="-3"] .wheel-card__copy,
 .wheel-card[data-slot="3"] .wheel-card__copy {
   width: 160px;
-  margin-left: 24px;
+  margin-left: 104px;
   padding: 5px 8px;
+}
+
+.wheel-card[data-slot="-2"],
+.wheel-card[data-slot="2"] {
+  width: 384px;
+  margin-left: -192px;
+}
+
+.wheel-card[data-slot="-2"] .wheel-card__copy,
+.wheel-card[data-slot="2"] .wheel-card__copy {
+  width: 190px;
+  margin-left: 90px;
 }
 
 .wheel-card[data-slot="-3"] .wheel-card__copy strong,
@@ -2217,9 +2229,9 @@ button {
     top: 50%;
     left: 50%;
     display: grid !important;
-    width: 198px;
+    width: 242px;
     height: 78px;
-    margin: -39px 0 0 -99px;
+    margin: -39px 0 0 -121px;
     opacity: 0.82;
     transform:
       rotate(var(--card-angle))
@@ -2242,16 +2254,28 @@ button {
 
   .wheel-card[data-slot="-3"],
   .wheel-card[data-slot="3"] {
-    width: 166px;
+    width: 280px;
     height: 46px;
-    margin: -23px 0 0 -83px;
+    margin: -23px 0 0 -140px;
   }
 
   .wheel-card[data-slot="-3"] .wheel-card__copy,
   .wheel-card[data-slot="3"] .wheel-card__copy {
     width: 120px;
-    margin-left: 17px;
+    margin-left: 74px;
     padding: 3px 5px;
+  }
+
+  .wheel-card[data-slot="-2"],
+  .wheel-card[data-slot="2"] {
+    width: 320px;
+    margin-left: -160px;
+  }
+
+  .wheel-card[data-slot="-2"] .wheel-card__copy,
+  .wheel-card[data-slot="2"] .wheel-card__copy {
+    width: 150px;
+    margin-left: 80px;
   }
 
   .wheel-card[data-slot="-3"] .wheel-card__copy strong,
@@ -2275,9 +2299,9 @@ button {
   .wheel-card.is-active {
     top: 50%;
     left: 50%;
-    width: 214px;
+    width: 224px;
     height: 104px;
-    margin: -52px 0 0 -107px;
+    margin: -52px 0 0 -112px;
     opacity: 1;
     transform:
       rotate(var(--card-angle))
