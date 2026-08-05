@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Biblioteca de mods, add-ons e mundos para Minecraft Bedrock da Xexeu Dev."
+    />
+    <meta name="theme-color" content="#071016" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://ajax.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; media-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'"
+    />
+    <title>Mods e Add-ons Bedrock | Xexeu Dev</title>
+    <link
+      rel="icon"
+      type="image/webp"
+      href="./assets/portal/brand-bird-v4-minimal.webp"
+    />
+    <link
+      rel="preload"
+      href="./assets/bedrock/addons/aether-dimension/aether-dimension-cover.jpg"
+      as="image"
+    />
+    <link rel="stylesheet" href="./mods-bedrock.css?v=1" />
+    <script
+      type="module"
+      src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js"
+    ></script>
+  </head>
+  <body>
+    <div class="bedrock-backdrop" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+
+    <header class="bedrock-topbar" aria-label="Navegação Bedrock">
+      <a class="bedrock-home" href="./index.html" aria-label="Voltar ao início">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 11.2 12 4l9 7.2" />
+          <path d="M5.7 10.2V20h12.6v-9.8M9.5 20v-6h5v6" />
+        </svg>
+      </a>
+      <a class="bedrock-brand" href="./index.html" aria-label="Xexeu Dev">
+        <img
+          src="./assets/portal/brand-bird-v4-minimal.webp"
+          alt=""
+          width="72"
+          height="72"
+        />
+      </a>
+      <a class="bedrock-back" href="./mods.html" data-navigate>
+        <span aria-hidden="true">←</span>
+        <span>Voltar aos jogos</span>
+      </a>
+    </header>
+
+    <main class="bedrock-main">
+      <header class="bedrock-intro">
+        <p>Biblioteca Bedrock</p>
+        <h1>MODS E ADDONS<br />MINECRAFT BEDROCK</h1>
+        <span>
+          Gire o pilar, escolha um card e descubra novos mundos para jogar.
+        </span>
+        <i aria-hidden="true"></i>
+      </header>
+
+      <section class="bedrock-device" aria-label="Carrossel de add-ons">
+        <span class="device-corner device-corner--tl" aria-hidden="true"></span>
+        <span class="device-corner device-corner--tr" aria-hidden="true"></span>
+        <span class="device-corner device-corner--bl" aria-hidden="true"></span>
+        <span class="device-corner device-corner--br" aria-hidden="true"></span>
+
+        <div
+          class="orbit-stage"
+          data-orbit-stage
+          tabindex="0"
+          aria-label="Arraste, use o scroll ou as setas para girar os add-ons"
+        >
+          <div class="orbit-floor" aria-hidden="true"></div>
+          <div class="orbit-beam" aria-hidden="true"></div>
+
+          <div class="quartz-pillar" data-pillar aria-hidden="true">
+            <div class="quartz-pillar__fallback">
+              <span></span><span></span><span></span>
+            </div>
+            <model-viewer
+              class="quartz-pillar__model"
+              data-pillar-model
+              src="./assets/bedrock/models/quartz-obelisk.glb"
+              alt="Pilar quadrado de quartzo"
+              camera-orbit="0deg 76deg 108%"
+              field-of-view="22deg"
+              interaction-prompt="none"
+              shadow-intensity="0"
+              exposure="0.78"
+              disable-zoom
+            ></model-viewer>
+            <span class="quartz-pillar__cap"></span>
+            <span class="quartz-pillar__base"></span>
+          </div>
+
+          <div class="addon-orbit" data-addon-orbit>
+            <button
+              class="addon-card addon-card--aether"
+              type="button"
+              data-addon-card
+              data-addon="aether"
+              aria-label="Abrir informações de Aether Dimension"
+            >
+              <span class="addon-card__media">
+                <img
+                  src="./assets/bedrock/addons/aether-dimension/aether-dimension-cover.jpg"
+                  alt=""
+                  width="800"
+                  height="450"
+                  decoding="async"
+                />
+              </span>
+              <strong>Aether Dimension</strong>
+              <small>Mundo + Add-on</small>
+            </button>
+
+            <button
+              class="addon-card addon-card--future addon-card--future-1"
+              type="button"
+              data-addon-card
+              data-placeholder="Novo add-on em breve."
+              aria-label="Próximo add-on, em breve"
+            >
+              <span class="addon-card__media addon-card__placeholder">
+                <i aria-hidden="true">?</i>
+              </span>
+              <strong>Em breve 01</strong>
+              <small>Novo add-on</small>
+            </button>
+
+            <button
+              class="addon-card addon-card--future addon-card--future-2"
+              type="button"
+              data-addon-card
+              data-placeholder="Novo mundo em breve."
+              aria-label="Próximo mundo, em breve"
+            >
+              <span class="addon-card__media addon-card__placeholder">
+                <i aria-hidden="true">◇</i>
+              </span>
+              <strong>Em breve 02</strong>
+              <small>Novo mundo</small>
+            </button>
+
+            <button
+              class="addon-card addon-card--future addon-card--future-3"
+              type="button"
+              data-addon-card
+              data-placeholder="Novo pacote em breve."
+              aria-label="Próximo pacote, em breve"
+            >
+              <span class="addon-card__media addon-card__placeholder">
+                <i aria-hidden="true">✦</i>
+              </span>
+              <strong>Em breve 03</strong>
+              <small>Novo pacote</small>
+            </button>
+
+            <button
+              class="addon-card addon-card--future addon-card--future-4"
+              type="button"
+              data-addon-card
+              data-placeholder="Nova aventura em breve."
+              aria-label="Próxima aventura, em breve"
+            >
+              <span class="addon-card__media addon-card__placeholder">
+                <i aria-hidden="true">⬡</i>
+              </span>
+              <strong>Em breve 04</strong>
+              <small>Nova aventura</small>
+            </button>
+          </div>
+
+          <p class="orbit-hint">
+            <span aria-hidden="true">↔</span>
+            Arraste, use o scroll ou os botões
+          </p>
+        </div>
+
+        <nav class="device-controls" aria-label="Controles do carrossel">
+          <button type="button" data-orbit-prev aria-label="Add-on anterior">
+            <span aria-hidden="true">‹</span>
+          </button>
+          <a
+            href="./mods.html"
+            data-navigate
+            aria-label="Voltar à lista de jogos"
+          >
+            <span aria-hidden="true">○</span>
+          </a>
+          <button type="button" data-orbit-next aria-label="Próximo add-on">
+            <span aria-hidden="true">›</span>
+          </button>
+        </nav>
+      </section>
+
+      <p class="bedrock-footnote">
+        <span aria-hidden="true">◆</span>
+        Toque no card para abrir as informações
+      </p>
+    </main>
+
+    <section
+      class="addon-modal"
+      data-addon-modal
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="addon-modal-title"
+      aria-hidden="true"
+      inert
+    >
+      <button
+        class="addon-modal__backdrop"
+        type="button"
+        data-addon-close
+        aria-label="Fechar informações"
+      ></button>
+      <article class="addon-modal__panel">
+        <button
+          class="addon-modal__close"
+          type="button"
+          data-addon-close
+          aria-label="Fechar informações"
+        >
+          ×
+        </button>
+        <div class="addon-modal__media">
+          <img
+            src="./assets/bedrock/addons/aether-dimension/aether-dimension-cover.jpg"
+            alt="Capa do Aether Dimension"
+            width="800"
+            height="450"
+          />
+          <span>Disponível</span>
+        </div>
+        <div class="addon-modal__content">
+          <p>Dimensão completa</p>
+          <h2 id="addon-modal-title">Aether Dimension</h2>
+          <span class="addon-modal__version">Minecraft Bedrock 1.17.30+</span>
+          <p class="addon-modal__description">
+            Explore uma dimensão aérea completa com ilhas flutuantes, criaturas,
+            equipamentos, estruturas e novos desafios. O arquivo inclui o mundo,
+            behavior pack e resource pack necessários.
+          </p>
+
+          <dl class="addon-meta">
+            <div>
+              <dt>NOME</dt>
+              <dd>Aether Dimension</dd>
+            </div>
+            <div>
+              <dt>VERSÃO</dt>
+              <dd>1.0.4</dd>
+            </div>
+            <div>
+              <dt>TIPO</dt>
+              <dd>Mundo + Add-on</dd>
+            </div>
+            <div>
+              <dt>ÚLTIMA ATUALIZAÇÃO</dt>
+              <dd>27/07/2026</dd>
+            </div>
+          </dl>
+
+          <a
+            class="addon-download"
+            href="./assets/bedrock/addons/aether-dimension/AETHER-DIMENSION.mcworld"
+            download="AETHER-DIMENSION.mcworld"
+          >
+            <span>Baixar add-on</span>
+            <small>.MCWORLD · 33 MB</small>
+            <i aria-hidden="true">↓</i>
+          </a>
+        </div>
+      </article>
+    </section>
+
+    <div class="bedrock-toast" data-toast role="status" aria-hidden="true">
+      <span aria-hidden="true">!</span>
+      <p data-toast-message></p>
+    </div>
+
+    <script src="./mods-bedrock.js?v=1"></script>
+  </body>
+</html>
