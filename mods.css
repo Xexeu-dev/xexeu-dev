@@ -312,6 +312,10 @@ button {
   --coin-accent: 119, 203, 74;
 }
 
+.game-coin--bedrock {
+  --coin-accent: 53, 190, 255;
+}
+
 .game-coin--zomboid {
   --coin-accent: 239, 59, 47;
 }
@@ -474,6 +478,11 @@ button {
 .coin-symbol--minecraft {
   width: 108px;
   height: 108px;
+}
+
+.coin-symbol--bedrock {
+  width: 110px;
+  height: 110px;
 }
 
 .coin-symbol--zomboid {
